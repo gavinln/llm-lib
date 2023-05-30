@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "langchain-example"
+version = "0.1.0"
+description = ""
+authors = ["Gavin Noronha <gavinln@hotmail.com>"]
+readme = "README.md"
+packages = [{include = "langchain_example"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+langchain = "^0.0.65"
+openai = "^0.26.1"
+python-lsp-server = "^1.7.1"
+jupyterlab = "^3.6.1"
+python-dotenv = "^1.0.0"
+pandas = "^1.5.3"
+tiktoken = "^0.3.3"
+matplotlib = "^3.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
