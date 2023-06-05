@@ -6,6 +6,10 @@ Building applications with Large Language Models (LLMs)
 
 ## ChatGPT uses
 
+Login at the following address
+
+https://chat.openai.com/auth/login
+
 ### Introduction
 
 https://platform.openai.com/docs/introduction/overview
@@ -20,6 +24,12 @@ https://platform.openai.com/docs/introduction/overview
 
 Example prompt: Write a tagline for an ice cream shop
 Completion: We serve up smiles with every scoop
+
+Clone the project
+
+```
+git clone https://github.com/openai/openai-quickstart-python.git
+```
 
 ## Run openapi-quickstart-python
 
@@ -47,9 +57,25 @@ pip install -r requirements.txt
 flask run
 ```
 
+## Run openai-cookbook
+
+1. Clone the project
+
+```
+git clone https://github.com/openai/openai-cookbook
+```
+
+2. Change to the project root
+
 ## Run openai-examples
 
-1. Run openai-example in a poetry virtual environment
+1. Setup API key
+
+```
+source ./do_not_checkin/openai_key.sh
+```
+
+2. Run openai-example in a poetry virtual environment
 
 ```
 make open-ai-example
@@ -91,6 +117,8 @@ https://www.youtube.com/@echohive/videos
 
 #### Github
 
-https://github.com/hwchase17/langchain - 20k stars
+https://github.com/hwchase17/langchain - 43k stars
 
-https://github.com/nomic-ai/gpt4all - 20k stars
+https://github.com/nomic-ai/gpt4all - 44k stars
+
+https://github.com/microsoft/guidance - 8k stars
