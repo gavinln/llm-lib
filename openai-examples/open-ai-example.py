@@ -7,6 +7,12 @@ from example_lib import question_answer
 from example_lib import correct_grammar 
 from example_lib import summarize_second_grader
 from example_lib import translate_english
+from example_lib import sql_translate
+from example_lib import parse_unstructured_data
+from example_lib import classification
+from example_lib import python_to_natural_language
+from example_lib import time_complexity_of_code
+from example_lib import translate_programming_languages
 
 # basic example
 prompt = "Say this is a test"
@@ -69,13 +75,91 @@ in the night sky after the Moon and Venus."
 
 
 prompt="""
-
 Translate this into 1. French, 2. Spanish:
-
 What rooms do you have available?
-
-1.
-
 """
 
-translate_english(prompt)
+# translate_english(prompt)
+
+prompt = """
+# Postgres SQL tables, with their properties:
+#
+# Employee(id, name, department_id)
+# Department(id, name, address)
+# Salary_Payments(id, employee_id, amount, date)
+#
+# A query to list the names of the departments which employed more than 10 employees in the last 3 months
+SELECT
+"""
+
+# sql_translate(prompt)
+
+prompt = """
+A table summarizing the fruits from Goocrux:
+
+There are many fruits that were found on the recently discovered planet
+Goocrux. There are neoskizzles that grow there, which are purple and taste
+like candy. There are also loheckles, which are a grayish blue fruit and
+are very tart, a little bit like a lemon. Pounits are a bright green color
+and are more savory than sweet. There are also plenty of loopnovas which
+are a neon pink flavor and taste like cotton candy. Finally, there are
+fruits called glowls, which have a very sour and bitter taste which is
+acidic and caustic, and a pale orange tinge to them.
+
+| Fruit | Color | Flavor |
+"""
+
+# parse_unstructured_data(prompt)
+
+
+prompt = """
+The following is a list of companies and the categories they fall into:
+Apple, Facebook, Fedex
+
+Apple
+Category:
+"""
+
+# classification(prompt)
+
+prompt = """
+# Python 3 
+def remove_common_prefix(x, prefix, ws_prefix): 
+    x["completion"] = x["completion"].str[len(prefix) :] 
+    if ws_prefix: 
+        # keep the single whitespace as prefix 
+        x["completion"] = " " + x["completion"] 
+    return x 
+
+# Explanation of what the code does
+#
+"""
+
+# python_to_natural_language(prompt)
+
+
+prompt = """
+def foo(n, k):
+    accum = 0
+    for i in range(n):
+        for l in range(k):
+            accum += i
+    return accum
+
+The time complexity of this function is"
+"""
+
+# time_complexity_of_code(prompt)
+
+
+prompt = """
+##### Translate this function  from Python into Haskell
+### Python
+    
+def predict_proba(X: Iterable[str]):
+    return np.array([predict_one_probas(tweet) for tweet in X])
+    
+### Haskell
+"""
+
+translate_programming_languages(prompt)

@@ -72,8 +72,102 @@ def translate_english(prompt):
         max_tokens=100,
         top_p=1.0,
         frequency_penalty=0.0,
+        presence_penalty=0.0,
+    )
+    print("prompt is {}".format(prompt))
+    text = response["choices"][0]["text"]
+    print("response text is {}".format(text))
+
+
+def sql_translate(prompt):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0,
+        max_tokens=150,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+        stop=["#", ";"],
+    )
+    print("prompt is {}".format(prompt))
+    text = response["choices"][0]["text"]
+    print("response text is {}".format(text))
+
+
+def parse_unstructured_data(prompt):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0,
+        max_tokens=100,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+    )
+    print("prompt is {}".format(prompt))
+    text = response["choices"][0]["text"]
+    print("response text is {}".format(text))
+
+
+def classification(prompt):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0,
+        max_tokens=64,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+    )
+    print("prompt is {}".format(prompt))
+    text = response["choices"][0]["text"]
+    print("response text is {}".format(text))
+
+
+def python_to_natural_language(prompt):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0,
+        max_tokens=150,
+        top_p=1.0,
+        frequency_penalty=0.0,
         presence_penalty=0.0
     )
     print("prompt is {}".format(prompt))
     text = response["choices"][0]["text"]
     print("response text is {}".format(text))
+
+
+def time_complexity_of_code(prompt):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0,
+        max_tokens=64,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+        stop=["\n"]
+    )
+    print("prompt is {}".format(prompt))
+    text = response["choices"][0]["text"]
+    print("response text is {}".format(text))
+
+
+def translate_programming_languages(prompt):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0,
+        max_tokens=150,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+        stop=["###"]
+    )
+    print("prompt is {}".format(prompt))
+    text = response["choices"][0]["text"]
+    print("response text is {}".format(text))
+
