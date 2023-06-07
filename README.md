@@ -2,7 +2,7 @@
 
 https://github.com/hwchase17/langchain
 
-Building applications with Large Language Models (LLMs) 
+Building applications with Large Language Models (LLMs)
 
 ## ChatGPT uses
 
