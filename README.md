@@ -81,6 +81,29 @@ source ./do_not_checkin/openai_key.sh
 make open-ai-example
 ```
 
+### Datasets
+
+#### Fine food reviews
+
+There are two files
+
+```
+./openai-cookbook/examples/data/fine_food_reviews_1k.csv
+./openai-cookbook/examples/data/fine_food_reviews_with_embeddings_1k.csv
+```
+
+Obtain_dataset.ipynb - read the first file and create the second file with embeddings
+Visualizing_embeddings_in_2D.ipynb - visualize embeddings using tSNE
+Visualizing_embeddings_with_Atlas.ipynb - requires Nomic login https://atlas.nomic.ai/
+
+Classification_using_embeddings.ipynb
+Clustering.ipynb
+Regression_using_embeddings.ipynb
+Semantic_text_search_using_embeddings.ipynb
+Visualizing_embeddings_in_W&B.ipynb
+Zero-shot_classification_with_embeddings.ipynb
+
+
 ## Links
 
 [Prompt engineering guide][1000]
