@@ -45,11 +45,10 @@ from example_lib import restaurant_review_creator
 from example_lib import study_notes
 from example_lib import interview_questions
 
-
 # basic example
 prompt = "Say this is a test"
 
-# basic_example(prompt)
+basic_example(prompt)
 
 # question_answer
 prompt = """
@@ -82,11 +81,11 @@ A:
 
 """
 
-# question_answer(prompt)
+question_answer(prompt)
 
 prompt = "Correct this to standard English: She no went to the market."
 
-# correct_grammar(prompt)
+correct_grammar(prompt)
 
 prompt = """
 Summarize this for a second-grade student:
@@ -103,15 +102,14 @@ in the night sky after the Moon and Venus."
 
 """
 
-# summarize_second_grader(prompt)
-
+summarize_second_grader(prompt)
 
 prompt = """
 Translate this into 1. French, 2. Spanish:
 What rooms do you have available?
 """
 
-# translate_english(prompt)
+translate_english(prompt)
 
 prompt = """
 # Postgres SQL tables, with their properties:
@@ -124,7 +122,7 @@ prompt = """
 SELECT
 """
 
-# sql_translate(prompt)
+sql_translate(prompt)
 
 prompt = """
 A table summarizing the fruits from Goocrux:
@@ -141,8 +139,7 @@ acidic and caustic, and a pale orange tinge to them.
 | Fruit | Color | Flavor |
 """
 
-# parse_unstructured_data(prompt)
-
+parse_unstructured_data(prompt)
 
 prompt = """
 The following is a list of companies and the categories they fall into:
@@ -152,7 +149,7 @@ Apple
 Category:
 """
 
-# classification(prompt)
+classification(prompt)
 
 prompt = """
 # Python 3
@@ -167,8 +164,7 @@ def remove_common_prefix(x, prefix, ws_prefix):
 #
 """
 
-# python_to_natural_language(prompt)
-
+python_to_natural_language(prompt)
 
 prompt = """
 def foo(n, k):
@@ -181,8 +177,7 @@ def foo(n, k):
 The time complexity of this function is"
 """
 
-# time_complexity_of_code(prompt)
-
+time_complexity_of_code(prompt)
 
 prompt = """
 ##### Translate this function  from Python into Haskell
@@ -194,7 +189,7 @@ def predict_proba(X: Iterable[str]):
 ### Haskell
 """
 
-# translate_programming_languages(prompt)
+translate_programming_languages(prompt)
 
 prompt = """
 "Classify the sentiment in these tweets:
@@ -208,7 +203,7 @@ prompt = """
 Tweet sentiment ratings:"
 """
 
-# sentiment_classifier(prompt)
+sentiment_classifier(prompt)
 
 prompt = """
 "class Log:
@@ -245,7 +240,7 @@ Here's what the above class is doing, explained in a concise way:
 1."
 """
 
-# explain_code(prompt)
+explain_code(prompt)
 
 prompt = """
 Extract keywords from this text:
@@ -253,7 +248,7 @@ Extract keywords from this text:
 Black-on-black ware is a 20th- and 21st-century pottery tradition developed by the Puebloan Native American ceramic artists in Northern New Mexico. Traditional reduction-fired blackware has been made for centuries by pueblo artists. Black-on-black ware of the past century is produced with a smooth surface, with the designs applied through selective burnishing or the application of refractory slip. Another style involves carving or incising designs and selectively polishing the raised areas. For generations several families from Kha'po Owingeh and P'ohwhóge Owingeh pueblos have been making black-on-black ware with the techniques passed down from matriarch potters. Artists from other pueblos have also produced black-on-black ware. Several contemporary artists have created works honoring the pottery of their ancestors.
 """
 
-# extract_keywords(prompt)
+extract_keywords(prompt)
 
 prompt = """
 Q: Who is Batman?
@@ -293,7 +288,7 @@ Q: What's a language model?
 A:
 """
 
-# factual_answering(prompt)
+factual_answering(prompt)
 
 prompt = """
 Write a creative ad for the following product to run on Facebook aimed at parents:
@@ -301,7 +296,7 @@ Write a creative ad for the following product to run on Facebook aimed at parent
 Product: Learning Room is a virtual environment to help students from kindergarten to high school excel in school.
 """
 
-# product_description_to_ad(prompt)
+product_description_to_ad(prompt)
 
 prompt = """
 Product description: A home milkshake maker
@@ -312,7 +307,7 @@ Product description: A pair of shoes that can fit any foot size.
 Seed words: adaptable, fit, omni-fit.
 """
 
-# product_name_generator(prompt)
+product_name_generator(prompt)
 
 prompt = """
 A neutron star is the collapsed core of a massive supergiant star, which had a total mass of between 10 and 25 solar masses, possibly more if the star was especially metal-rich.[1] Neutron stars are the smallest and densest stellar objects, excluding black holes and hypothetical white holes, quark stars, and strange stars.[2] Neutron stars have a radius on the order of 10 kilometres (6.2 mi) and a mass of about 1.4 solar masses.[3] They result from the supernova explosion of a massive star, combined with gravitational collapse, that compresses the core past white dwarf star density to that of atomic nuclei.
@@ -320,8 +315,7 @@ A neutron star is the collapsed core of a massive supergiant star, which had a t
 Tl;dr
 """
 
-# summarization(prompt)
-
+summarization(prompt)
 
 prompt = """
 ##### Fix bugs in the below function
@@ -341,7 +335,7 @@ for i in range(10):
 ### Fixed Python"
 """
 
-# python_bug_fixer(prompt)
+python_bug_fixer(prompt)
 
 prompt = """
 A two-column spreadsheet of top science fiction movies and the year of release:
@@ -349,8 +343,7 @@ A two-column spreadsheet of top science fiction movies and the year of release:
 Title |  Year of release
 """
 
-# spreadsheet_creator(prompt)
-
+spreadsheet_creator(prompt)
 
 prompt = """
 ML Tutor: I am a ML/AI language model tutor
@@ -359,15 +352,13 @@ ML Tutor: A language model is a statistical model that describes the probability
 You: What is a statistical model?
 """
 
-# ai_language_model_tutor(prompt)
-
+ai_language_model_tutor(prompt)
 
 prompt = """
 "List 10 science fiction books:"
 """
 
-# book_list_maker(prompt)
-
+book_list_maker(prompt)
 
 prompt = """
 Decide whether a Tweet's sentiment is positive, neutral, or negative.
@@ -376,8 +367,7 @@ Tweet: \"I loved the new Batman movie!\"
 Sentiment:
 """
 
-# tweet_classifier(prompt)
-
+tweet_classifier(prompt)
 
 prompt = """
 "Extract the airport codes from this text:
@@ -389,16 +379,14 @@ Text: \"I want to fly from Orlando to Boston\"
 Airport codes:"
 """
 
-# airport_code_extractor(prompt)
-
+airport_code_extractor(prompt)
 
 prompt = """
 Create a SQL request to find all users who live in California and have over
 1000 credits:
 """
 
-# sql_creator(prompt)
-
+sql_creator(prompt)
 
 prompt = """
 "Extract the name and mailing address from this email:
@@ -416,8 +404,7 @@ Maya
 Name:"
 """
 
-# extract_contact_info(prompt)
-
+extract_contact_info(prompt)
 
 prompt = """
 You: What have you been up to?
@@ -426,8 +413,7 @@ You: Did you watch anything interesting?
 Friend:
 """
 
-# emulate_chat(prompt)
-
+emulate_chat(prompt)
 
 prompt = """
 The CSS code for a color like a blue sky at dusk:
@@ -435,7 +421,7 @@ The CSS code for a color like a blue sky at dusk:
 background-color: #
 """
 
-# mood_to_color(prompt)
+mood_to_color(prompt)
 
 prompt = """
 # Python 3.7
@@ -452,8 +438,7 @@ randomly_split_dataset('finetune_data/', 'dataset.jsonl')
 \"\"\"
 """
 
-# write_python_docstring(prompt)
-
+write_python_docstring(prompt)
 
 prompt = """
 "Create an analogy for this phrase:
@@ -461,8 +446,7 @@ prompt = """
 Questions are arrows in that:"
 """
 
-# analogy_maker(prompt)
-
+analogy_maker(prompt)
 
 prompt = """
 "Topic: Breakfast
@@ -472,8 +456,7 @@ Topic: Wind
 Two-Sentence Horror Story:"
 """
 
-# micro_horrow_story_creator(prompt)
-
+micro_horrow_story_creator(prompt)
 
 prompt = """
 "Convert this from first-person to third person (gender female):
@@ -481,8 +464,7 @@ prompt = """
 I decided to make a movie about Ada Lovelace."
 """
 
-# third_person_converter(prompt)
-
+third_person_converter(prompt)
 
 prompt = """
 "Convert my short hand into a first-hand account of the meeting:
@@ -494,22 +476,19 @@ Jane: Happy to help
 Parkman: Beta testing almost done"
 """
 
-# notes_to_summary(prompt)
-
+notes_to_summary(prompt)
 
 prompt = """
 "Brainstorm some ideas combining VR and fitness:"
 """
 
-# vr_fitness_idea_generator(prompt)
-
+vr_fitness_idea_generator(prompt)
 
 prompt = """
 Create an outline for an essay about Nikola Tesla and his contributions to technology:
 """
 
-# essay_outline(prompt)
-
+essay_outline(prompt)
 
 prompt = """
 "Write a recipe based on these ingredients and instructions:
@@ -526,8 +505,7 @@ Sour cream
 Instructions:"
 """
 
-# recipe_creator(prompt)
-
+recipe_creator(prompt)
 
 prompt = """
 "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
@@ -538,8 +516,7 @@ Human: I'd like to cancel my subscription.
 AI:"
 """
 
-# open_ended_chat(prompt)
-
+open_ended_chat(prompt)
 
 prompt = """
 "Marv is a chatbot that reluctantly answers questions with sarcastic responses:
@@ -556,8 +533,7 @@ You: What time is it?
 Marv:"
 """
 
-# sarcastic_chatbot(prompt)
-
+sarcastic_chatbot(prompt)
 
 prompt = """
 "Create a numbered list of turn-by-turn directions from this text:
@@ -565,8 +541,7 @@ prompt = """
 Go south on 95 until you hit Sunrise boulevard then take it east to us 1 and head south. Tom Jenkins bbq will be on the left after several miles."
 """
 
-# turn_by_turn_directions(prompt)
-
+turn_by_turn_directions(prompt)
 
 prompt = """
 Write a restaurant review based on these notes:
@@ -577,18 +552,16 @@ Lobster great, noisy, service polite, prices good.
 Review:
 """
 
-# restaurant_review_creator(prompt)
+restaurant_review_creator(prompt)
 
 prompt = """
 What are 5 key points I should know when studying Ancient Rome?
 """
 
-# study_notes(prompt)
-
+study_notes(prompt)
 
 prompt = """
 Create a list of 8 questions for my interview with a science fiction author:
 """
-
 
 interview_questions(prompt)

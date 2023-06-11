@@ -8,14 +8,20 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
+def print_prompt_response(prompt, response):
+    # print("prompt is {}".format(prompt))
+    print("{}\n{}".format("=" * 30, prompt))
+    text = response["choices"][0]["text"]
+    # print("response text is {}".format(text))
+    print("{}\n{}".format("-" * 30, text))
+
+
 # basic example
 def basic_example(prompt):
     response = openai.Completion.create(
         model="text-davinci-003", prompt=prompt, temperature=0, max_tokens=7
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def question_answer(prompt):
@@ -29,9 +35,7 @@ def question_answer(prompt):
         presence_penalty=0.0,
         stop=["\n"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def correct_grammar(prompt):
@@ -44,9 +48,7 @@ def correct_grammar(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def summarize_second_grader(prompt):
@@ -59,9 +61,7 @@ def summarize_second_grader(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def translate_english(prompt):
@@ -74,9 +74,7 @@ def translate_english(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def sql_translate(prompt):
@@ -90,9 +88,7 @@ def sql_translate(prompt):
         presence_penalty=0.0,
         stop=["#", ";"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def parse_unstructured_data(prompt):
@@ -105,9 +101,7 @@ def parse_unstructured_data(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def classification(prompt):
@@ -120,9 +114,7 @@ def classification(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def python_to_natural_language(prompt):
@@ -135,9 +127,7 @@ def python_to_natural_language(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def time_complexity_of_code(prompt):
@@ -151,9 +141,7 @@ def time_complexity_of_code(prompt):
         presence_penalty=0.0,
         stop=["\n"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def translate_programming_languages(prompt):
@@ -167,9 +155,7 @@ def translate_programming_languages(prompt):
         presence_penalty=0.0,
         stop=["###"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def sentiment_classifier(prompt):
@@ -182,9 +168,7 @@ def sentiment_classifier(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def explain_code(prompt):
@@ -198,9 +182,7 @@ def explain_code(prompt):
         presence_penalty=0.0,
         stop=['"""'],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def extract_keywords(prompt):
@@ -213,9 +195,7 @@ def extract_keywords(prompt):
         frequency_penalty=0.8,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def factual_answering(prompt):
@@ -228,9 +208,7 @@ def factual_answering(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def product_description_to_ad(prompt):
@@ -243,9 +221,7 @@ def product_description_to_ad(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def product_name_generator(prompt):
@@ -258,9 +234,7 @@ def product_name_generator(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def summarization(prompt):
@@ -273,9 +247,7 @@ def summarization(prompt):
         frequency_penalty=0.0,
         presence_penalty=1,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def python_bug_fixer(prompt):
@@ -289,9 +261,7 @@ def python_bug_fixer(prompt):
         presence_penalty=0.0,
         stop=["###"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def spreadsheet_creator(prompt):
@@ -304,9 +274,7 @@ def spreadsheet_creator(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def ai_language_model_tutor(prompt):
@@ -320,9 +288,7 @@ def ai_language_model_tutor(prompt):
         presence_penalty=0.0,
         stop=["You:"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def book_list_maker(prompt):
@@ -336,9 +302,7 @@ def book_list_maker(prompt):
         presence_penalty=0.5,
         stop=["11."],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def tweet_classifier(prompt):
@@ -351,9 +315,7 @@ def tweet_classifier(prompt):
         frequency_penalty=0.5,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def airport_code_extractor(prompt):
@@ -367,9 +329,7 @@ def airport_code_extractor(prompt):
         presence_penalty=0.0,
         stop=["\n"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def sql_creator(prompt):
@@ -382,9 +342,7 @@ def sql_creator(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def extract_contact_info(prompt):
@@ -397,9 +355,7 @@ def extract_contact_info(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def emulate_chat(prompt):
@@ -413,9 +369,7 @@ def emulate_chat(prompt):
         presence_penalty=0.0,
         stop=["You:"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def mood_to_color(prompt):
@@ -429,9 +383,7 @@ def mood_to_color(prompt):
         presence_penalty=0.0,
         stop=[";"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def write_python_docstring(prompt):
@@ -445,9 +397,7 @@ def write_python_docstring(prompt):
         presence_penalty=0.0,
         stop=["#", '"""'],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def analogy_maker(prompt):
@@ -460,9 +410,7 @@ def analogy_maker(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def micro_horrow_story_creator(prompt):
@@ -475,9 +423,7 @@ def micro_horrow_story_creator(prompt):
         frequency_penalty=0.5,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def third_person_converter(prompt):
@@ -490,9 +436,7 @@ def third_person_converter(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def notes_to_summary(prompt):
@@ -505,9 +449,7 @@ def notes_to_summary(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def vr_fitness_idea_generator(prompt):
@@ -520,9 +462,7 @@ def vr_fitness_idea_generator(prompt):
         frequency_penalty=1,
         presence_penalty=1,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def essay_outline(prompt):
@@ -535,9 +475,7 @@ def essay_outline(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def recipe_creator(prompt):
@@ -550,9 +488,7 @@ def recipe_creator(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def open_ended_chat(prompt):
@@ -566,9 +502,7 @@ def open_ended_chat(prompt):
         presence_penalty=0.6,
         stop=[" Human:", " AI:"],
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def sarcastic_chatbot(prompt):
@@ -581,9 +515,7 @@ def sarcastic_chatbot(prompt):
         frequency_penalty=0.5,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 prompt = """
@@ -603,9 +535,7 @@ def turn_by_turn_directions(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def restaurant_review_creator(prompt):
@@ -618,9 +548,7 @@ def restaurant_review_creator(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 def study_notes(prompt):
@@ -633,9 +561,7 @@ def study_notes(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
 
 
 prompt = """
@@ -653,6 +579,4 @@ def interview_questions(prompt):
         frequency_penalty=0.0,
         presence_penalty=0.0,
     )
-    print("prompt is {}".format(prompt))
-    text = response["choices"][0]["text"]
-    print("response text is {}".format(text))
+    print_prompt_response(prompt, response)
