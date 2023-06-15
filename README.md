@@ -95,14 +95,66 @@ There are two files
 Obtain_dataset.ipynb - read the first file and create the second file with embeddings
 Visualizing_embeddings_in_2D.ipynb - visualize embeddings using tSNE
 Visualizing_embeddings_with_Atlas.ipynb - requires Nomic login https://atlas.nomic.ai/
+Clustering.ipynb - kMeans clustering and tSNE
+Visualizing_embeddings_in_W&B.ipynb - requires Weights and Biases
+Zero-shot_classification_with_embeddings.ipynb - uses cosine distance of embeddings
 
 Classification_using_embeddings.ipynb
-Clustering.ipynb
 Regression_using_embeddings.ipynb
 Semantic_text_search_using_embeddings.ipynb
-Visualizing_embeddings_in_W&B.ipynb
-Zero-shot_classification_with_embeddings.ipynb
 
+
+## Jupyterlab in a different virtual environment
+
+https://samedwardes.com/2022/10/23/best-jupyter-lab-install/
+
+1. Install jupyterlab using pipx
+
+```
+pipx install jupyterlab --include-deps
+```
+
+2. Check pipx binary directories are added to PATH
+
+```
+pipx ensurepath
+```
+
+3. Check for the jupyterlab environment
+
+```
+pipx list --short
+```
+
+4. List available kernels
+
+```
+jupyter kernelspec list
+```
+
+5. Switch to the virtual environment
+
+```
+poetry shell
+```
+
+6. Install ipykernel in the environment
+
+```
+poetry add ipykernel
+```
+
+7. Register the kernel
+
+```
+python -m ipykernel install --user --display-name ${PWD} --name ${PWD##*/}
+```
+
+8. List available kernels. A new one is added
+
+```
+jupyter kernelspec list
+```
 
 ## Links
 
