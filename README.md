@@ -92,15 +92,16 @@ There are two files
 ./openai-cookbook/examples/data/fine_food_reviews_with_embeddings_1k.csv
 ```
 
+The following notebooks use the above two data files.
+
 Obtain_dataset.ipynb - read the first file and create the second file with embeddings
 Visualizing_embeddings_in_2D.ipynb - visualize embeddings using tSNE
 Visualizing_embeddings_with_Atlas.ipynb - requires Nomic login https://atlas.nomic.ai/
 Clustering.ipynb - kMeans clustering and tSNE
 Visualizing_embeddings_in_W&B.ipynb - requires Weights and Biases
-Zero-shot_classification_with_embeddings.ipynb - uses cosine distance of embeddings
-
-Classification_using_embeddings.ipynb
-Regression_using_embeddings.ipynb
+Zero-shot_classification_with_embeddings.ipynb - uses cosine distance of embeddings to classify positive/negative
+Classification_using_embeddings.ipynb - uses RandomForest classifier with embeddings to learn ratings
+Regression_using_embeddings.ipynb - uses RandomForest regressor to learn ratings
 Semantic_text_search_using_embeddings.ipynb
 
 
