@@ -191,10 +191,18 @@ https://www.youtube.com/@echohive/videos
 
 [1120]: https://huggingface.co/course/chapter6/5
 
-#### Github
+#### Github libraries
 
-https://github.com/hwchase17/langchain - 43k stars
+https://github.com/hwchase17/langchain - 61k stars
 
-https://github.com/nomic-ai/gpt4all - 44k stars
+https://github.com/nomic-ai/gpt4all - 52k stars
 
-https://github.com/microsoft/guidance - 8k stars
+https://github.com/microsoft/guidance - 13k stars
+
+https://github.com/stanfordnlp/dspy - 2.4k stars
+
+https://github.com/jerryjliu/llama_index - 21k stars
+
+#### Comparison of libraries
+
+https://medium.com/badal-io/exploring-langchain-and-llamaindex-to-achieve-standardization-and-interoperability-in-large-2b5f3fabc360
