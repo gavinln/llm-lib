@@ -1,6 +1,6 @@
 # LangChain example
 
-https://github.com/hwchase17/langchain
+https://github.com/langchain-ai/langchain
 
 Building applications with Large Language Models (LLMs)
 
@@ -105,6 +105,26 @@ Regression_using_embeddings.ipynb - uses RandomForest regressor to learn ratings
 Semantic_text_search_using_embeddings.ipynb
 
 
+## Ollama
+
+[Ollama][100] is used to run large language models locally.
+
+[100]: https://github.com/ollama/ollama
+
+Install Ollama using the command
+
+```
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+## Llama index
+
+https://github.com/run-llama/llama_index
+
+## Semantic kernel
+
+https://github.com/microsoft/semantic-kernel
+
 ## Jupyterlab in a different virtual environment
 
 https://samedwardes.com/2022/10/23/best-jupyter-lab-install/
@@ -176,6 +196,8 @@ https://www.pinecone.io/learn/langchain-intro/
 https://www.youtube.com/@DataIndependent/videos
 
 https://www.youtube.com/@echohive/videos
+
+https://www.youtube.com/watch?v=aywZrzNaKjs
 
 ### Other
 
