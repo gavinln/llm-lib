@@ -1,10 +1,6 @@
-# LangChain example
+# Libraries for large language models: llm-lib
 
-https://github.com/langchain-ai/langchain
-
-Building applications with Large Language Models (LLMs)
-
-## ChatGPT uses
+## ChatGPT interactive use
 
 Login at the following address
 
@@ -20,52 +16,9 @@ https://platform.openai.com/docs/introduction/overview
 * Data extraction
 * Translation
 
-### Quickstart
-
-Example prompt: Write a tagline for an ice cream shop
-Completion: We serve up smiles with every scoop
-
-Clone the project
-
-```
-git clone https://github.com/openai/openai-quickstart-python.git
-```
-
 ## Run openapi-quickstart-python
 
-1. Create a virtual environment
-
-```
-python3 -m venv venv
-```
-
-2. Activate the virtual environment
-
-```
-source venv/bin/activate
-```
-
-3. Install Python libraries
-
-```
-pip install -r requirements.txt
-```
-
-4. Run the Flask application
-
-```
-flask run
-```
-
-## Run openai-cookbook
-
-1. Clone the project
-
-```
-git clone https://github.com/openai/openai-cookbook
-```
-
-2. Change to the project root
+See ./openai-quickstart-python/README.md
 
 ## Run openai-examples
 
@@ -81,6 +34,16 @@ source ./do_not_checkin/openai_key.sh
 make open-ai-example
 ```
 
+## Run openai-cookbook
+
+1. Clone the project
+
+```
+git clone https://github.com/openai/openai-cookbook
+```
+
+2. Change to the project root
+
 ### Datasets
 
 #### Fine food reviews
@@ -94,16 +57,15 @@ There are two files
 
 The following notebooks use the above two data files.
 
-Obtain_dataset.ipynb - read the first file and create the second file with embeddings
-Visualizing_embeddings_in_2D.ipynb - visualize embeddings using tSNE
-Visualizing_embeddings_with_Atlas.ipynb - requires Nomic login https://atlas.nomic.ai/
-Clustering.ipynb - kMeans clustering and tSNE
-Visualizing_embeddings_in_W&B.ipynb - requires Weights and Biases
-Zero-shot_classification_with_embeddings.ipynb - uses cosine distance of embeddings to classify positive/negative
-Classification_using_embeddings.ipynb - uses RandomForest classifier with embeddings to learn ratings
-Regression_using_embeddings.ipynb - uses RandomForest regressor to learn ratings
-Semantic_text_search_using_embeddings.ipynb
-
+* Obtain_dataset.ipynb - read the first file and create the second file with embeddings
+* Visualizing_embeddings_in_2D.ipynb - visualize embeddings using tSNE
+* Visualizing_embeddings_with_Atlas.ipynb - requires Nomic login https://atlas.nomic.ai/
+* Clustering.ipynb - kMeans clustering and tSNE
+* Visualizing_embeddings_in_W&B.ipynb - requires Weights and Biases
+* Zero-shot_classification_with_embeddings.ipynb - uses cosine distance of embeddings to classify positive/negative
+* Classification_using_embeddings.ipynb - uses RandomForest classifier with embeddings to learn ratings
+* Regression_using_embeddings.ipynb - uses RandomForest regressor to learn ratings
+* Semantic_text_search_using_embeddings.ipynb
 
 ## Ollama
 
@@ -186,6 +148,11 @@ jupyter kernelspec list
 Chat [GPT login][1010]
 
 [1010]: https://chat.openai.com/auth/login
+
+https://github.com/langchain-ai/langchain
+
+Building applications with Large Language Models (LLMs)
+
 
 ### Getting started with LLMs using LangChain
 
