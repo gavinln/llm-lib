@@ -28,8 +28,8 @@ def basic_example(system, user):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
-        ]
+            {"role": "user", "content": user},
+        ],
     )
     print_prompt_response(system, user, completion)
 
@@ -597,11 +597,11 @@ def function_from_specification(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
 
@@ -611,11 +611,11 @@ def improve_code_efficiency(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
 
@@ -625,11 +625,11 @@ def single_page_website_creator(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
 
@@ -639,11 +639,11 @@ def rap_battle_writer(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
 
@@ -653,11 +653,11 @@ def memo_writer(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
 
@@ -667,11 +667,11 @@ def emoji_chatbot(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
 
@@ -681,63 +681,67 @@ def translation(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
+
 
 def socratic_tutor(system, user):
     completion = OpenAI().chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
+
 
 def natural_language_to_sql(system, user):
     completion = OpenAI().chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
+
 
 def meeting_notes_summarizer(system, user):
     completion = OpenAI().chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
+
 
 def review_classifier(system, user):
     completion = OpenAI().chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
 
@@ -747,11 +751,11 @@ def pro_con_discusser(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)
 
@@ -761,10 +765,10 @@ def lesson_plan_writer(system, user):
         model="gpt-4",
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": user}
+            {"role": "user", "content": user},
         ],
         temperature=0.7,
         max_tokens=256,
-        top_p=1
+        top_p=1,
     )
     print_prompt_response(system, user, completion)

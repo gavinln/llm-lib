@@ -69,8 +69,7 @@ fire_map = {}
 
 
 def fmf(fn: Callable, *args):
-    """ fill fire map
-    """
+    """fill fire map"""
     fire_map[fn.__name__] = lambda: fn(*args)
 
 
