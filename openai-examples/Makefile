@@ -7,9 +7,9 @@ SHELL = /bin/bash
 help:  ## help for this Makefile
 	@grep -E '^[a-zA-Z0-9_\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: open-ai-example
-open-ai-example:  ## run open-ai-example
-	poetry run python open-ai-example.py
+.PHONY: openai-example
+openai-example:  ## run openai-example
+	poetry run python openai-example.py
 
 .PHONY: jupyter
 jupyter: ## start jupyter lab

@@ -3,6 +3,11 @@ https://platform.openai.com/docs/libraries/python-bindings
 https://platform.openai.com/examples
 """
 
+from typing import Callable
+
+import fire
+
+
 from example_lib import basic_example
 from example_lib import question_answer
 from example_lib import correct_grammar
@@ -48,6 +53,26 @@ from example_lib import interview_questions
 from example_lib import function_from_specification
 from example_lib import improve_code_efficiency
 from example_lib import single_page_website_creator
+from example_lib import rap_battle_writer
+from example_lib import memo_writer
+from example_lib import emoji_chatbot
+from example_lib import translation
+from example_lib import socratic_tutor
+from example_lib import natural_language_to_sql
+from example_lib import meeting_notes_summarizer
+from example_lib import review_classifier
+from example_lib import pro_con_discusser
+from example_lib import lesson_plan_writer
+
+
+fire_map = {}
+
+
+def fmf(fn: Callable, *args):
+    """ fill fire map
+    """
+    fire_map[fn.__name__] = lambda: fn(*args)
+
 
 # basic example
 prompt = "Say this is a test"
@@ -59,7 +84,7 @@ system = (
 
 user = "Compose a poem that explains the concept of " + "recursion in programming."
 
-## basic_example(system, user)
+fmf(basic_example, system, user)
 
 # question_answer
 prompt = """
@@ -92,11 +117,11 @@ A:
 
 """
 
-## question_answer(prompt)
+fmf(question_answer, prompt)
 
 prompt = "Correct this to standard English: She no went to the market."
 
-## correct_grammar(prompt)
+fmf(correct_grammar, prompt)
 
 prompt = """
 Summarize this for a second-grade student:
@@ -113,14 +138,14 @@ in the night sky after the Moon and Venus."
 
 """
 
-## summarize_second_grader(prompt)
+fmf(summarize_second_grader, prompt)
 
 prompt = """
 Translate this into 1. French, 2. Spanish:
 What rooms do you have available?
 """
 
-## translate_english(prompt)
+fmf(translate_english, prompt)
 
 prompt = """
 # Postgres SQL tables, with their properties:
@@ -133,7 +158,7 @@ prompt = """
 SELECT
 """
 
-## sql_translate(prompt)
+fmf(sql_translate, prompt)
 
 prompt = """
 A table summarizing the fruits from Goocrux:
@@ -150,7 +175,7 @@ acidic and caustic, and a pale orange tinge to them.
 | Fruit | Color | Flavor |
 """
 
-## parse_unstructured_data(prompt)
+fmf(parse_unstructured_data, prompt)
 
 prompt = """
 The following is a list of companies and the categories they fall into:
@@ -160,7 +185,7 @@ Apple
 Category:
 """
 
-## classification(prompt)
+fmf(classification, prompt)
 
 prompt = """
 # Python 3
@@ -175,7 +200,7 @@ def remove_common_prefix(x, prefix, ws_prefix):
 #
 """
 
-## python_to_natural_language(prompt)
+fmf(python_to_natural_language, prompt)
 
 prompt = """
 def foo(n, k):
@@ -188,7 +213,7 @@ def foo(n, k):
 The time complexity of this function is"
 """
 
-## time_complexity_of_code(prompt)
+fmf(time_complexity_of_code, prompt)
 
 prompt = """
 ##### Translate this function  from Python into Haskell
@@ -200,7 +225,7 @@ def predict_proba(X: Iterable[str]):
 ### Haskell
 """
 
-## translate_programming_languages(prompt)
+fmf(translate_programming_languages, prompt)
 
 prompt = """
 "Classify the sentiment in these tweets:
@@ -214,7 +239,7 @@ prompt = """
 Tweet sentiment ratings:"
 """
 
-## sentiment_classifier(prompt)
+fmf(sentiment_classifier, prompt)
 
 prompt = """
 "class Log:
@@ -251,7 +276,7 @@ Here's what the above class is doing, explained in a concise way:
 1."
 """
 
-## explain_code(prompt)
+fmf(explain_code, prompt)
 
 prompt = """
 Extract keywords from this text:
@@ -259,7 +284,7 @@ Extract keywords from this text:
 Black-on-black ware is a 20th- and 21st-century pottery tradition developed by the Puebloan Native American ceramic artists in Northern New Mexico. Traditional reduction-fired blackware has been made for centuries by pueblo artists. Black-on-black ware of the past century is produced with a smooth surface, with the designs applied through selective burnishing or the application of refractory slip. Another style involves carving or incising designs and selectively polishing the raised areas. For generations several families from Kha'po Owingeh and P'ohwhóge Owingeh pueblos have been making black-on-black ware with the techniques passed down from matriarch potters. Artists from other pueblos have also produced black-on-black ware. Several contemporary artists have created works honoring the pottery of their ancestors.
 """
 
-## extract_keywords(prompt)
+fmf(extract_keywords, prompt)
 
 prompt = """
 Q: Who is Batman?
@@ -299,7 +324,7 @@ Q: What's a language model?
 A:
 """
 
-## factual_answering(prompt)
+fmf(factual_answering, prompt)
 
 prompt = """
 Write a creative ad for the following product to run on Facebook aimed at parents:
@@ -307,7 +332,7 @@ Write a creative ad for the following product to run on Facebook aimed at parent
 Product: Learning Room is a virtual environment to help students from kindergarten to high school excel in school.
 """
 
-## product_description_to_ad(prompt)
+fmf(product_description_to_ad, prompt)
 
 prompt = """
 Product description: A home milkshake maker
@@ -318,7 +343,7 @@ Product description: A pair of shoes that can fit any foot size.
 Seed words: adaptable, fit, omni-fit.
 """
 
-## product_name_generator(prompt)
+fmf(product_name_generator, prompt)
 
 prompt = """
 A neutron star is the collapsed core of a massive supergiant star, which had a total mass of between 10 and 25 solar masses, possibly more if the star was especially metal-rich.[1] Neutron stars are the smallest and densest stellar objects, excluding black holes and hypothetical white holes, quark stars, and strange stars.[2] Neutron stars have a radius on the order of 10 kilometres (6.2 mi) and a mass of about 1.4 solar masses.[3] They result from the supernova explosion of a massive star, combined with gravitational collapse, that compresses the core past white dwarf star density to that of atomic nuclei.
@@ -326,7 +351,7 @@ A neutron star is the collapsed core of a massive supergiant star, which had a t
 Tl;dr
 """
 
-## summarization(prompt)
+fmf(summarization, prompt)
 
 prompt = """
 ##### Fix bugs in the below function
@@ -346,7 +371,7 @@ for i in range(10):
 ### Fixed Python"
 """
 
-## python_bug_fixer(prompt)
+fmf(python_bug_fixer, prompt)
 
 prompt = """
 A two-column spreadsheet of top science fiction movies and the year of release:
@@ -354,7 +379,7 @@ A two-column spreadsheet of top science fiction movies and the year of release:
 Title |  Year of release
 """
 
-## spreadsheet_creator(prompt)
+fmf(spreadsheet_creator, prompt)
 
 prompt = """
 ML Tutor: I am a ML/AI language model tutor
@@ -363,13 +388,13 @@ ML Tutor: A language model is a statistical model that describes the probability
 You: What is a statistical model?
 """
 
-## ai_language_model_tutor(prompt)
+fmf(ai_language_model_tutor, prompt)
 
 prompt = """
 "List 10 science fiction books:"
 """
 
-## book_list_maker(prompt)
+fmf(book_list_maker, prompt)
 
 prompt = """
 Decide whether a Tweet's sentiment is positive, neutral, or negative.
@@ -378,7 +403,7 @@ Tweet: \"I loved the new Batman movie!\"
 Sentiment:
 """
 
-## tweet_classifier(prompt)
+fmf(tweet_classifier, prompt)
 
 prompt = """
 "Extract the airport codes from this text:
@@ -390,14 +415,14 @@ Text: \"I want to fly from Orlando to Boston\"
 Airport codes:"
 """
 
-## airport_code_extractor(prompt)
+fmf(airport_code_extractor, prompt)
 
 prompt = """
 Create a SQL request to find all users who live in California and have over
 1000 credits:
 """
 
-## sql_creator(prompt)
+fmf(sql_creator, prompt)
 
 prompt = """
 "Extract the name and mailing address from this email:
@@ -415,7 +440,7 @@ Maya
 Name:"
 """
 
-## extract_contact_info(prompt)
+fmf(extract_contact_info, prompt)
 
 prompt = """
 You: What have you been up to?
@@ -424,7 +449,7 @@ You: Did you watch anything interesting?
 Friend:
 """
 
-## emulate_chat(prompt)
+fmf(emulate_chat, prompt)
 
 prompt = """
 The CSS code for a color like a blue sky at dusk:
@@ -432,7 +457,7 @@ The CSS code for a color like a blue sky at dusk:
 background-color: #
 """
 
-## mood_to_color(prompt)
+fmf(mood_to_color, prompt)
 
 prompt = """
 # Python 3.7
@@ -449,7 +474,7 @@ randomly_split_dataset('finetune_data/', 'dataset.jsonl')
 \"\"\"
 """
 
-## write_python_docstring(prompt)
+fmf(write_python_docstring, prompt)
 
 prompt = """
 "Create an analogy for this phrase:
@@ -457,7 +482,7 @@ prompt = """
 Questions are arrows in that:"
 """
 
-## analogy_maker(prompt)
+fmf(analogy_maker, prompt)
 
 prompt = """
 "Topic: Breakfast
@@ -467,7 +492,7 @@ Topic: Wind
 Two-Sentence Horror Story:"
 """
 
-## micro_horrow_story_creator(prompt)
+fmf(micro_horrow_story_creator, prompt)
 
 prompt = """
 "Convert this from first-person to third person (gender female):
@@ -475,7 +500,7 @@ prompt = """
 I decided to make a movie about Ada Lovelace."
 """
 
-## third_person_converter(prompt)
+fmf(third_person_converter, prompt)
 
 prompt = """
 "Convert my short hand into a first-hand account of the meeting:
@@ -487,19 +512,19 @@ Jane: Happy to help
 Parkman: Beta testing almost done"
 """
 
-## notes_to_summary(prompt)
+fmf(notes_to_summary, prompt)
 
 prompt = """
 "Brainstorm some ideas combining VR and fitness:"
 """
 
-## vr_fitness_idea_generator(prompt)
+fmf(vr_fitness_idea_generator, prompt)
 
 prompt = """
 Create an outline for an essay about Nikola Tesla and his contributions to technology:
 """
 
-## essay_outline(prompt)
+fmf(essay_outline, prompt)
 
 prompt = """
 "Write a recipe based on these ingredients and instructions:
@@ -516,7 +541,7 @@ Sour cream
 Instructions:"
 """
 
-## recipe_creator(prompt)
+fmf(recipe_creator, prompt)
 
 prompt = """
 "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
@@ -527,7 +552,7 @@ Human: I'd like to cancel my subscription.
 AI:"
 """
 
-## open_ended_chat(prompt)
+fmf(open_ended_chat, prompt)
 
 prompt = """
 "Marv is a chatbot that reluctantly answers questions with sarcastic responses:
@@ -544,7 +569,7 @@ You: What time is it?
 Marv:"
 """
 
-## sarcastic_chatbot(prompt)
+fmf(sarcastic_chatbot, prompt)
 
 prompt = """
 "Create a numbered list of turn-by-turn directions from this text:
@@ -552,7 +577,7 @@ prompt = """
 Go south on 95 until you hit Sunrise boulevard then take it east to us 1 and head south. Tom Jenkins bbq will be on the left after several miles."
 """
 
-## turn_by_turn_directions(prompt)
+fmf(turn_by_turn_directions, prompt)
 
 prompt = """
 Write a restaurant review based on these notes:
@@ -563,25 +588,25 @@ Lobster great, noisy, service polite, prices good.
 Review:
 """
 
-## restaurant_review_creator(prompt)
+fmf(restaurant_review_creator, prompt)
 
 prompt = """
 What are 5 key points I should know when studying Ancient Rome?
 """
 
-## study_notes(prompt)
+fmf(study_notes, prompt)
 
 prompt = """
 Create a list of 8 questions for my interview with a science fiction author:
 """
 
-## interview_questions(prompt)
+fmf(interview_questions, prompt)
 
 system = ""
 
 user = """Write a Python function that takes as input a file path to an image, loads the image into memory as a numpy array, then crops the rows and columns around the perimeter if they are darker than a threshold value. Use the mean value of rows and columns to decide if they should be marked for deletion."""
 
-## function_from_specification(system, user)
+fmf(function_from_specification, system, user)
 
 system = """
 You will be provided with a piece of Python code, and your task is to provide ideas for efficiency improvements.
@@ -603,7 +628,7 @@ def has_sum_k(nums: List[int], k: int) -> bool:
     return False
 '''
 
-## improve_code_efficiency(system, user)
+fmf(improve_code_efficiency, system, user)
 
 system = ""
 
@@ -611,37 +636,222 @@ user = """
 Make a single page website that shows off different neat javascript features for drop-downs and things to display information. The website should be an HTML file with embedded javascript and CSS.
 """
 
-single_page_website_creator(system, user)
+fmf(single_page_website_creator, system, user)
 
+system = ""
 
+user = "Write a rap battle between Alan Turing and Claude Shannon."
+
+fmf(rap_battle_writer, system, user)
+
+system = ""
+
+user = """
+Draft a company memo to be distributed to all employees. The memo should cover the following specific points without deviating from the topics mentioned and not writing any fact which is not present here:
+    
+    Introduction: Remind employees about the upcoming quarterly review scheduled for the last week of April.
+    
+    Performance Metrics: Clearly state the three key performance indicators (KPIs) that will be assessed during the review: sales targets, customer satisfaction (measured by net promoter score), and process efficiency (measured by average project completion time).
+    
+    Project Updates: Provide a brief update on the status of the three ongoing company projects:
+    
+    a. Project Alpha: 75% complete, expected completion by May 30th.
+    b. Project Beta: 50% complete, expected completion by June 15th.
+    c. Project Gamma: 30% complete, expected completion by July 31st.
+    
+    Team Recognition: Announce that the Sales Team was the top-performing team of the past quarter and congratulate them for achieving 120% of their target.
+    
+    Training Opportunities: Inform employees about the upcoming training workshops that will be held in May, including "Advanced Customer Service" on May 10th and "Project Management Essentials" on May 25th.
 """
-Rap battle writer
-Generate a rap battle between two characters.
 
-Memo writer
-Generate a company memo based on provided points.
+fmf(memo_writer, system, user)
 
-Emoji chatbot
-Generate conversational replies using emojis only.
+system = "You will be provided with a message, and your task is to respond using emojis only."
 
-Translation
-Translate natural language text.
+user = "How are you?"
 
-Socratic tutor
-Generate responses as a Socratic tutor.
+fmf(emoji_chatbot, system, user)
 
-Natural language to SQL
-Convert natural language into SQL queries.
 
-Meeting notes summarizer
-Summarize meeting notes including overall discussion, action items, and future topics.
-
-Review classifier
-Classify user reviews based on a set of tags.
-
-Pro and con discusser
-Analyze the pros and cons of a given topic.
-
-Lesson plan writer
-Generate a lesson plan for a specific topic.
+system = """
+You will be provided with a sentence in English, and your task is to translate it into French.
 """
+
+user = """
+My name is Jane. What is yours?
+"""
+
+fmf(translation, system, user)
+
+system = """
+You are a Socratic tutor. Use the following principles in responding to students:
+    
+    - Ask thought-provoking, open-ended questions that challenge students' preconceptions and encourage them to engage in deeper reflection and critical thinking.
+    - Facilitate open and respectful dialogue among students, creating an environment where diverse viewpoints are valued and students feel comfortable sharing their ideas.
+    - Actively listen to students' responses, paying careful attention to their underlying thought processes and making a genuine effort to understand their perspectives.
+    - Guide students in their exploration of topics by encouraging them to discover answers independently, rather than providing direct answers, to enhance their reasoning and analytical skills.
+    - Promote critical thinking by encouraging students to question assumptions, evaluate evidence, and consider alternative viewpoints in order to arrive at well-reasoned conclusions.
+    - Demonstrate humility by acknowledging your own limitations and uncertainties, modeling a growth mindset and exemplifying the value of lifelong learning.
+"""
+
+user = """
+Help me to understand the future of artificial intelligence.
+"""
+
+fmf(socratic_tutor, system, user)
+
+system = """
+Given the following SQL tables, your job is to write queries given a user’s request.
+    
+    CREATE TABLE Orders (
+      OrderID int,
+      CustomerID int,
+      OrderDate datetime,
+      OrderTime varchar(8),
+      PRIMARY KEY (OrderID)
+    );
+    
+    CREATE TABLE OrderDetails (
+      OrderDetailID int,
+      OrderID int,
+      ProductID int,
+      Quantity int,
+      PRIMARY KEY (OrderDetailID)
+    );
+    
+    CREATE TABLE Products (
+      ProductID int,
+      ProductName varchar(50),
+      Category varchar(50),
+      UnitPrice decimal(10, 2),
+      Stock int,
+      PRIMARY KEY (ProductID)
+    );
+    
+    CREATE TABLE Customers (
+      CustomerID int,
+      FirstName varchar(50),
+      LastName varchar(50),
+      Email varchar(100),
+      Phone varchar(20),
+      PRIMARY KEY (CustomerID)
+    );
+"""
+
+user = """
+Write a SQL query which computes the average total order value for all orders on 2023-04-01.
+"""
+
+fmf(natural_language_to_sql, system, user)
+
+
+system = """
+You will be provided with meeting notes, and your task is to summarize the meeting as follows:
+    
+    -Overall summary of discussion
+    -Action items (what needs to be done and who is doing it)
+    -If applicable, a list of topics that need to be discussed more fully in the next meeting.
+"""
+
+user = """
+Meeting Date: March 5th, 2050
+    Meeting Time: 2:00 PM
+    Location: Conference Room 3B, Intergalactic Headquarters
+    
+    Attendees:
+    - Captain Stardust
+    - Dr. Quasar
+    - Lady Nebula
+    - Sir Supernova
+    - Ms. Comet
+    
+    Meeting called to order by Captain Stardust at 2:05 PM
+    
+    1. Introductions and welcome to our newest team member, Ms. Comet
+    
+    2. Discussion of our recent mission to Planet Zog
+    - Captain Stardust: "Overall, a success, but communication with the Zogians was difficult. We need to improve our language skills."
+    - Dr. Quasar: "Agreed. I'll start working on a Zogian-English dictionary right away."
+    - Lady Nebula: "The Zogian food was out of this world, literally! We should consider having a Zogian food night on the ship."
+    
+    3. Addressing the space pirate issue in Sector 7
+    - Sir Supernova: "We need a better strategy for dealing with these pirates. They've already plundered three cargo ships this month."
+    - Captain Stardust: "I'll speak with Admiral Starbeam about increasing patrols in that area.
+    - Dr. Quasar: "I've been working on a new cloaking technology that could help our ships avoid detection by the pirates. I'll need a few more weeks to finalize the prototype."
+    
+    4. Review of the annual Intergalactic Bake-Off
+    - Lady Nebula: "I'm happy to report that our team placed second in the competition! Our Martian Mud Pie was a big hit!"
+    - Ms. Comet: "Let's aim for first place next year. I have a secret recipe for Jupiter Jello that I think could be a winner."
+    
+    5. Planning for the upcoming charity fundraiser
+    - Captain Stardust: "We need some creative ideas for our booth at the Intergalactic Charity Bazaar."
+    - Sir Supernova: "How about a 'Dunk the Alien' game? We can have people throw water balloons at a volunteer dressed as an alien."
+    - Dr. Quasar: "I can set up a 'Name That Star' trivia game with prizes for the winners."
+    - Lady Nebula: "Great ideas, everyone. Let's start gathering the supplies and preparing the games."
+    
+    6. Upcoming team-building retreat
+    - Ms. Comet: "I would like to propose a team-building retreat to the Moon Resort and Spa. It's a great opportunity to bond and relax after our recent missions."
+    - Captain Stardust: "Sounds like a fantastic idea. I'll check the budget and see if we can make it happen."
+    
+    7. Next meeting agenda items
+    - Update on the Zogian-English dictionary (Dr. Quasar)
+    - Progress report on the cloaking technology (Dr. Quasar)
+    - Results of increased patrols in Sector 7 (Captain Stardust)
+    - Final preparations for the Intergalactic Charity Bazaar (All)
+    
+    Meeting adjourned at 3:15 PM. Next meeting scheduled for March 19th, 2050 at 2:00 PM in Conference Room 3B, Intergalactic Headquarters.
+"""
+
+fmf(meeting_notes_summarizer, system, user)
+
+system = """
+You will be presented with user reviews and your job is to provide a set of tags from the following list. Provide your answer in bullet point form. Choose ONLY from the list of tags provided here (choose either the positive or the negative tag but NOT both):
+    - Provides good value for the price OR Costs too much
+    - Works better than expected OR Did not work as well as expected
+    - Includes essential features OR Lacks essential features
+    - Easy to use OR Difficult to use
+    - High quality and durability OR Poor quality and durability
+    - Easy and affordable to maintain or repair OR Difficult or costly to maintain or repair
+    - Easy to transport OR Difficult to transport
+    - Easy to store OR Difficult to store
+    - Compatible with other devices or systems OR Not compatible with other devices or systems
+    - Safe and user-friendly OR Unsafe or hazardous to use
+    - Excellent customer support OR Poor customer support
+    - Generous and comprehensive warranty OR Limited or insufficient warranty
+"""
+
+user = """
+I recently purchased the Inflatotron 2000 airbed for a camping trip and wanted to share my experience with others. Overall, I found the airbed to be a mixed bag with some positives and negatives.
+    
+    Starting with the positives, the Inflatotron 2000 is incredibly easy to set up and inflate. It comes with a built-in electric pump that quickly inflates the bed within a few minutes, which is a huge plus for anyone who wants to avoid the hassle of manually pumping up their airbed. The bed is also quite comfortable to sleep on and offers decent support for your back, which is a major plus if you have any issues with back pain.
+    
+    On the other hand, I did experience some negatives with the Inflatotron 2000. Firstly, I found that the airbed is not very durable and punctures easily. During my camping trip, the bed got punctured by a stray twig that had fallen on it, which was quite frustrating. Secondly, I noticed that the airbed tends to lose air overnight, which meant that I had to constantly re-inflate it every morning. This was a bit annoying as it disrupted my sleep and made me feel less rested in the morning.
+    
+    Another negative point is that the Inflatotron 2000 is quite heavy and bulky, which makes it difficult to transport and store. If you're planning on using this airbed for camping or other outdoor activities, you'll need to have a large enough vehicle to transport it and a decent amount of storage space to store it when not in use.
+"""
+
+fmf(review_classifier, system, user)
+
+system = ""
+
+user = """
+Analyze the pros and cons of remote work vs. office work
+"""
+
+fmf(pro_con_discusser, system, user)
+
+system = ""
+
+user = """
+Write a lesson plan for an introductory algebra class. The lesson plan should cover the distributive law, in particular how it works in simple cases involving mixes of positive and negative numbers. Come up with some examples that show common student errors.
+"""
+
+fmf(lesson_plan_writer, system, user)
+
+
+def main():
+    fire.Fire(fire_map)
+
+
+if __name__ == "__main__":
+    main()
