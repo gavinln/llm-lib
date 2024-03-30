@@ -10,7 +10,3 @@ help:  ## help for this Makefile
 .PHONY: openai-prompts
 openai-prompts:  ## run openai-prompts
 	poetry run python openai-prompts.py
-
-.PHONY: jupyter
-jupyter: ## start jupyter lab
-	poetry run jupyter lab --ip=127.0.0.1 --no-browser --notebook-dir=$(SCRIPT_DIR)
