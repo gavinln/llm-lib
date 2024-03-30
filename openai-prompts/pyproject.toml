@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "openai-prompts"
+version = "0.1.0"
+description = ""
+authors = ["Gavin Noronha <gavinln@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+openai = "^1.14.3"
+python-dotenv = "^1.0.1"
+jupyterlab = "^4.1.5"
+fire = "^0.6.0"
+ipython = "^8.22.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
