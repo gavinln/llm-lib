@@ -118,10 +118,6 @@ def crawl(url):
     if not os.path.exists("text/" + local_domain + "/"):
         os.mkdir("text/" + local_domain + "/")
 
-    # Create a directory to store the csv files
-    # if not os.path.exists("processed"):
-    #     os.mkdir("processed")
-
     # While the queue is not empty, continue crawling
     while queue:
         # Get the next URL from the queue

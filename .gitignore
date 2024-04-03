@@ -164,3 +164,7 @@ do_not_checkin/
 cookbook-copy/data/fine_food_reviews_with_embeddings_1k.csv
 
 openai-quickstart-python/openai-quickstart-python/
+
+# data directories
+processed/
+text/
