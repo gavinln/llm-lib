@@ -1,15 +1,13 @@
 import logging
 import os
 import pathlib
+from contextlib import contextmanager
 from typing import Any
 
 import numpy as np
 import openai
 import pandas as pd
 from scipy.spatial.distance import cosine
-
-
-from contextlib import contextmanager
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 
@@ -73,7 +71,8 @@ def answer_question(
     stop_sequence=None,
 ):
     """
-    Answer a question based on the most similar context from the dataframe texts
+    Answer a question based on the most similar context from the
+    dataframe texts
     """
     context = create_context(
         question,
@@ -143,15 +142,15 @@ def main():
         print("Example questions and answers")
         question = "What day is it?"
         answer = answer_question(df, question, debug=False)
-        print(question + '\n' + answer)
+        print(question + "\n" + answer)
 
         question = "What is our newest embeddings model?"
         answer = answer_question(df, question)
-        print(question + '\n' + answer)
+        print(question + "\n" + answer)
 
         question = "What is ChatGPT?"
         answer = answer_question(df, question)
-        print(question + '\n' + answer)
+        print(question + "\n" + answer)
 
         while True:
             user_input = input("Ask a question (type ENTER to quit): ")
