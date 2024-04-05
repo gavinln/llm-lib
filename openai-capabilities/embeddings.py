@@ -2,12 +2,20 @@ import logging
 import pathlib
 from ast import literal_eval
 from contextlib import contextmanager
+from typing import Any
 
 import fire
+import matplotlib
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from openai import OpenAI
 from scipy.spatial.distance import cosine
+from sklearn.dummy import DummyRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.manifold import TSNE
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.model_selection import train_test_split
 from tqdm.auto import tqdm
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
@@ -42,6 +50,10 @@ def get_ag_news_file():
     return SCRIPT_DIR / "data" / "AG_news_samples.csv"
 
 
+def get_ag_news_embedding_file():
+    return SCRIPT_DIR / "output" / "AG_news_samples_embedding.csv"
+
+
 def get_ag_news_dataset():
     df = pd.read_csv(get_ag_news_file())
     return df
@@ -49,6 +61,12 @@ def get_ag_news_dataset():
 
 def get_food_reviews_embedding_dataset():
     df = pd.read_csv(get_food_reviews_embedding_file())
+    df["embedding"] = df.embedding.apply(literal_eval).apply(np.array)
+    return df
+
+
+def get_ag_news_embedding_dataset():
+    df = pd.read_csv(get_ag_news_embedding_file())
     df["embedding"] = df.embedding.apply(literal_eval).apply(np.array)
     return df
 
@@ -70,7 +88,7 @@ def get_text_embeddings(text, model="text-embedding-3-small"):
     )
 
 
-def save_food_reviews_embedding():
+def save_food_reviews_embeddings():
     "get and save the food reviews embeddings"
     df = get_food_reviews_dataset()
     with temp_log_level(logging.WARNING):
@@ -78,6 +96,20 @@ def save_food_reviews_embedding():
             lambda x: get_text_embeddings(x)
         )
         output_file = get_food_reviews_embedding_file()
+        output_dir = output_file.parent
+        if not output_dir.exists():
+            output_dir.mkdir()
+        df.to_csv(output_file, index=False)
+
+
+def save_ag_news_embeddings():
+    "get and save the ag news embeddings"
+    df = get_ag_news_dataset()
+    with temp_log_level(logging.WARNING):
+        df["embedding"] = df.description.progress_apply(
+            lambda x: get_text_embeddings(x)
+        )
+        output_file = get_ag_news_embedding_file()
         output_dir = output_file.parent
         if not output_dir.exists():
             output_dir.mkdir()
@@ -198,14 +230,14 @@ def answer_question_using_context():
     print(completion.choices[0].message.content)
 
 
-def search_reviews(df, product_description, n=3):
+def search_reviews_text(df, product_description, n=3):
     product_embedding = get_text_embeddings(product_description)
     df["similarity"] = df.embedding.apply(
-        lambda x: 1 - cosine(x, product_embedding)
+        lambda x: cosine(x, product_embedding)
     )
 
     results = (
-        df.sort_values("similarity", ascending=False)
+        df.sort_values("similarity", ascending=True)
         .head(n)
         .combined.str.replace("Title: ", "")
         .str.replace("; Content:", ": ")
@@ -213,40 +245,139 @@ def search_reviews(df, product_description, n=3):
     return results
 
 
-def text_search_using_embeddings():
+def search_reviews():
     "search reviews using embeddings"
     df = get_food_reviews_embedding_dataset()
 
     product_description = "delicious beans"
     print(f"searching for {product_description} {'-' * 10}")
-    results = search_reviews(df, product_description)
+    results = search_reviews_text(df, product_description)
     for r in results:
         print(r)
         print()
 
     product_description = "whole wheat pasta"
     print(f"searching for {product_description} {'-' * 10}")
-    results = search_reviews(df, product_description)
+    results = search_reviews_text(df, product_description)
     for r in results:
         print(r)
         print()
 
 
-def recommend_using_embeddings():
-    print("in function")
-    df = get_ag_news_dataset()
-    print(df.head())
+def recommendations_indices_from_strings(
+    strings: list[str],
+    embeddings: list[np.ndarray],
+    source_string_index: int,
+    k_nearest_neighbors: int = 1,
+) -> list[Any]:
+    "return nearest neighbor indices from smallest to largest"
+    print("Number of strings:", len(strings))
+    print("Number of embeddings:", len(embeddings))
+    print("source string index:", source_string_index)
+    print("Number of nearest neighbors:", k_nearest_neighbors)
+
+    query_embedding = embeddings[source_string_index]
+
+    distances = [
+        (idx, cosine(embedding, query_embedding))
+        for idx, embedding in enumerate(embeddings)
+    ]
+    sorted_distances = sorted(distances, key=lambda p: p[1])
+    return sorted_distances[: min(len(distances), k_nearest_neighbors)]
+
+
+def recommendation_news():
+    "recommend similar news articles"
+    df = get_ag_news_embedding_dataset()
+    source_string_idx = 0
+    print("Searching for {}".format(df.description[source_string_idx]))
+
+    recommendation_indices = recommendations_indices_from_strings(
+        df.description.tolist(), df.embedding.tolist(), 0, 5
+    )
+
+    indices = [r[0] for r in recommendation_indices]
+    print("\n".join(df.description[indices].tolist()))
+
+
+def visualization_reviews():
+    "visualize distribution of reviews"
+    df = get_food_reviews_embedding_dataset()
+
+    # only use rating 1, 2, 3
+    df_subset = df[df.Score.isin([1, 2, 3])]
+
+    embedding_matrix = np.array(df_subset.embedding.tolist())
+
+    tsne = TSNE(
+        n_components=2,
+        perplexity=15,
+        random_state=42,
+        init="random",
+        learning_rate=200.0,  # type: ignore
+    )
+    vis_dims = tsne.fit_transform(embedding_matrix)
+    x, y = zip(*vis_dims)
+
+    # colors = ["red", "darkorange", "gold", "turquoise", "darkgreen"]
+    colors = ["red", "gold", "darkgreen"]
+    color_indices = df_subset.Score.values - 1
+
+    colormap = matplotlib.colors.ListedColormap(colors)  # type: ignore
+
+    fig, ax = plt.subplots()
+    scatter = ax.scatter(x, y, c=color_indices, cmap=colormap, alpha=0.3)
+    handles, labels = scatter.legend_elements(prop="colors", alpha=0.6)
+    legend = ax.legend(handles, labels, loc="upper right", title="Sizes")
+    ax.add_artist(legend)
+
+    for score in [0, 1, 2]:
+        avg_x = np.array(x)[df_subset.Score - 1 == score].mean()
+        avg_y = np.array(y)[df_subset.Score - 1 == score].mean()
+        color = colors[score]
+        ax.scatter(avg_x, avg_y, marker="x", color=color, s=100)
+
+    fig.suptitle("Amazon ratings visualized in language using t-SNE")
+    plt.show()
+
+
+def regression_reviews():
+    "regression of reviews vs score"
+    df = get_food_reviews_embedding_dataset()
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        list(df.embedding.values), df.Score, test_size=0.2, random_state=42
+    )
+
+    rfr = RandomForestRegressor(n_estimators=100)
+    rfr.fit(X_train, y_train)
+    preds = rfr.predict(X_test)
+
+    mse = mean_squared_error(y_test, preds)
+    mae = mean_absolute_error(y_test, preds)
+    print(f"performance on 1k Amazon reviews: mse={mse:.2f}, mae={mae:.2f}")
+
+    dr = DummyRegressor(strategy="mean")
+    dr.fit(X_train, y_train)
+    preds = dr.predict(X_test)
+
+    mse_d = mean_squared_error(y_test, preds)
+    mae_d = mean_absolute_error(y_test, preds)
+    print(f"dummy performance: mse={mse_d:.2f}, mae={mae_d:.2f}")
 
 
 def main():
     logging.basicConfig(level=logging.INFO)
     fire.Fire(
         {
-            "save-food-reviews-embedding": save_food_reviews_embedding,
+            "save-food-reviews-embeddings": save_food_reviews_embeddings,
             "reduce-embeddings-dim": reduce_embeddings_dim,
             "answer-question-using-context": answer_question_using_context,
-            "text-search-using-embeddings": text_search_using_embeddings,
-            "recommend-using-embeddings": recommend_using_embeddings,
+            "search-reviews": search_reviews,
+            "save-ag-news-embeddings": save_ag_news_embeddings,
+            "recommendation_news": recommendation_news,
+            "visualization-reviews": visualization_reviews,
+            "regression-reviews": regression_reviews,
         }
     )
 
