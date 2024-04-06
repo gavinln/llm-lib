@@ -1,3 +1,6 @@
+"""
+https://platform.openai.com/docs/guides/embeddings
+"""
 import logging
 import pathlib
 from ast import literal_eval
@@ -11,10 +14,12 @@ import numpy as np
 import pandas as pd
 from openai import OpenAI
 from scipy.spatial.distance import cosine
+from sklearn.cluster import KMeans
 from sklearn.dummy import DummyRegressor
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.manifold import TSNE
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.metrics import (classification_report, mean_absolute_error,
+                             mean_squared_error)
 from sklearn.model_selection import train_test_split
 from tqdm.auto import tqdm
 
@@ -366,6 +371,138 @@ def regression_reviews():
     print(f"dummy performance: mse={mse_d:.2f}, mae={mae_d:.2f}")
 
 
+def classification_reviews():
+    "classification of reviews"
+    df = get_food_reviews_embedding_dataset()
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        list(df.embedding.values), df.Score, test_size=0.2, random_state=42
+    )
+
+    rfc = RandomForestClassifier(n_estimators=100)
+    rfc.fit(X_train, y_train)
+    preds = rfc.predict(X_test)
+
+    report = classification_report(y_test, preds)
+    print(report)
+
+
+def zero_shot_classification():
+    "classification of reviews into positive/negative"
+    df = get_food_reviews_embedding_dataset()
+    df_subset: Any = df[df.Score != 3].copy()
+    df_subset["sentiment"] = df.Score.replace(
+        {1: "negative", 2: "negative", 4: "positive", 5: "positive"}
+    )
+
+    labels = ["negative", "positive"]
+    label_embeddings = [get_text_embeddings(label) for label in labels]
+
+    def label_score(review_embedding, label_embeddings):
+        return cosine(review_embedding, label_embeddings[1]) - cosine(
+            review_embedding, label_embeddings[0]
+        )
+
+    cosine_diff = df_subset["embedding"].apply(
+        lambda x: label_score(x, label_embeddings)
+    )
+    preds = cosine_diff.apply(lambda x: "positive" if x < 0 else "negative")
+
+    report = classification_report(df_subset.sentiment, preds)
+    print(report)
+
+
+def user_product_embeddings():
+    "get similarity between user and product embeddings to predict score"
+    df = get_food_reviews_embedding_dataset()
+    X_train, X_test, y_train, y_test = train_test_split(
+        df, df.Score, test_size=0.2, random_state=42
+    )
+
+    user_group = X_train.groupby("UserId")  # type: ignore
+    user_embeddings_avg = user_group.embedding.apply(np.mean)
+
+    product_group = X_train.groupby("ProductId")  # type: ignore
+    prod_embeddings_avg = product_group.embedding.apply(np.mean)
+
+    def get_user_product_similarity(row):
+        "calculate the cosine similarity between user and product embeddings"
+        user_id = row.UserId
+        product_id = row.ProductId
+        try:
+            user_embedding = user_embeddings_avg[user_id]
+            product_embedding = prod_embeddings_avg[product_id]
+            similarity = cosine(user_embedding, product_embedding)
+            return similarity
+        except Exception:
+            return np.nan
+
+    X_test["cosine_similarity"] = X_test.apply(  # type: ignore
+        get_user_product_similarity, axis=1
+    )
+    X_test["percentile_cosine_similarity"] = X_test[  # type: ignore
+        "cosine_similarity"
+    ].rank(pct=True)
+
+    # calculate correlation between cosine similarity and scores
+    corr = X_test["percentile_cosine_similarity"].corr(  # type: ignore
+        X_test["Score"]  # type: ignore
+    )
+    print(f"Correlation between user & product similarity: {corr * 100:.2f}%")
+
+
+def generate_cluster_theme(reviews):
+    query = f'''
+        What do the following customer reviews have in common? Be concise.
+
+        Customer reviews:
+        """
+        {reviews}
+        """
+        Theme:
+    '''
+    completion = OpenAI().chat.completions.create(
+        messages=[
+            {
+                "role": "system",
+                "content": "Act as an editor good at writing summaries",
+            },
+            {"role": "user", "content": query},
+        ],
+        model="gpt-3.5-turbo",
+        temperature=0,
+    )
+    content: Any = completion.choices[0].message.content
+    return content.replace("\n", " ")
+
+
+def clustering_reviews():
+    "cluster reviews using embeddings and automatically label clusters"
+    df = get_food_reviews_embedding_dataset()
+    matrix = np.vstack(df.embedding.values)
+
+    n_clusters = 4
+    kmeans = KMeans(n_clusters=n_clusters, init="k-means++", random_state=42)
+    kmeans.fit(matrix)
+
+    labels = kmeans.labels_
+    df["Cluster"] = labels
+
+    reviews_per_cluster = 5
+
+    for i in range(n_clusters):
+        reviews = "\n".join(
+            df[df.Cluster == i]
+            .combined.str.replace("Title: ", "")
+            .str.replace("\n\nContent: ", ":  ")
+            .sample(reviews_per_cluster, random_state=42)
+            .values
+        )
+        print(f"Cluster {i} Theme:", end=" ")
+        cluster_theme = generate_cluster_theme(reviews)
+        print(cluster_theme)
+
+
 def main():
     logging.basicConfig(level=logging.INFO)
     fire.Fire(
@@ -378,6 +515,10 @@ def main():
             "recommendation_news": recommendation_news,
             "visualization-reviews": visualization_reviews,
             "regression-reviews": regression_reviews,
+            "classification-reviews": classification_reviews,
+            "zero-shot-classification": zero_shot_classification,
+            "user-product-embeddings": user_product_embeddings,
+            "clustering-reviews": clustering_reviews,
         }
     )
 
