@@ -168,3 +168,4 @@ openai-quickstart-python/openai-quickstart-python/
 # data directories
 processed/
 text/
+output/
