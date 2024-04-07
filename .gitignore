@@ -165,6 +165,8 @@ cookbook-copy/data/fine_food_reviews_with_embeddings_1k.csv
 
 openai-quickstart-python/openai-quickstart-python/
 
+poetry.lock
+
 # data directories
 processed/
 text/
