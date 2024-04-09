@@ -24,6 +24,9 @@ make count-tokens-remote
 
 https://platform.openai.com/docs/guides/function-calling
 
+```
+```
+
 ## Embeddings
 
 https://platform.openai.com/docs/guides/embeddings

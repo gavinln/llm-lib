@@ -70,3 +70,32 @@ count-tokens-local:  ## count tokens using the tiktoken library
 .PHONY: count-tokens-remote
 count-tokens-remote:  ## count tokens using an openai call
 	poetry run python text_generation.py count-tokens-remote
+
+
+.PHONY: basic-function-call
+basic-function-call:  ## basic function call
+	poetry run python tool_call.py basic-function-call
+
+.PHONY: ask-and-answer-place-question
+ask-and-answer-place-question:  ## ask and answer place question
+	poetry run python tool_call.py ask-and-answer-place-question
+
+.PHONY: ask-and-answer-day-question
+ask-and-answer-day-question:  ## ask and answer day question
+	poetry run python tool_call.py ask-and-answer-day-question
+
+.PHONY: ask-and-force-function-call
+ask-and-force-function-call:  ## ask and force function call
+	poetry run python tool_call.py ask-and-force-function-call
+
+.PHONY: ask-and-get-function-call
+ask-and-get-function-call:  ## ask and get function call
+	poetry run python tool_call.py ask-and-get-function-call
+
+.PHONY: ask-and-prevent-function-call
+ask-and-prevent-function-call:  ## ask and prevent function call
+	poetry run python tool_call.py ask-and-prevent-function-call
+
+.PHONY: parallel-function-call
+parallel-function-call:  ## parallel function call
+	poetry run python tool_call.py parallel-function-call
