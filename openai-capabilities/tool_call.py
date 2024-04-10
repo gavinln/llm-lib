@@ -10,8 +10,8 @@ from typing import Any, Optional
 
 import fire
 import openai
-# import tiktoken
 from openai.types.chat.chat_completion import ChatCompletion
+from openai.types.chat.chat_completion_message import ChatCompletionMessage
 from openai.types.chat.chat_completion_message_tool_call import \
     ChatCompletionMessageToolCall
 from tenacity import retry, stop_after_attempt, wait_random_exponential
@@ -140,9 +140,9 @@ def basic_function_call():
 )
 def chat_completion_request(
     messages, tools: Any = None, tool_choice: Any = None, model=GPT_MODEL
-):
+) -> Optional[ChatCompletion]:
     try:
-        response = openai.OpenAI().chat.completions.create(
+        response: ChatCompletion = openai.OpenAI().chat.completions.create(
             model=model,
             messages=messages,
             tools=tools,
@@ -152,6 +152,7 @@ def chat_completion_request(
     except Exception as e:
         print("Unable to generate ChatCompletion response")
         print(f"Exception: {e}")
+    return None
 
 
 def get_weather_tools():
@@ -382,7 +383,7 @@ def get_database_info(conn) -> list[dict[str, list[str]]]:
     return table_dicts
 
 
-def get_database_info_str():
+def get_database_info_str() -> str:
     conn = get_db_conn()
     table_dicts = get_database_info(conn)
     return "\n".join(
@@ -392,8 +393,120 @@ def get_database_info_str():
     )
 
 
+def get_db_tools():
+    database_schema_string: str = get_database_info_str()
+    tools = [
+        {
+            "type": "function",
+            "function": {
+                "name": "ask_database",
+                "description": (
+                    "Use this function to answer user questions about music."
+                    " Input should be a fully formed SQL query."
+                ),
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": f"""
+                    SQL query extracting info to answer the user's question.
+                    SQL should be written using this database schema:
+                    {database_schema_string}
+                    The query should be returned in plain text, not in JSON.
+                            """,
+                        }
+                    },
+                    "required": ["query"],
+                },
+            },
+        }
+    ]
+    return tools
+
+
 def print_database_info():
     print(get_database_info_str())
+    print(json.dumps(get_db_tools(), indent=2))
+
+
+def ask_database(conn, query):
+    "query SQLite database with a provided SQL query"
+    try:
+        results = str(conn.execute(query).fetchall())
+    except Exception as e:
+        results = f"query failed with error: {e}"
+    return results
+
+
+def execute_function_call(message):
+    function_name = message.tool_calls[0].function.name
+    if function_name == "ask_database":
+        query = json.loads(message.tool_calls[0].function.arguments)["query"]
+        conn = get_db_conn()
+        results = ask_database(conn, query)
+    else:
+        results = f"Error: function {function_name} does not exist"
+    return results
+
+
+def sql_query_function_call():
+    "answer user questions by generating sql queries"
+    tools = get_db_tools()
+    messages = Messages()
+    messages.add_system(
+        "Answer user questions by generating SQL queries"
+        " against the Chinook Music Database."
+    )
+    messages.add_user("Hi, who are the top 5 artists by number of tracks?")
+    chat_response = chat_completion_request(messages, tools)
+    if not chat_response:
+        return
+
+    assistant_message: ChatCompletionMessage = chat_response.choices[0].message
+    print(assistant_message)
+
+    if not assistant_message.tool_calls:
+        return
+
+    assistant_message.content = str(assistant_message.tool_calls[0].function)
+    messages.add(
+        {
+            "role": assistant_message.role,
+            "content": assistant_message.content,
+        }
+    )
+    result = execute_function_call(assistant_message)
+    print(result)
+
+    messages.clear()
+    messages.add_system(
+        "Answer user questions by generating SQL queries"
+        " against the Chinook Music Database."
+    )
+    messages.add_user("What is the name of the album with the most tracks?")
+
+    chat_response2 = chat_completion_request(messages, tools)
+    if not chat_response2:
+        return
+
+    assistant_message2: ChatCompletionMessage = chat_response2.choices[
+        0
+    ].message
+    print(assistant_message2)
+
+    if not assistant_message2.tool_calls:
+        return
+
+    assistant_message2.content = str(assistant_message2.tool_calls[0].function)
+    messages.add(
+        {
+            "role": assistant_message2.role,
+            "content": assistant_message2.content,
+        }
+    )
+    result2 = execute_function_call(assistant_message2)
+    print(result2)
 
 
 def main():
@@ -408,6 +521,7 @@ def main():
             "ask-and-prevent-function-call": ask_and_prevent_function_call,
             "parallel-function-call": parallel_function_call,
             "print-database-info": print_database_info,
+            "sql-query-function-call": sql_query_function_call,
         }
     )
 

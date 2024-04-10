@@ -99,3 +99,8 @@ ask-and-prevent-function-call:  ## ask and prevent function call
 .PHONY: parallel-function-call
 parallel-function-call:  ## parallel function call
 	poetry run python tool_call.py parallel-function-call
+
+
+.PHONY: sql-query-function-call
+sql-query-function-call:  ## answer user questions by generating sql queries
+	poetry run python tool_call.py sql-query-function-call
