@@ -104,3 +104,15 @@ parallel-function-call:  ## parallel function call
 .PHONY: sql-query-function-call
 sql-query-function-call:  ## answer user questions by generating sql queries
 	poetry run python tool_call.py sql-query-function-call
+
+.PHONY: assistant-no-tools
+assistant-no-tools:  ## run assistant with no tools
+	poetry run python assistant.py $@
+
+.PHONY: assistant-code-interpreter
+assistant-code-interpreter:  ## run assistant with code interpreter
+	poetry run python assistant.py $@
+
+.PHONY: assistant-retrieval
+assistant-retrieval:  ## run assistant with document retrieval
+	poetry run python assistant.py $@
