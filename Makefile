@@ -12,3 +12,7 @@ jupyter:  ## start jupyter lab
 .PHONY: open-ai-example
 open-ai-example:  ## run minimum open-ai-example
 	poetry run python openai-examples/open-ai-example.py
+
+.PHONY: aider
+aider:  ## run aider to modify code using AI
+	aider -4 --no-auto-commits --no-dirty-commits
