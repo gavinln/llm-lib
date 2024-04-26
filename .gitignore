@@ -171,3 +171,4 @@ poetry.lock
 processed/
 text/
 output/
+.aider*
