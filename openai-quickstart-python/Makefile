@@ -9,18 +9,18 @@ help:  ## help for this Makefile
 
 .PHONY: chat-basic
 chat-basic:  ## run chat-basic flask example
-	pushd ./openai-quickstart-python/examples/chat-basic && poetry run flask run && popd
+	pushd ./examples/chat-basic && poetry run flask run && popd
 
 .PHONY: assistant-basic
 assistant-basic:  ## run assistant-basic command line example
-	poetry run python ./openai-quickstart-python/examples/assistant-basic/assistant.py
+	poetry run python3 ./examples/assistant-basic/assistant.py
 
 .PHONY: assistant-functions
 assistant-functions:  ## run assistant-functions command line example using tools
 	echo Try: "What is the current weather?"
-	poetry run python ./openai-quickstart-python/examples/assistant-functions/functions.py
+	poetry run python3 ./examples/assistant-functions/functions.py
 
 .PHONY: assistant-flask
 assistant-flask:  ## run assistant-flask web example
 	echo Upload the file people.csv and ask questions about the people in the file
-	pushd ./openai-quickstart-python/examples/assistant-flask && poetry run flask run && popd
+	pushd ./examples/assistant-flask && poetry run flask run && popd
