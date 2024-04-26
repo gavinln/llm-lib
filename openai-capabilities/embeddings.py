@@ -3,6 +3,7 @@ https://platform.openai.com/docs/guides/embeddings
 """
 import logging
 import pathlib
+import sys
 from ast import literal_eval
 from contextlib import contextmanager
 from typing import Any
@@ -65,13 +66,27 @@ def get_ag_news_dataset():
 
 
 def get_food_reviews_embedding_dataset():
-    df = pd.read_csv(get_food_reviews_embedding_file())
+    embedding_dataset: pathlib.Path = get_food_reviews_embedding_file()
+    if not embedding_dataset.exists():
+        sys.exit(
+            "{} file missing. Call save_food_reviews_embeddings".format(
+                embedding_dataset
+            )
+        )
+    df = pd.read_csv(embedding_dataset)
     df["embedding"] = df.embedding.apply(literal_eval).apply(np.array)
     return df
 
 
 def get_ag_news_embedding_dataset():
-    df = pd.read_csv(get_ag_news_embedding_file())
+    embedding_dataset: pathlib.Path = get_ag_news_embedding_file()
+    if not embedding_dataset.exists():
+        sys.exit(
+            "{} file missing. Call save_ag_news_embeddings".format(
+                embedding_dataset
+            )
+        )
+    df = pd.read_csv(embedding_dataset)
     df["embedding"] = df.embedding.apply(literal_eval).apply(np.array)
     return df
 
