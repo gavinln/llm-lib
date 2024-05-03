@@ -11,3 +11,6 @@ help:  ## help for this Makefile
 pytest:  ## run Python tests
 	poetry run pytest
 
+.PHONY: print_tags_from_examples
+print_tags_from_examples:  ## print tags from openai examples
+	poetry run python $@.py
