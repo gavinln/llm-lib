@@ -1,0 +1,112 @@
+Batch processing with the Batch API|batchcompletions|Apr 24, 2024
+Summarizing Long Documents|chat|Apr 19, 2024
+Synthetic data generation (Part 1)|completions|Apr 10, 2024
+CLIP embeddings to improve multimodal RAG with GPT-4 Vision|embeddingsvision|Apr 10, 2024
+Using GPT4 Vision with Function Calling|chatvision|Apr 9, 2024
+Getting Started with OpenAI Evals|completions|Mar 21, 2024
+How to use the moderation API|moderation|Mar 5, 2024
+How to parse PDF docs for RAG|embeddingsvision|Feb 28, 2024
+Using GPT4 with Vision to tag and caption images|embeddingsvision|Feb 28, 2024
+How to combine GPT4 with Vision with RAG to create a clothing matchmaker app|embeddingsvision|Feb 16, 2024
+Using logprobs|completions|Dec 20, 2023
+How to implement LLM guardrails|guardrails|Dec 19, 2023
+Creating slides with the Assistants API and DALL·E 3|assistantsdall-e|Dec 8, 2023
+RAG with a Graph database|completionsembeddings|Dec 8, 2023
+Supabase Vector Database|embeddings|Dec 4, 2023
+Semantic search using Supabase Vector|embeddings|Dec 4, 2023
+MongoDB Atlas Vector Search|completionsembeddings|Nov 21, 2023
+Semantic search using MongoDB Atlas Vector Search and OpenAI|completionsembeddings|Nov 21, 2023
+Assistants API Overview (Python SDK)|assistantsfunctions|Nov 10, 2023
+Fine tuning for function calling|completionsfunctions|Nov 7, 2023
+Processing and narrating a video with GPT's visual capabilities and the TTS API|completionsspeechvision|Nov 6, 2023
+What's new with DALL·E 3?|dall-e|Nov 6, 2023
+How to make your completions outputs consistent with the new seed parameter|completions|Nov 6, 2023
+Evaluate RAG with LlamaIndex|completionsembeddings|Nov 6, 2023
+Named Entity Recognition to Enrich Text|completionsfunctions|Oct 20, 2023
+Function calling with an OpenAPI specification|completionsfunctions|Oct 15, 2023
+How to build an agent with the OpenAI Node.js SDK|completionsfunctions|Oct 5, 2023
+Fine-tuning OpenAI models with Weights & Biases|completionstiktoken|Oct 4, 2023
+OpenAI API Monitoring with Weights & Biases Weave|completionstiktoken|Oct 4, 2023
+Question answering with LangChain, Deep Lake, & OpenAI|embeddings|Sep 30, 2023
+Neon as a vector database|embeddings|Sep 28, 2023
+Vector similarity search using Neon Postgres|embeddings|Sep 28, 2023
+How to automate AWS tasks with function calling|completionsembeddingsfunctions|Sep 27, 2023
+Azure Chat Completion models with your own data (preview)|completions|Sep 11, 2023
+Azure AI Search as a vector database for OpenAI embeddings|embeddings|Sep 11, 2023
+Using Tair as a vector database for OpenAI embeddings|embeddings|Sep 11, 2023
+Question answering with Langchain, Tair and OpenAI|completionsembeddingstiktoken|Sep 11, 2023
+Fine-Tuning for retrieval augmented generation (RAG) with Qdrant|completionsembeddings|Sep 4, 2023
+Philosophy with vector embeddings, OpenAI and Cassandra / Astra DB|completionsembeddings|Aug 29, 2023
+Philosophy with vector embeddings, OpenAI and Cassandra / Astra DB|completionsembeddings|Aug 29, 2023
+Cassandra / Astra DB|embeddings|Aug 29, 2023
+Elasticsearch|completionsembeddings|Aug 29, 2023
+Retrieval augmented generation using Elasticsearch and OpenAI|completionsembeddings|Aug 29, 2023
+Semantic search using Elasticsearch and OpenAI|completionsembeddings|Aug 29, 2023
+Data preparation and analysis for chat model fine-tuning|completionstiktoken|Aug 22, 2023
+How to fine-tune chat models|completions|Aug 22, 2023
+How to evaluate a summarization task|completionsembeddings|Aug 16, 2023
+Function calling for nearby places: Leveraging the Google Places API and customer profiles|completionsfunctions|Aug 11, 2023
+Addressing transcription misspellings: prompt vs post-processing|completionswhisper|Aug 11, 2023
+Enhancing Whisper transcriptions: pre- & post-processing techniques|whisper|Aug 11, 2023
+Azure functions example|completionsfunctions|Jul 21, 2023
+Visualizing the embeddings in Kangas|embeddings|Jul 11, 2023
+Using PolarDB-PG as a vector database for OpenAI embeddings|embeddings|Jul 11, 2023
+Search reranking with cross-encoders|completionsembeddings|Jun 28, 2023
+Vector databases|embeddings|Jun 28, 2023
+Using Chroma for embeddings search|embeddings|Jun 28, 2023
+Using MyScale for embeddings search|embeddings|Jun 28, 2023
+Using Pinecone for embeddings search|embeddings|Jun 28, 2023
+Using Qdrant for embeddings search|embeddings|Jun 28, 2023
+Using Redis for embeddings search|embeddings|Jun 28, 2023
+Using Typesense for embeddings search|embeddings|Jun 28, 2023
+Using Weaviate for embeddings search|embeddings|Jun 28, 2023
+Whisper prompting guide|completionswhisper|Jun 27, 2023
+Financial document analysis with LlamaIndex|completionsembeddings|Jun 22, 2023
+Question answering using a search API and re-ranking|completionsembeddings|Jun 16, 2023
+How to use functions with a knowledge base|completionsfunctions|Jun 14, 2023
+How to call functions with chat models|completionsfunctions|Jun 13, 2023
+Semantic search with SingleStoreDB|completionsembeddings|May 22, 2023
+SingleStoreDB|completionsembeddings|May 22, 2023
+Using Weaviate with generative OpenAI module for generative search|completionsembeddings|May 22, 2023
+Unit test writing using a multi-step prompt with legacy Completions|completions|May 19, 2023
+How to create dynamic masks with DALL·E and Segment Anything|dall-e|May 19, 2023
+Using Hologres as a vector database for OpenAI embeddings|embeddings|May 19, 2023
+Running hybrid VSS queries with Redis and OpenAI|embeddings|May 11, 2023
+Redis as a context store with Chat Completions|completionsembeddings|May 11, 2023
+Kusto as a vector database for embeddings|embeddings|May 10, 2023
+Kusto as a vector database|embeddings|May 10, 2023
+Redis vectors as JSON with OpenAI|embeddings|May 10, 2023
+Question answering with Langchain, AnalyticDB and OpenAI|embeddingstiktoken|May 5, 2023
+How to build a tool-using agent with LangChain|completionsembeddings|May 2, 2023
+Using MyScale as a vector database for OpenAI embeddings|embeddings|May 1, 2023
+Embedding Wikipedia articles for search|completionsembeddings|Apr 14, 2023
+Typesense|embeddings|Apr 13, 2023
+Using AnalyticDB as a vector database for OpenAI embeddings|embeddings|Apr 6, 2023
+Robust question answering with Chroma and OpenAI|completionsembeddings|Apr 6, 2023
+Visualizing embeddings in Atlas|embeddings|Mar 28, 2023
+Azure Chat Completions example (preview)|completions|Mar 28, 2023
+Filtered search with Milvus and OpenAI|embeddings|Mar 28, 2023
+Getting started with Milvus and OpenAI|embeddings|Mar 28, 2023
+Filtered Search with Zilliz and OpenAI|embeddings|Mar 28, 2023
+Getting Started with Zilliz and OpenAI|embeddings|Mar 28, 2023
+Retrieval augmentation for GPT-4 using Pinecone|completionsembeddingstiktoken|Mar 24, 2023
+Pinecone vector database|completionsembeddings|Mar 24, 2023
+Semantic search with Pinecone and OpenAI|embeddings|Mar 24, 2023
+How to format inputs to ChatGPT models|completionstiktoken|Mar 1, 2023
+Long document content extraction|completions|Feb 20, 2023
+Using Qdrant as a vector database for OpenAI embeddings|embeddings|Feb 16, 2023
+Question answering with Langchain, Qdrant and OpenAI|embeddings|Feb 16, 2023
+Redis|completionsembeddings|Feb 13, 2023
+Using Redis as a vector database with OpenAI|embeddings|Feb 13, 2023
+Weaviate <> OpenAI|embeddings|Feb 13, 2023
+Using Weaviate with OpenAI vectorize module for embeddings search|embeddings|Feb 13, 2023
+Using Weaviate with OpenAI vectorize module for hybrid search|embeddings|Feb 13, 2023
+Question Answering in Weaviate with OpenAI Q&A module|completionsembeddings|Feb 13, 2023
+Retrieval augmented generative question answering with Pinecone|completionsembeddings|Feb 7, 2023
+Visualizing embeddings in Weights and Biases|embeddings|Feb 1, 2023
+How to work with large language models|completions|Jan 20, 2023
+Use cases for embeddings|embeddings|Jan 20, 2023
+Related resources from around the web|completionsembeddings|Jan 20, 2023
+Embedding texts that are longer than the model's maximum context length|embeddingstiktoken|Jan 18, 2023
+How to count tokens with Tiktoken|completionstiktoken|Dec 16, 2022
+Unit test writing using a multi-step prompt|completions|Nov 15, 2022
