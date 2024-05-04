@@ -11,6 +11,10 @@ help:  ## help for this Makefile
 pytest:  ## run Python tests
 	poetry run pytest
 
-.PHONY: print_tags_from_examples
-print_tags_from_examples:  ## print tags from openai examples
+.PHONY: print-tags
+print-tags:  ## print tags from openai examples
+	poetry run python ./process_openai_examples.py $@
+
+.PHONY: unit-test-writing
+unit-test-writing:  ## using openai to create unit tests
 	poetry run python $@.py
