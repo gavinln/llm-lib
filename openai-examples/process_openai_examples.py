@@ -45,15 +45,7 @@ def test_get_new_tags():
 
 
 def get_split_tags(tag_combo: str, tags: list):
-    split_tags = []
-    tag_rem = tag_combo
-    for tag in tags:
-        start_len = len(tag_rem)
-        tag_rem = tag_rem.replace(tag, '')
-        end_len = len(tag_rem)
-        if start_len != end_len:
-            split_tags.append(tag)
-    return split_tags
+    return [tag for tag in tags if tag in tag_combo]
 
 
 def test_get_split_tag():
@@ -93,13 +85,26 @@ def print_tags():
     print("default tags------------\n", default_tags)
     print("new tags----------------\n", new_tags)
 
+
+def print_openai_examples():
+    "print openai example with split tags"
+    df = get_openai_examples_data()
     tag_combos = []
+    default_tags = get_default_tags()
     for tag_combo in df.tags.tolist():
         split_tags = get_split_tags(tag_combo, default_tags)
         tag_combos.append(split_tags)
 
     df["split_tags"] = tag_combos
-    print(df)
+    del df["tags"]
+
+    print("Total examples {}".format(df.shape[0]))
+    print("Examples by category")
+    tag_counts = {
+        tag: df.split_tags.apply(lambda x: tag in x).sum()
+        for tag in default_tags
+    }
+    print(tag_counts)
 
 
 def process_examples():
@@ -108,7 +113,13 @@ def process_examples():
 
 
 def main():
-    fire.Fire({"print-tags": print_tags, "process-examples": process_examples})
+    fire.Fire(
+        {
+            "print-tags": print_tags,
+            "process-examples": process_examples,
+            "print-examples": print_openai_examples,
+        }
+    )
 
 
 if __name__ == "__main__":
