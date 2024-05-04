@@ -6,8 +6,7 @@ import logging
 import pathlib
 import sys
 
-from typing import Any
-
+import fire
 import pandas as pd
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
@@ -33,7 +32,7 @@ def get_remaining_tag(tag_combo: str, tag: str):
     start_idx = tag_combo.find(tag)
     tag_rem = tag_combo
     if start_idx >= 0:
-        tag_rem = tag_combo[0:start_idx] + tag_combo[start_idx + len(tag):]
+        tag_rem = tag_combo[0:start_idx] + tag_combo[start_idx + len(tag) :]
     return tag_rem
 
 
@@ -61,7 +60,7 @@ def get_split_tags(tag_combo: str, tags: list):
     return split_tags
 
 
-def main():
+def print_tags():
     log.info("In process-file.py")
     df = get_data()
     unique_tag_combos: list = list(set(df.tags.tolist()))
@@ -93,6 +92,15 @@ def main():
 
     df["split_tags"] = tag_combos
     print(df)
+
+
+def process_examples():
+    df = get_data()
+    print(df[df.title.str.contains('Unit')])
+
+
+def main():
+    fire.Fire({"print-tags": print_tags, "process-examples": process_examples})
 
 
 if __name__ == "__main__":

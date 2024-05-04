@@ -1,4 +1,4 @@
-from print_tags_from_examples import get_remaining_tag, get_remaining_tags
+from process_openai_examples import get_remaining_tag, get_remaining_tags
 
 
 def test_get_remaining_tags():
