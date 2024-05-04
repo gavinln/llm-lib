@@ -12,7 +12,7 @@ help:  ## help for this Makefile
 
 .PHONY: pytest
 pytest:  ## run Python tests
-	poetry run pytest
+	poetry run pytest ./process_openai_examples.py
 
 .PHONY: print-tags
 print-tags:  ## print tags from openai examples
