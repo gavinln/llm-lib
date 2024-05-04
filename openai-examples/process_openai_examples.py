@@ -1,3 +1,9 @@
+"""
+
+This module provides functions to process and display information about OpenAI
+examples.
+
+"""
 import logging
 import pathlib
 import sys
@@ -11,14 +17,15 @@ log = logging.getLogger(__name__)
 
 
 def get_data_file():
-    return SCRIPT_DIR / "openai-examples-list.csv"
+    data_file = SCRIPT_DIR / "openai-examples-list.csv"
+    if not data_file.exists():
+        sys.exit(f"Cannot find file {data_file}")
+    return data_file
 
 
 def get_openai_examples_data():
     "get openai examples from a csv file as a dataframe"
     data_file = get_data_file()
-    if not data_file.exists():
-        sys.exit(f"Cannot find file {data_file}")
     df = pd.read_csv(data_file, sep="|", header=None)
     df.columns = ["title", "tags", "date"]
     df["date"] = pd.to_datetime(df["date"])
