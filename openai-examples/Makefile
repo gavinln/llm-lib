@@ -18,6 +18,10 @@ pytest:  ## run Python tests
 print-tags:  ## print tags from openai examples
 	poetry run python ./process_openai_examples.py $@
 
+.PHONY: print-examples
+print-examples:  ## print openai examples & tags
+	poetry run python ./process_openai_examples.py $@
+
 .PHONY: unit-test-writing
 unit-test-writing:  ## using openai to create unit tests
 	poetry run python $@.py
