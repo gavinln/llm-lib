@@ -6,6 +6,7 @@ import logging
 import pathlib
 from itertools import islice
 
+import numpy as np
 import openai
 import tiktoken
 from tenacity import (retry, retry_if_not_exception_type, stop_after_attempt,
@@ -33,11 +34,20 @@ def get_embedding(text_or_tokens, model=EMBEDDING_MODEL):
     )
 
 
+def encode_text(text, encoding_name=EMBEDDING_ENCODING):
+    encoding = tiktoken.get_encoding(encoding_name)
+    return encoding.encode(text)
+
+
 def test_embedding():
     emb1 = get_embedding("AGI")
-    emb2 = get_embedding(["A", "G", "I"])
-    assert len(emb1) == len(emb2)
-    assert emb1 != emb2
+    enc_text = encode_text("AGI")
+    emb2 = get_embedding(enc_text)
+    assert np.allclose(emb1, emb2)
+
+    emb3 = get_embedding(["A", "G", "I"])
+    assert len(emb1) == len(emb3)
+    assert emb1 != emb3
 
 
 def batched(iterable, n):
@@ -52,12 +62,12 @@ def batched(iterable, n):
 
 def test_batched():
     items = tuple(batched("ABCDE", 2))
-    assert items == (('A', 'B'), ('C', 'D'), ('E',))
+    assert items == (("A", "B"), ("C", "D"), ("E",))
 
 
 def main():
     # test_batched()
-    long_text = 'AGI ' * 5000
+    long_text = "AGI " * 5000
     try:
         emb = get_embedding(long_text)
     except openai.BadRequestError as err:
