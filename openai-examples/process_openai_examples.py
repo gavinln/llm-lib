@@ -1,7 +1,3 @@
-"""
-print all tags from the openai examples list
-"""
-
 import logging
 import pathlib
 import sys
@@ -18,7 +14,8 @@ def get_data_file():
     return SCRIPT_DIR / "openai-examples-list.csv"
 
 
-def get_data():
+def get_openai_examples_data():
+    "get openai examples from a csv file as a dataframe"
     data_file = get_data_file()
     if not data_file.exists():
         sys.exit(f"Cannot find file {data_file}")
@@ -29,6 +26,7 @@ def get_data():
 
 
 def get_remaining_tag(tag_combo: str, tag: str):
+    "remove tags from a tag_combo and returns remaining"
     start_idx = tag_combo.find(tag)
     tag_rem = tag_combo
     if start_idx >= 0:
@@ -36,7 +34,19 @@ def get_remaining_tag(tag_combo: str, tag: str):
     return tag_rem
 
 
-def get_remaining_tags(default_tags: list, tag_combos: list):
+def test_get_remaining_tag():
+    tag_combo = "completionstiktokenembeddings"
+    tag_rem1 = get_remaining_tag(tag_combo, "completions")
+    tag_rem2 = get_remaining_tag(tag_combo, "tiktoken")
+    tag_rem3 = get_remaining_tag(tag_combo, "embeddings")
+    assert (tag_rem1, tag_rem2, tag_rem3) == (
+        "tiktokenembeddings",
+        "completionsembeddings",
+        "completionstiktoken",
+    )
+
+
+def get_new_tags(default_tags: list, tag_combos: list):
     "returns tags not in default_tags"
     tag_rems = []
     for tag_combo in tag_combos:
@@ -46,6 +56,14 @@ def get_remaining_tags(default_tags: list, tag_combos: list):
         if len(tag_rem) > 0:
             tag_rems.append(tag_rem)
     return list(set(tag_rems))
+
+
+def test_get_new_tags():
+    default_tags = ["completions", "tiktoken"]
+    missing_tag = "embeddings"
+    tag_combos = ["".join(default_tags) + missing_tag]
+    tag_rems = get_new_tags(default_tags, tag_combos)
+    assert tag_rems == [missing_tag]
 
 
 def get_split_tags(tag_combo: str, tags: list):
@@ -60,10 +78,12 @@ def get_split_tags(tag_combo: str, tags: list):
     return split_tags
 
 
-def print_tags():
-    log.info("In process-file.py")
-    df = get_data()
-    unique_tag_combos: list = list(set(df.tags.tolist()))
+def test_get_split_tag():
+    split_tags = get_split_tags("completionschat", ["completions", "chat"])
+    assert split_tags == ["completions", "chat"]
+
+
+def get_default_tags():
     default_tags = [
         "completions",
         "chat",
@@ -81,9 +101,19 @@ def print_tags():
         "moderation",
         "vision",
     ]
-    tags = get_remaining_tags(default_tags, unique_tag_combos)
+    return default_tags
+
+
+def print_tags():
+    "print default and new tags"
+    df = get_openai_examples_data()
+    unique_tag_combos: list = list(set(df.tags.tolist()))
+
+    default_tags = get_default_tags()
+    new_tags = get_new_tags(default_tags, unique_tag_combos)
+
     print("default tags------------\n", default_tags)
-    print("new tags----------------\n", tags)
+    print("new tags----------------\n", new_tags)
 
     tag_combos = []
     for tag_combo in df.tags.tolist():
@@ -95,8 +125,8 @@ def print_tags():
 
 
 def process_examples():
-    df = get_data()
-    print(df[df.title.str.contains('Unit')])
+    df = get_openai_examples_data()
+    print(df[df.title.str.contains("Unit")])
 
 
 def main():
