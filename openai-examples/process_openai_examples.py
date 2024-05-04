@@ -25,36 +25,14 @@ def get_openai_examples_data():
     return df
 
 
-def get_remaining_tag(tag_combo: str, tag: str):
-    "remove tags from a tag_combo and returns remaining"
-    start_idx = tag_combo.find(tag)
-    tag_rem = tag_combo
-    if start_idx >= 0:
-        tag_rem = tag_combo[0:start_idx] + tag_combo[start_idx + len(tag) :]
-    return tag_rem
-
-
-def test_get_remaining_tag():
-    tag_combo = "completionstiktokenembeddings"
-    tag_rem1 = get_remaining_tag(tag_combo, "completions")
-    tag_rem2 = get_remaining_tag(tag_combo, "tiktoken")
-    tag_rem3 = get_remaining_tag(tag_combo, "embeddings")
-    assert (tag_rem1, tag_rem2, tag_rem3) == (
-        "tiktokenembeddings",
-        "completionsembeddings",
-        "completionstiktoken",
-    )
-
-
 def get_new_tags(default_tags: list, tag_combos: list):
     "returns tags not in default_tags"
     tag_rems = []
     for tag_combo in tag_combos:
-        tag_rem = tag_combo
         for tag in default_tags:
-            tag_rem = get_remaining_tag(tag_rem, tag)
-        if len(tag_rem) > 0:
-            tag_rems.append(tag_rem)
+            tag_combo = tag_combo.replace(tag, "")
+        if len(tag_combo) > 0:
+            tag_rems.append(tag_combo)
     return list(set(tag_rems))
 
 
@@ -71,7 +49,7 @@ def get_split_tags(tag_combo: str, tags: list):
     tag_rem = tag_combo
     for tag in tags:
         start_len = len(tag_rem)
-        tag_rem = get_remaining_tag(tag_rem, tag)
+        tag_rem = tag_rem.replace(tag, '')
         end_len = len(tag_rem)
         if start_len != end_len:
             split_tags.append(tag)
