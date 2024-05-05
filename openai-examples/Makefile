@@ -26,3 +26,7 @@ print-examples:  ## print openai examples & tags
 .PHONY: unit-test-writing
 unit-test-writing:  ## using openai to create unit tests
 	poetry run python $@.py
+
+.PHONY: embedding-long-texts
+embedding-long-texts:  ## use chunks for long texts
+	poetry run python $@.py

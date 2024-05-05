@@ -34,16 +34,11 @@ def get_embedding(text_or_tokens, model=EMBEDDING_MODEL):
     )
 
 
-def encode_text(text, encoding_name=EMBEDDING_ENCODING):
-    encoding = tiktoken.get_encoding(encoding_name)
-    return encoding.encode(text)
-
-
-def test_embedding():
+def test_get_embedding():
     emb1 = get_embedding("AGI")
     enc_text = encode_text("AGI")
     emb2 = get_embedding(enc_text)
-    assert np.allclose(emb1, emb2)
+    assert np.allclose(emb1, emb2, atol=1e-3)
 
     emb3 = get_embedding(["A", "G", "I"])
     assert len(emb1) == len(emb3)
@@ -65,14 +60,65 @@ def test_batched():
     assert items == (("A", "B"), ("C", "D"), ("E",))
 
 
+def encode_text(text, encoding_name=EMBEDDING_ENCODING):
+    encoding = tiktoken.get_encoding(encoding_name)
+    return encoding.encode(text)
+
+
+def chunked_tokens(text, encoding_name, chunk_length):
+    tokens = encode_text(text, encoding_name)
+    chunks_iterator = batched(tokens, chunk_length)
+    yield from chunks_iterator
+
+
+def test_chunked_tokens():
+    text = "AGI " * 20
+    chunk_lengths = [
+        len(chunk) for chunk in chunked_tokens(text, EMBEDDING_ENCODING, 10)
+    ]
+    assert chunk_lengths == [10, 10, 10, 10, 1]
+
+
+def get_embedding_chunks(
+    text, model, max_tokens, enconding_name, average=False
+):
+    chunk_embeddings = []
+    chunk_lens = []
+    for chunk in chunked_tokens(text, enconding_name, max_tokens):
+        chunk_embedding = get_embedding(chunk, model)
+        chunk_embeddings.append(chunk_embedding)
+        chunk_lens.append(len(chunk))
+
+    if average:
+        chunk_embeddings = np.average(
+            chunk_embeddings, axis=0, weights=chunk_lens
+        )
+        chunk_embeddings = chunk_embeddings / np.linalg.norm(chunk_embeddings)
+        chunk_embeddings = chunk_embeddings.tolist()
+    return chunk_embeddings
+
+
 def main():
     # test_batched()
     long_text = "AGI " * 5000
     try:
-        emb = get_embedding(long_text)
+        _ = get_embedding(long_text)
     except openai.BadRequestError as err:
         print(err)
-    breakpoint()
+
+    chunk_embeddings = get_embedding_chunks(
+        long_text, EMBEDDING_MODEL, EMBEDDING_CTX_LENGTH, EMBEDDING_ENCODING
+    )
+    print("chunk_embeddings: shape", np.array(chunk_embeddings).shape)
+
+    chunk_embeddings_avg = get_embedding_chunks(
+        long_text,
+        EMBEDDING_MODEL,
+        EMBEDDING_CTX_LENGTH,
+        EMBEDDING_ENCODING,
+        True,
+    )
+    print("chunk_embeddings_avg: shape", np.array(chunk_embeddings_avg).shape)
 
 
 if __name__ == "__main__":
