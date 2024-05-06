@@ -27,7 +27,9 @@ Qdrant is an open-source vector search engine optimized for storing and searchin
 
 The examples-list.csv is a file using the pipe '|' character as a separator with no header.
 
-Create the file from the page https://cookbook.openai.com/.
+Create the file from the [examples][200] page.
+
+[200]: https://cookbook.openai.com/
 
 Run the ./process_openai_examples.py file to create a list of tags from the ./openai-examples-list.csv file
 
@@ -46,3 +48,17 @@ make unit-test-writing
 ```
 make embedding-long-texts
 ```
+
+## Other libraries
+
+### Spacy
+
+[spaCy][900] is a high-performance, open-source Python library for Natural Language Processing (NLP). It offers pre-trained models in multiple languages and supports tasks like tokenization, tagging, entity recognition, and parsing.
+
+[900]: https://github.com/explosion/spaCy
+
+### TextBlob
+
+[TextBlob][910] is a Python library for processing textual data. It supports common natural language processing (NLP) tasks such as part-of-speech tagging, noun phrase extraction, sentiment analysis, classification, translation, and more.
+
+[910]: https://github.com/sloria/TextBlob
