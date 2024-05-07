@@ -19,8 +19,16 @@ pytest:  ## run Python tests
 print-tags:  ## print tags from openai examples
 	poetry run python ./process_openai_examples.py $@
 
-.PHONY: print-examples
-print-examples:  ## print openai examples & tags
+.PHONY: print-examples-stats
+print-examples-stats:  ## print openai examples stats
+	poetry run python ./process_openai_examples.py $@
+
+.PHONY: vector-in-titles
+vector-in-titles:  ## print openai examples with vector
+	poetry run python ./process_openai_examples.py $@
+
+.PHONY: redis-in-titles
+redis-in-titles:  ## print openai examples with redis
 	poetry run python ./process_openai_examples.py $@
 
 .PHONY: unit-test-writing
