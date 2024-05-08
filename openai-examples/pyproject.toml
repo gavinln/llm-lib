@@ -15,6 +15,7 @@ fire = "^0.6.0"
 openai = "^1.25.1"
 tenacity = "^8.2.3"
 tiktoken = "^0.6.0"
+redis = "^5.0.4"
 
 
 [build-system]

@@ -38,3 +38,30 @@ unit-test-writing:  ## using openai to create unit tests
 .PHONY: embedding-long-texts
 embedding-long-texts:  ## use chunks for long texts
 	poetry run python $@.py
+
+.PHONY: docker-compose-test
+docker-compose-test:  ## example of using docker compose
+	docker compose --project-directory ./redis-examples/composetest/ up
+	echo open browser to http://127.0.0.1:8000.
+
+.PHONY: docker-compose-test-rm
+docker-compose-test-rm:  ## remove example docker compose
+	docker compose --project-directory ./redis-examples/composetest/ rm -s -v
+
+.PHONY: data-structure-store
+data-structure-store:  ## redis data structure store
+	docker compose --project-directory ./redis-examples/ up -d
+	poetry run python ./redis-examples/data-structure-store.py
+	# docker compose --project-directory ./redis-examples/ stop
+
+.PHONY: document-database
+document-database:  ## redis document database
+	docker compose --project-directory ./redis-examples/ up -d
+	poetry run python ./redis-examples/document-database.py
+	# docker compose --project-directory ./redis-examples/ stop
+
+.PHONY: vector-database
+vector-database:  ## redis vector database
+	docker compose --project-directory ./redis-examples/ up -d
+	poetry run python ./redis-examples/vector-database.py
+	# docker compose --project-directory ./redis-examples/ stop
