@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "openai-examples"
+name = "redis-examples"
 version = "0.1.0"
 description = ""
 authors = ["Gavin Noronha <gavinln@hotmail.com>"]
@@ -12,9 +12,8 @@ ipython = "^8.24.0"
 pandas = "^2.2.2"
 pytest = "^8.2.0"
 fire = "^0.6.0"
-openai = "^1.25.1"
-tenacity = "^8.2.3"
-tiktoken = "^0.6.0"
+redis = "^5.0.4"
+flask = "^3.0.3"
 
 
 [build-system]
