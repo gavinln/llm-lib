@@ -38,3 +38,7 @@ document-database:  ## redis document database
 vector-database:  ## redis vector database
 	docker compose --project-directory ./redis-examples/ up -d
 	poetry run python vector-database.py
+
+.PHONY: sentence-xfmer
+sentence-xfmer:  ## sentence transformer examples
+	poetry run python sentence-transformer-example.py
