@@ -16,9 +16,9 @@ https://platform.openai.com/docs/introduction/overview
 * Data extraction
 * Translation
 
-## Run openapi-quickstart-python
+## Run openai-quickstart-python
 
-See ./openai-quickstart-python/README.md
+See [openai-quickstart-python](./openai-quickstart-python/README.md)
 
 ## Run openai-examples
 

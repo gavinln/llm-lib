@@ -10,7 +10,6 @@ SHELL = /bin/bash
 help:  ## help for this Makefile
 	@grep -E '^[a-zA-Z0-9_\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
 
-
 .PHONY: docker-daemon-start
 docker-daemon-start:
 	echo sudo service docker start
@@ -42,3 +41,7 @@ vector-database:  ## redis vector database
 .PHONY: sentence-xfmer
 sentence-xfmer:  ## sentence transformer examples
 	poetry run python sentence-transformer-example.py
+
+.PHONY: clean
+clean: ## remove temporary files
+	echo clean
