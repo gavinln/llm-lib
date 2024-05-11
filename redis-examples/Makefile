@@ -14,28 +14,37 @@ help:  ## help for this Makefile
 docker-daemon-start:
 	echo sudo service docker start
 
-.PHONY: docker-compose-test
-docker-compose-test: docker-daemon-start  ## example of using docker compose
+.PHONY: docker-compose-test-up
+docker-compose-test-up: docker-daemon-start  ## example of using docker compose
 	echo open browser to http://127.0.0.1:8000.
-	docker compose --project-directory ./composetest/ up
+	poetry run docker compose --project-directory ./composetest/ up
 
 .PHONY: docker-compose-test-rm
 docker-compose-test-rm:  ## remove example docker compose
-	docker compose --project-directory ./composetest/ rm -s -v
+	poetry run docker compose --project-directory ./composetest/ rm -s -v
+
+.PHONY: env-up
+env-up:
+	docker compose up -d
+	poetry install
+
+.PHONY: env-rm
+env-rm:
+	docker compose rm -s -v
+	poetry env remove $$(poetry env info -e)
 
 .PHONY: data-structure-store
-data-structure-store:  ## redis data structure store
-	docker compose --project-directory ./redis-examples/ up -d
+data-structure-store: env-up  ## redis data structure store
 	poetry run python data-structure-store.py
 
 .PHONY: document-database
-document-database:  ## redis document database
-	docker compose --project-directory ./redis-examples/ up -d
+document-database: env-up  ## redis document database
+	poetry run docker compose up -d
 	poetry run python document-database.py
 
 .PHONY: vector-database
-vector-database:  ## redis vector database
-	docker compose --project-directory ./redis-examples/ up -d
+vector-database: env-up  ## redis vector database
+	poetry run docker compose up -d
 	poetry run python vector-database.py
 
 .PHONY: sentence-xfmer
@@ -43,5 +52,5 @@ sentence-xfmer:  ## sentence transformer examples
 	poetry run python sentence-transformer-example.py
 
 .PHONY: clean
-clean: ## remove temporary files
-	echo clean
+clean: env-rm  ## remove temporary files
+	rm -f poetry.lock

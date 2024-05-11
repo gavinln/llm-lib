@@ -20,3 +20,12 @@ aider:  ## run aider to modify code using AI
 .PHONY: tmux
 tmux:  ## run tmux
 	tmuxp load .tmuxp.yaml
+
+.PHONY: clean
+clean:  ## remove temporary directories in python envs
+	@make -C ./openai-capabilities/ clean
+	@make -C ./openai-examples/ clean
+	@make -C ./openai-prompts/ clean
+	@make -C ./openai-quickstart-python/ clean
+	@make -C ./openai-website-qa/ clean
+	@make -C ./redis-examples/ clean
