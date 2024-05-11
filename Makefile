@@ -17,10 +17,6 @@ open-ai-example:  ## run minimum open-ai-example
 aider:  ## run aider to modify code using AI
 	aider -4 --no-auto-commits --no-dirty-commits
 
-.PHONY: tmux
-tmux:  ## run tmux
-	tmuxp load .tmuxp.yaml
-
 .PHONY: clean
 clean:  ## remove temporary directories in python envs
 	@make -C ./openai-capabilities/ clean

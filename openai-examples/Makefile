@@ -10,6 +10,9 @@ SHELL = /bin/bash
 help:  ## help for this Makefile
 	@grep -E '^[a-zA-Z0-9_\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
 
+.PHONY: tmux
+tmux:  ## run tmux
+	tmuxp load .tmuxp.yaml
 
 .PHONY: docker-daemon-start
 docker-daemon-start:
