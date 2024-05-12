@@ -17,6 +17,8 @@ from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
 from sentence_transformers import SentenceTransformer
 
+from redis_util import index_exists, print_indexing_failures
+
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
 
@@ -95,22 +97,6 @@ def create_vector_index(index_key: str, dim: int, client: redis.Redis):
         fields=schema, definition=definition
     )
     return res
-
-
-def print_indexing_failures(index_key: str, client):
-    info = client.ft(index_key).info()
-    num_docs = info["num_docs"]
-    indexing_failures = info["hash_indexing_failures"]
-    print(f"{num_docs} documents indexed with {indexing_failures} failures")
-
-
-def index_exists(index_key: str, client: redis.Redis):
-    try:
-        search = client.ft(index_key)
-        search.info()
-    except redis.ResponseError:
-        return False
-    return True
 
 
 def get_query_text_list():

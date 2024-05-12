@@ -51,6 +51,12 @@ vector-database: env-up  ## redis vector database
 sentence-xfmer:  ## sentence transformer examples
 	poetry run python sentence-transformer-example.py
 
+.PHONY: vector-hybrid-search1
+vector-hybrid-search1:  ## vector hybrid search
+	echo "Does NOT WORK correctly"
+	poetry run docker compose up -d
+	poetry run python $@.py
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
