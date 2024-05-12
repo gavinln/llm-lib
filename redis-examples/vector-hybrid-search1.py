@@ -5,8 +5,6 @@ https://cookbook.openai.com/examples/vector_databases/redis/using_redis_for_embe
 import logging
 import pathlib
 import tempfile
-# import json
-# import time
 import urllib.request
 import zipfile
 from ast import literal_eval
@@ -209,7 +207,7 @@ def search_redis(
     for i, article in enumerate(results.docs):  # type: ignore
         score = 1 - float(article.vector_score)
         print(f"{i}. {article.title} (Score: {round(score ,3) })")
-    return results.docs
+    return results.docs  # type: ignore
 
 
 def main():
