@@ -63,16 +63,6 @@ def download_wikipedia_embeddings_zip_dataset(url):
     return df
 
 
-def get_bike_model(redis_key: str, client):
-    return client.json().get(redis_key, "$.model")
-
-
-def get_bikes_descriptions(redis_key, client):
-    keys: Any = sorted(client.keys(redis_key))
-    descriptions = client.json().mget(keys, "$.description")
-    return keys, [description[0] for description in descriptions]
-
-
 def get_openai_embeddings(text: str):
     return (
         OpenAI()
@@ -80,43 +70,6 @@ def get_openai_embeddings(text: str):
         .data[0]
         .embedding
     )
-
-
-def save_embeddings(keys: list[str], embeddings: list[Any], client):
-    pipeline = client.pipeline()
-    for key, embedding in zip(keys, embeddings):
-        pipeline.json().set(key, "$.description_embeddings", embedding)
-    return pipeline.execute()
-
-
-def get_query_text_list():
-    queries = []
-    return queries
-
-
-def run_query(index_key, query, encoded_query, client: redis.Redis) -> Any:
-    result = client.ft(index_key).search(
-        query,
-        {"query_vector": np.array(encoded_query, dtype=np.float32).tobytes()},
-    )
-    return result
-
-
-def get_query_results(result_docs, query_text):
-    results_list = []
-    for doc in result_docs:
-        vector_score = round(1 - float(doc.vector_score), 2)
-        results_list.append(
-            {
-                "query": query_text,
-                "score": vector_score,
-                "id": doc.id,
-                "brand": doc.brand,
-                "model": doc.model,
-                "description": doc.description,
-            }
-        )
-    return results_list
 
 
 @memory.cache
