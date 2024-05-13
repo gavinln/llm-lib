@@ -30,7 +30,7 @@ env-up:
 
 .PHONY: env-rm
 env-rm:
-	docker compose rm -s -v
+	docker compose rm -s -v -f
 	poetry env remove $$(poetry env info -e)
 
 .PHONY: data-structure-store
@@ -60,3 +60,5 @@ vector-hybrid-search1:  ## vector hybrid search
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
+	find . -name '.pytest_cache' -type d -exec rm -rf '{}' +
+	find . -name '__pycache__' -type d -exec rm -rf '{}' +

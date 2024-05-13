@@ -129,3 +129,5 @@ assistant-retrieval: env-up  ## run assistant with document retrieval
 clean: env-rm  ## remove temporary files
 	rm -rf output/
 	rm -f poetry.lock
+	find . -name '.pytest_cache' -type d -exec rm -rf '{}' +
+	find . -name '__pycache__' -type d -exec rm -rf '{}' +

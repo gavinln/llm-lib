@@ -35,7 +35,7 @@ assistant-flask: env-up  ## run assistant-flask web example
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
-	find . -name '.pytest_cache' -type d -exec rm -rf '{}' +
-	find . -name '__pycache__' -type d -exec rm -rf '{}' +
 	rm -rf output/
 	rm -f poetry.lock
+	find . -name '.pytest_cache' -type d -exec rm -rf '{}' +
+	find . -name '__pycache__' -type d -exec rm -rf '{}' +
