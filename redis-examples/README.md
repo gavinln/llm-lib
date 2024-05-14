@@ -33,7 +33,7 @@ https://cookbook.openai.com/examples/vector_databases/redis/redisqna/redisqna
 5. Run a vector search to get context for the question
 6. Ask chat gpt a question with addional context
 
-vector-search-for-context.py
+vector-search-context.py
 
 ### Running hybrid VSS queries with Redis and OpenAI
 

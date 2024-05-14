@@ -57,6 +57,11 @@ vector-hybrid-search1:  ## vector hybrid search
 	poetry run docker compose up -d
 	poetry run python $@.py
 
+.PHONY: vector-search-context
+vector-search-context:  ## vector search for context
+	poetry run docker compose up -d
+	poetry run python $@.py
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
