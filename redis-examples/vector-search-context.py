@@ -4,13 +4,11 @@ https://cookbook.openai.com/examples/vector_databases/redis/redisqna/redisqna
 
 import logging
 import pathlib
-import tempfile
 import zipfile
 from typing import Any, Generator, NamedTuple
 
 import numpy as np
 import redis
-from joblib import Memory
 from openai import OpenAI
 from openai.types.chat.chat_completion import ChatCompletion
 from redis.commands.search.field import TextField, VectorField

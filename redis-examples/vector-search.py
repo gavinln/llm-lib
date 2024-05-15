@@ -2,21 +2,17 @@
 https://cookbook.openai.com/examples/vector_databases/redis/redisjson/redisjson
 """
 
-import itertools
 import logging
 import pathlib
 from typing import Any, NamedTuple
 
 import numpy as np
-import pandas as pd
 import redis
-from redis.commands.search.field import (NumericField, TagField, TextField,
-                                         VectorField)
+from redis.commands.search.field import TextField, VectorField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
 
-from redis_util import (get_embeddings, get_embeddings_batch, index_exists,
-                        print_indexing_failures)
+from redis_util import get_embeddings, index_exists, print_indexing_failures
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
