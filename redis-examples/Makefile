@@ -55,8 +55,8 @@ vector-database: env-up  ## redis vector database
 sentence-xfmer:  ## sentence transformer examples
 	poetry run python sentence-transformer-example.py
 
-.PHONY: vector-hybrid-search1
-vector-hybrid-search1:  ## vector hybrid search
+.PHONY: vector-search-existing
+vector-search-existing:  ## vector search with existing embedding
 	echo "Does NOT WORK correctly"
 	poetry run docker compose up -d
 	poetry run python $@.py
@@ -66,13 +66,13 @@ vector-search-context:  ## vector search for context
 	poetry run docker compose up -d
 	poetry run python $@.py
 
-.PHONY: vector-hybrid-search2
-vector-hybrid-search2:  ## vector hybrid search
+.PHONY: vector-search-hybrid
+vector-search-hybrid:  ## vector hybrid search
 	poetry run docker compose up -d
 	poetry run python $@.py
 
-.PHONY: vector-hybrid-search3
-vector-hybrid-search3:  ## vector hybrid search
+.PHONY: vector-search
+vector-search:  ## vector search
 	poetry run docker compose up -d
 	poetry run python $@.py
 
