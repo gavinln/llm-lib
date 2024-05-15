@@ -5,13 +5,10 @@ https://cookbook.openai.com/examples/vector_databases/redis/redisqna/redisqna
 import logging
 import pathlib
 import tempfile
-import urllib.request
 import zipfile
-from ast import literal_eval
 from typing import Any, Generator, NamedTuple
 
 import numpy as np
-import pandas as pd
 import redis
 from joblib import Memory
 from openai import OpenAI
@@ -27,9 +24,6 @@ log = logging.getLogger(__name__)
 
 EMBEDDING_MODEL = "text-embedding-3-small"
 OPENAI_MODEL = "gpt-3.5-turbo"
-
-
-memory = Memory(tempfile.gettempdir(), verbose=0)
 
 
 def get_articles_file() -> pathlib.Path:
@@ -54,30 +48,6 @@ def get_articles(article_file: pathlib.Path) -> Generator[bytes, None, None]:
             yield article_zip.open(name, "r").read()
 
 
-def download_wikipedia_embeddings_zip_dataset(url):
-    csv_data_file = "vector_database_wikipedia_articles_embedded.csv"
-    df = None
-    with urllib.request.urlopen(url) as f:
-        with tempfile.NamedTemporaryFile(delete=True) as temp_file:
-            # download the zip wikipedia data into a temporary file
-            temp_file.write(f.read())
-            temp_file.seek(0)
-            with zipfile.ZipFile(temp_file) as data_zip:
-                # open a specified csv file from the zip file
-                with data_zip.open(csv_data_file) as csv_data:
-                    log.debug("about to read csv data")
-                    df = pd.read_csv(csv_data)
-                    log.debug("completed reading csv data")
-                    df["title_vector"] = df.title_vector.apply(literal_eval)
-                    log.debug("converted title_vector")
-                    df["content_vector"] = df.content_vector.apply(
-                        literal_eval
-                    )
-                    log.debug("converted content_vector")
-            log.debug("Temporary file name: %s", temp_file.name)
-    return df
-
-
 def get_openai_embeddings(text: str):
     return np.array(
         OpenAI()
@@ -86,48 +56,6 @@ def get_openai_embeddings(text: str):
         .embedding,
         dtype=np.float32,
     )
-
-
-@memory.cache
-def get_wikipedia_embeddings_dataframe(url) -> pd.DataFrame:
-    df = download_wikipedia_embeddings_zip_dataset(url)
-    # use memory.clear() to empty cache
-    return df
-
-
-def create_vector_index2(
-    index_key: str, dim: int, capacity: int, prefix: str, client: redis.Redis
-):
-    schema = (
-        TextField(name="title"),
-        TextField(name="url"),
-        TextField(name="text"),
-        VectorField(
-            "title_vector",
-            "FLAT",
-            {
-                "TYPE": "FLOAT32",
-                "DIM": dim,
-                "DISTANCE_METRIC": "COSINE",
-                "INITIAL_CAP": capacity,
-            },
-        ),
-        VectorField(
-            "content_vector",
-            "FLAT",
-            {
-                "TYPE": "FLOAT32",
-                "DIM": dim,
-                "DISTANCE_METRIC": "COSINE",
-                "INITIAL_CAP": capacity,
-            },
-        ),
-    )
-    definition = IndexDefinition(prefix=[prefix], index_type=IndexType.HASH)
-    res = client.ft(index_key).create_index(
-        fields=schema, definition=definition
-    )
-    return res
 
 
 def create_vector_index(
@@ -214,6 +142,15 @@ def load_text_embeddings(
     return res_list
 
 
+def get_text_embeddings(text_zip_file: pathlib.Path) -> list[TextEmbedding]:
+    text_embeddings: list[TextEmbedding] = []
+    for article in get_articles(text_zip_file):
+        embedding = get_openai_embeddings(article.decode("utf-8"))
+        text_embedding = TextEmbedding(article, embedding)
+        text_embeddings.append(text_embedding)
+    return text_embeddings
+
+
 def main():
     prompt = (
         "Is Sam Bankman-Fried's company, FTX,"
@@ -224,13 +161,8 @@ def main():
     print(response)
     print(len(embeddings))
 
-    text_embeddings: list[TextEmbedding] = []
-
     article_file = get_articles_file()
-    for article in get_articles(article_file):
-        embedding = get_openai_embeddings(article.decode("utf-8"))
-        text_embedding = TextEmbedding(article, embedding)
-        text_embeddings.append(text_embedding)
+    text_embeddings: list[TextEmbedding] = get_text_embeddings(article_file)
 
     client = redis.Redis(
         host="localhost", port=6379, db=0, decode_responses=True
