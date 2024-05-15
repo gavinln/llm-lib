@@ -149,7 +149,7 @@ def main():
     print(response)
 
     article_file = get_articles_file()
-    articles = list(get_articles(article_file))[:4]  # TODO
+    articles = list(get_articles(article_file))
     embeddings: list[list[float]] = get_text_embeddings(articles)
 
     client = redis.Redis(
