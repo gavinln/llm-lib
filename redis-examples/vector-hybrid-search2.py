@@ -20,14 +20,13 @@ from typing import Any
 import numpy as np
 import pandas as pd
 import redis
-from openai import OpenAI
-# import requests
 from redis.commands.search.field import (NumericField, TagField, TextField,
                                          VectorField)
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
 
-from redis_util import index_exists, print_indexing_failures
+from redis_util import (get_embeddings, get_embeddings_batch, index_exists,
+                        print_indexing_failures)
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
@@ -92,26 +91,6 @@ def create_vector_index(
         fields=schema, definition=definition
     )
     return res
-
-
-def get_embeddings(text: str) -> list[float]:
-    text = text.replace("\n", " ")
-    return (
-        OpenAI()
-        .embeddings.create(input=[text], model=EMBEDDING_MODEL)
-        .data[0]
-        .embedding
-    )
-
-
-def get_embeddings_batch(
-    list_text: list[str] | tuple[str],
-) -> list[list[float]]:
-    list_text = [text.replace("\n", " ") for text in list_text]
-    data = (
-        OpenAI().embeddings.create(input=list_text, model=EMBEDDING_MODEL).data
-    )
-    return [d.embedding for d in data]
 
 
 def batched(iterable, n):
