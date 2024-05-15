@@ -5,7 +5,7 @@ https://cookbook.openai.com/examples/vector_databases/redis/redisqna/redisqna
 import logging
 import pathlib
 import zipfile
-from typing import Any, Generator, NamedTuple
+from typing import Any, Generator
 
 import numpy as np
 import redis
@@ -46,13 +46,12 @@ def get_articles(article_file: pathlib.Path) -> Generator[bytes, None, None]:
             yield article_zip.open(name, "r").read()
 
 
-def get_openai_embeddings(text: str):
-    return np.array(
+def get_openai_embeddings(text: str) -> list[float]:
+    return (
         OpenAI()
         .embeddings.create(input=text, model=EMBEDDING_MODEL)
         .data[0]
-        .embedding,
-        dtype=np.float32,
+        .embedding
     )
 
 
@@ -60,6 +59,7 @@ def create_vector_index(
     index_name: str, dim: int, prefix: str, client: redis.Redis
 ):
     schema = (
+        TextField("$.text", as_name="text"),
         VectorField(
             "$.vector",
             "FLAT",
@@ -70,7 +70,6 @@ def create_vector_index(
             },
             as_name="vector",
         ),
-        TextField("$.content", as_name="content"),
     )
     definition = IndexDefinition(prefix=[prefix], index_type=IndexType.JSON)
     res = client.ft(index_name).create_index(
@@ -80,7 +79,7 @@ def create_vector_index(
 
 
 def create_query(vector_field, return_field) -> Query:
-    base_query = f"*=>[KNN 1 @{vector_field} $query_vec AS vector_score]"
+    base_query = f"(*)=>[KNN 1 @{vector_field} $query_vec AS vector_score]"
     query = (
         Query(base_query)
         .sort_by("vector_score")
@@ -91,12 +90,16 @@ def create_query(vector_field, return_field) -> Query:
 
 
 def search_redis(
-    query_vec: np.ndarray, index_name: str, query: Any, client: redis.Redis
+    query_vec: list[float],
+    index_name: str,
+    query: Any,
+    client: redis.Redis,
 ):
-    params: Any = {"query_vec": query_vec.tobytes()}
+    query_vec_bytes = np.array(query_vec).astype(np.float32).tobytes()
+    params: Any = {"query_vec": query_vec_bytes}
     result: Any = client.ft(index_name).search(query, query_params=params)
     assert len(result.docs) > 0
-    return result.docs[0].content
+    return result.docs[0].text
 
 
 def get_completion(prompt: str, model=OPENAI_MODEL) -> str:
@@ -112,41 +115,29 @@ def get_completion(prompt: str, model=OPENAI_MODEL) -> str:
     return text
 
 
-class TextEmbedding(NamedTuple):
-    text: bytes
-    embedding: np.ndarray
-
-    def __repr__(self):
-        return "text len: {}, embedding len: {}".format(
-            len(self.text), len(self.embedding)
-        )
-
-
 def load_text_embeddings(
-    text_embeddings: list[TextEmbedding], client: redis.Redis
+    articles: list[bytes], embeddings: list[list[float]], client: redis.Redis
 ) -> list[bool]:
 
     res_list = []
-    for i, text_embedding in enumerate(text_embeddings):
+    for i, (article, embedding) in enumerate(zip(articles, embeddings)):
+        key = f"doc:{i + 1}"
         res = client.json().set(
-            f"doc:{i + 1}",
+            key,
             "$",
             {
-                "content": text_embedding.text.decode("utf-8"),
-                "vector": text_embedding.embedding.tolist(),
+                "text": article.decode("utf-8"),
+                "vector": np.array(embedding).astype(np.float32).tolist(),
             },
         )
         res_list.append(res)
     return res_list
 
 
-def get_text_embeddings(text_zip_file: pathlib.Path) -> list[TextEmbedding]:
-    text_embeddings: list[TextEmbedding] = []
-    for article in get_articles(text_zip_file):
-        embedding = get_openai_embeddings(article.decode("utf-8"))
-        text_embedding = TextEmbedding(article, embedding)
-        text_embeddings.append(text_embedding)
-    return text_embeddings
+def get_text_embeddings(articles: list[bytes]) -> list[list[float]]:
+    return [
+        get_openai_embeddings(article.decode("utf-8")) for article in articles
+    ]
 
 
 def main():
@@ -155,12 +146,11 @@ def main():
         " considered a well-managed company?"
     )
     response = get_completion(prompt)
-    embeddings = get_openai_embeddings(response)
     print(response)
-    print(len(embeddings))
 
     article_file = get_articles_file()
-    text_embeddings: list[TextEmbedding] = get_text_embeddings(article_file)
+    articles = list(get_articles(article_file))[:4]  # TODO
+    embeddings: list[list[float]] = get_text_embeddings(articles)
 
     client = redis.Redis(
         host="localhost", port=6379, db=0, decode_responses=True
@@ -169,20 +159,21 @@ def main():
 
     index_name = "idx"
     prefix = "doc:"
-    assert len(text_embeddings) > 0, "There are not articles"
-    dim = len(text_embeddings[0].text)
+    assert len(embeddings) > 0, "There are no articles"
+    dim = len(embeddings[0])
 
     if not index_exists(index_name, client):
         res = create_vector_index(index_name, dim, prefix, client)
         assert res == "OK", "Cannot create vector index"
         print_indexing_failures(index_name, client)
 
-    res_list = load_text_embeddings(text_embeddings, client)
+    res_list = load_text_embeddings(articles, embeddings, client)
     assert all(res_list), "Not all text embeddings were loaded"
 
     prompt_embedding = get_openai_embeddings(prompt)
+
     vector_field = "vector"
-    return_field = "content"
+    return_field = "text"
     query = create_query(vector_field, return_field)
     context = search_redis(prompt_embedding, index_name, query, client)
     prompt_with_context = """
@@ -199,6 +190,6 @@ def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.WARN)
     # logging.basicConfig(level=logging.DEBUG)
     main()
