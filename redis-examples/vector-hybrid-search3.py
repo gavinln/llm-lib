@@ -188,12 +188,13 @@ def search_redis(
         .tobytes()
     }
 
-    # perform vector search
     results = client.ft(index_name).search(query, params_dict)
+
     for doc in results.docs:  # type: ignore
         score = 1 - float(doc["vector_score"])
         content = doc["content"].strip()[:100]
-        print(f"{content} (Score: {round(score ,3) })")
+        clean_text = " ".join(content.replace("\n", " ").split())
+        print(f"  {clean_text[:100]} (Score: {round(score ,3) })")
     return results.docs  # type: ignore
 
 
@@ -203,8 +204,12 @@ def query_redis(query_text, hybrid_fields, index_name, client):
     vector_field = "vector"
     return_fields = ["vector_score", "content"]
 
+    print("--- Query text ----------------------")
+    clean_text = " ".join(query_text.replace("\n", " ").split())
+    print(clean_text[:100])
     query = create_query(vector_field, return_fields, hybrid_fields)
     query_embeddings = get_embeddings(query_text)
+    print("Search similar text---------------------------")
     search_redis(query_embeddings, index_name, query, client)
 
 
@@ -230,7 +235,7 @@ def main():
 
     index_documents(prefix, text_embeddings, client)
 
-    query_text = """Radcliffe yet to answer GB call
+    query_text1 = """Radcliffe yet to answer GB call
 
     Paula Radcliffe has been granted extra time to decide whether to compete in
     the World Cross-Country Championships.
@@ -251,7 +256,38 @@ def main():
     absence, the GB team won bronze in Brussels.
     """
 
-    query_redis(query_text, "*", index_name, client)
+    query_redis(query_text1, "*", index_name, client)
+
+    query_text2 = """Ethiopia's crop production up 24%
+
+    Ethiopia produced 14.27 million tonnes of crops in 2004, 24% higher than in
+    2003 and 21% more than the average of the past five years, a report says.
+
+    In 2003, crop production totalled 11.49 million tonnes, the joint report
+    from the Food and Agriculture Organisation and the World Food Programme
+    said. Good rains, increased use of fertilizers and improved seeds
+    contributed to the rise in production. Nevertheless, 2.2 million Ethiopians
+    will still need emergency assistance.
+
+    The report calculated emergency food requirements for 2005 to be 387,500
+    tonnes. On top of that, 89,000 tonnes of fortified blended food and
+    vegetable oil for "targeted supplementary food distributions for a survival
+    programme for children under five and pregnant and lactating women" will be
+    needed.
+
+    In eastern and southern Ethiopia, a prolonged drought has killed crops and
+    drained wells. Last year, a total of 965,000 tonnes of food assistance was
+    needed to help seven million Ethiopians. The Food and Agriculture
+    Organisation (FAO) recommend that the food assistance is bought locally.
+    "Local purchase of cereals for food assistance programmes is recommended as
+    far as possible, so as to assist domestic markets and farmers," said Henri
+    Josserand, chief of FAO's Global Information and Early Warning System.
+    Agriculture is the main economic activity in Ethiopia, representing 45% of
+    gross domestic product. About 80% of Ethiopians depend directly or
+    indirectly on agriculture.
+    """
+
+    query_redis(query_text2, "*", index_name, client)
 
 
 if __name__ == "__main__":
