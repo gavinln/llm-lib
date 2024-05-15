@@ -10,6 +10,10 @@ SHELL = /bin/bash
 help:  ## help for this Makefile
 	@grep -E '^[a-zA-Z0-9_\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
 
+.PHONY: tmux
+tmux:  ## run tmux
+	tmuxp load .tmuxp.yaml
+
 .PHONY: docker-daemon-start
 docker-daemon-start:
 	echo sudo service docker start
@@ -59,6 +63,11 @@ vector-hybrid-search1:  ## vector hybrid search
 
 .PHONY: vector-search-context
 vector-search-context:  ## vector search for context
+	poetry run docker compose up -d
+	poetry run python $@.py
+
+.PHONY: vector-hybrid-search2
+vector-hybrid-search2:  ## vector hybrid search
 	poetry run docker compose up -d
 	poetry run python $@.py
 
