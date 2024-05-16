@@ -23,6 +23,12 @@ Weaviate is an open-source vector search engine that enables scalable and effici
 
 Qdrant is an open-source vector search engine optimized for storing and searching high-dimensional vector data efficiently.
 
+### textract
+
+[textract ][100] is a Python library designed to simplify the process of extracting text from various file formats. It acts as a wrapper around several Python libraries and can extract from document formats like PDF, DOC, DOCX, PPTX, HTML, and even image files like PNG, JPG and audio formats like WAV and MP3.
+
+[100]: https://github.com/deanmalmgren/textract
+
 ## Examples list as a csv file
 
 The examples-list.csv is a file using the pipe '|' character as a separator with no header.
@@ -49,6 +55,12 @@ make unit-test-writing
 make embedding-long-texts
 ```
 
+### Long document content extraction
+
+```
+make long-content-extraction
+```
+
 ## Other libraries
 
 ### Spacy
@@ -59,6 +71,9 @@ make embedding-long-texts
 
 ### TextBlob
 
-[TextBlob][910] is a Python library for processing textual data. It supports common natural language processing (NLP) tasks such as part-of-speech tagging, noun phrase extraction, sentiment analysis, classification, translation, and more.
+[TextBlob][910] is a Python library for processing textual data. It supports
+common natural language processing (NLP) tasks such as part-of-speech tagging,
+noun phrase extraction, sentiment analysis, classification, translation, and
+more.
 
 [910]: https://github.com/sloria/TextBlob
