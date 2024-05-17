@@ -55,6 +55,10 @@ unit-test-writing: env-up  ## using openai to create unit tests
 embedding-long-texts: env-up  ## use chunks for long texts
 	poetry run python $@.py
 
+.PHONY: long-content-extraction
+long-content-extraction: env-up  ## use chunks for long texts
+	poetry run python $@.py
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
