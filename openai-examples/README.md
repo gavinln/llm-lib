@@ -61,6 +61,20 @@ make embedding-long-texts
 make long-content-extraction
 ```
 
+## Getting the code and data for openai cookbook examples
+
+1. Create a shallow clone of the latest version of the repository
+
+```
+git clone --depth 1 https://github.com/openai/openai-cookbook
+```
+
+2. Location of the pdf document used for `long-content-extraction.py`
+
+```
+openai-cookbook/examples/data/fia_f1_power_unit_financial_regulations_issue_1_-_2022-08-16.pdf
+```
+
 ## Other libraries
 
 ### Spacy
