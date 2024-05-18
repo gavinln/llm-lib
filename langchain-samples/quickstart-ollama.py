@@ -17,8 +17,8 @@ def main():
 
     # use default system prompt
     # ask a question that is in the training data
-    # result: str = llm.invoke("Why is the sky blue?")
-    # print(result)
+    result: str = llm.invoke("Why is the sky blue?")
+    print(result)
 
     query: str = "how can langsmith help with testing?"
     result: str = llm.invoke(query)
@@ -36,7 +36,7 @@ def main():
     )
     chain = prompt | llm
     result: str = chain.invoke(query)  # type: ignore
-    breakpoint()
+    print(result)
 
 
 if __name__ == "__main__":
