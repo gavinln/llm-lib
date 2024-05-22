@@ -28,6 +28,11 @@ quickstart-ollama: env-up  ## redis document database
 	echo "ollma pull orca-mini"
 	poetry run python $@.py
 
+.PHONY: retrieval-chain
+retrieval-chain: env-up  ## retrieve document for context
+	poetry run python $@.py
+
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
