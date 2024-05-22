@@ -100,11 +100,40 @@ def voronoi_search():
     print(f"{elapsed=}")
 
 
+def low_memory_search():
+    ds = init_data_sizes()
+    xb, xq = init_data(ds)
+
+    nlist = 100  # number of cells
+    m = 8  # number of subquantizers
+    quantizer = faiss.IndexFlatL2(ds.d)
+    sub_vector_bits = 8  # number of bits encoding for each sub-vector
+    index = faiss.IndexIVFPQ(quantizer, ds.d, nlist, m, sub_vector_bits)
+
+    index.train(xb)  # type: ignore
+    index.add(xb)  # type: ignore
+
+    k = 4  # nearest neighbors
+    D, I = index.search(xb[:5], k)  # type: ignore
+    print(I)
+    print(D)
+
+    index.nprobe = 10  # cells to visit. default is 1
+    start = time.time()
+    D, I = index.search(xq, k)  # type: ignore
+    elapsed = time.time() - start
+    print(I[-5:])
+    print(f"{elapsed=}")
+
+
 def main():
-    fire.Fire({
-        "brute-force-search": brute_force_search,
-        "voronoi-search": voronoi_search
-    })
+    fire.Fire(
+        {
+            "brute-force-search": brute_force_search,
+            "voronoi-search": voronoi_search,
+            "low-memory-search": low_memory_search,
+        }
+    )
 
 
 if __name__ == "__main__":

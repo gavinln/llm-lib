@@ -34,6 +34,22 @@ brute-force-search: env-up  ## brute force search
 voronoi-search: env-up  ## voronoi-search
 	poetry run python getting-started.py $@
 
+.PHONY: low-memory-search
+low-memory-search: env-up  ## low-memory-search
+	poetry run python getting-started.py $@
+
+.PHONY: clustering
+clustering: env-up  ## clustering
+	poetry run python faiss-building-blocks.py $@
+
+.PHONY: pca
+pca: env-up  ## principal component analysis
+	poetry run python faiss-building-blocks.py $@
+
+.PHONY: quantization
+quantization: env-up  ## quantization
+	poetry run python faiss-building-blocks.py $@
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
