@@ -4,7 +4,6 @@ https://github.com/facebookresearch/faiss/wiki/Getting-started
 
 import logging
 import pathlib
-import time
 from typing import Any, NamedTuple
 
 import faiss
