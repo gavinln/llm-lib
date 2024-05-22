@@ -6,6 +6,7 @@ import logging
 import pathlib
 
 from langchain_community.llms.ollama import Ollama
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
@@ -35,8 +36,13 @@ def main():
         ]
     )
     chain = prompt | llm
-    result: str = chain.invoke(query)  # type: ignore
-    print(result)
+    result1: str = chain.invoke(query)  # type: ignore
+    print(result1)
+
+    output_parser = StrOutputParser()
+    chain = prompt | llm | output_parser
+    result2: str = chain.invoke(query)  # type: ignore
+    print(result2)
 
 
 if __name__ == "__main__":
