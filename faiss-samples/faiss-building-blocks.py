@@ -71,13 +71,48 @@ def clustering():
     D, I = index.search(chosen_centroids, 10)
     print(I)
 
+    print("The indices 0, 1, 2, 3, 4 should match the first five vectors")
+
 
 def pca():
-    pass
+    np.random.seed(1234)  # make reproducible
+    # random training data
+    mt = np.random.rand(1000, 40).astype("float32")
+    mat = faiss.PCAMatrix(40, 10)
+    mat.train(mt)  # type: ignore
+    assert mat.is_trained
+    tr = mat.apply(mt)  # type: ignore
+    # print this to show that the magnitude of tr's columns is decreasing
+    print((tr**2).sum(0))  # type: ignore
+    print("The magniture of the tr's columns are decreasing")
 
 
 def quantization():
-    pass
+    np.random.seed(1234)  # make reproducible
+    d = 32  # data dimension
+    cs = 4  # code size (bytes)
+
+    # train set
+    nt = 10000
+    xt = np.random.rand(nt, d).astype("float32")
+
+    # dataset to encode (could be same as train)
+    n = 20000
+    x = np.random.rand(n, d).astype("float32")
+
+    pq = faiss.ProductQuantizer(d, cs, 8)
+    pq.train(xt)  # type: ignore
+
+    # encode
+    codes = pq.compute_codes(x)  # type: ignore
+
+    # decode
+    x2 = pq.decode(codes)
+
+    # compute reconstruction error
+    avg_relative_error = ((x - x2) ** 2).sum() / (x**2).sum()
+
+    print(f"{avg_relative_error=}")
 
 
 def main():
