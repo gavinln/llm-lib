@@ -4,7 +4,6 @@ https://github.com/facebookresearch/faiss/wiki/Getting-started
 
 import logging
 import pathlib
-from typing import Any, NamedTuple
 
 import faiss
 import fire
@@ -13,29 +12,6 @@ import pandas as pd
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
-
-
-class DataSizes(NamedTuple):
-    d: int  # dimension
-    nb: int  # database size
-    nq: int  # number of queries
-
-
-def init_data_sizes():
-    np.random.seed(1234)  # make reproducible
-    d = 64  # dimension
-    nb = 100_000  # database size
-    nq = 10_000  # number of queries
-    return DataSizes(d, nb, nq)
-
-
-def init_data(ds: DataSizes) -> Any:
-    # add a translation along the first dimension that depends on the index
-    xb = np.random.random((ds.nb, ds.d)).astype("float32")
-    xb[:, 0] += np.arange(ds.nb) / 1000.0
-    xq = np.random.random((ds.nq, ds.d)).astype("float32")
-    xq[:, 0] += np.arange(ds.nq) / 1000.0
-    return xb, xq
 
 
 def clustering():
