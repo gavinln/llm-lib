@@ -168,3 +168,4 @@ processed/
 text/
 output/
 .aider*
+**/Session.vim
