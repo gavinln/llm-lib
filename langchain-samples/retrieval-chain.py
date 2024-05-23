@@ -7,15 +7,16 @@ import pathlib
 from typing import Any
 
 from bs4 import BeautifulSoup
+from langchain.chains import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.embeddings.ollama import OllamaEmbeddings
 from langchain_community.llms.ollama import Ollama
 from langchain_community.vectorstores.faiss import FAISS
 from langchain_core.documents.base import Document
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.vectorstores import VectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain.chains.combine_documents import create_stuff_documents_chain
-
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
@@ -70,7 +71,7 @@ def get_url_docs(url) -> list[Document]:
     return docs
 
 
-def get_vector_store(docs) -> FAISS:
+def get_vector_store(docs) -> VectorStore:
     embeddings = OllamaEmbeddings(model="orca-mini")
     # Recursive Character Text Splitter: default options try
     # to keep all paragraphs, sentences, and then words together.
@@ -81,8 +82,13 @@ def get_vector_store(docs) -> FAISS:
     return vector_store
 
 
+def get_retrieval_chain(vector_store: VectorStore, document_chain):
+    retriever = vector_store.as_retriever()
+    retrieval_chain = create_retrieval_chain(retriever, document_chain)
+    return retrieval_chain
+
+
 def main():
-    # DOES NOT WORK CORRECTLY
     # beautifulsoup_example()
     llm = Ollama(model="orca-mini")
     query = "how can langsmith help with testing?"
@@ -94,17 +100,26 @@ def main():
     vector_store = get_vector_store(docs)
     print(type(vector_store))
 
-    prompt = ChatPromptTemplate.from_template("""
+    prompt = ChatPromptTemplate.from_template(
+        """
     Answer the following question based only on the provided context:
 
     <context>
     {context}
     </context>
 
-    Question: {input}""")
+    Question: {input}
+    """
+    )
 
     document_chain = create_stuff_documents_chain(llm, prompt)
-    print(document_chain)
+    retrieval_chain = get_retrieval_chain(vector_store, document_chain)
+    response = retrieval_chain.invoke({"input": query})
+    print(f"{response['input']=}")
+    print(f"{response['answer']=}")
+    for idx, context in enumerate(response["context"]):
+        print(f"--context {idx}-----------------------")
+        print(context.page_content)
 
 
 if __name__ == "__main__":
