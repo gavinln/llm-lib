@@ -16,16 +16,25 @@ tmux:  ## run tmux
 
 .PHONY: env-up
 env-up:
+	docker compose up -d
 	poetry install
 
 .PHONY: env-rm
 env-rm:
+	docker compose rm -s -v -f
 	poetry env remove $$(poetry env info -e)
 
-.PHONY: hello
-hello: env-up  ## dummy example
-	poetry run echo hello
+PHONY: starter-openai
+starter-openai: env-up  ## llamaindex openai starter
+	poetry run python starter-openai.py
 
+PHONY: default-vector-store
+default-vector-store: env-up  ## query with default vector store
+	poetry run python ./vector-store-options.py $@
+
+PHONY: redis-vector-store
+redis-vector-store: env-up  ## query with redis vector store
+	poetry run python ./vector-store-options.py $@
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
