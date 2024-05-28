@@ -81,7 +81,10 @@ system = (
     + "complex programming concepts with creative flair."
 )
 
-user = "Compose a poem that explains the concept of " + "recursion in programming."
+user = (
+    "Compose a poem that explains the concept of "
+    + "recursion in programming."
+)
 
 fmf(basic_example, system, user)
 
@@ -613,10 +616,10 @@ You will be provided with a piece of Python code, and your task is to provide id
 
 user = '''
 from typing import List
-                
+
 def has_sum_k(nums: List[int], k: int) -> bool:
     """
-    Returns True if there are two distinct elements in nums such that their sum 
+    Returns True if there are two distinct elements in nums such that their sum
     is equal to k, and otherwise returns False.
     """
     n = len(nums)
@@ -647,19 +650,19 @@ system = ""
 
 user = """
 Draft a company memo to be distributed to all employees. The memo should cover the following specific points without deviating from the topics mentioned and not writing any fact which is not present here:
-    
+
     Introduction: Remind employees about the upcoming quarterly review scheduled for the last week of April.
-    
+
     Performance Metrics: Clearly state the three key performance indicators (KPIs) that will be assessed during the review: sales targets, customer satisfaction (measured by net promoter score), and process efficiency (measured by average project completion time).
-    
+
     Project Updates: Provide a brief update on the status of the three ongoing company projects:
-    
+
     a. Project Alpha: 75% complete, expected completion by May 30th.
     b. Project Beta: 50% complete, expected completion by June 15th.
     c. Project Gamma: 30% complete, expected completion by July 31st.
-    
+
     Team Recognition: Announce that the Sales Team was the top-performing team of the past quarter and congratulate them for achieving 120% of their target.
-    
+
     Training Opportunities: Inform employees about the upcoming training workshops that will be held in May, including "Advanced Customer Service" on May 10th and "Project Management Essentials" on May 25th.
 """
 
@@ -684,7 +687,7 @@ fmf(translation, system, user)
 
 system = """
 You are a Socratic tutor. Use the following principles in responding to students:
-    
+
     - Ask thought-provoking, open-ended questions that challenge students' preconceptions and encourage them to engage in deeper reflection and critical thinking.
     - Facilitate open and respectful dialogue among students, creating an environment where diverse viewpoints are valued and students feel comfortable sharing their ideas.
     - Actively listen to students' responses, paying careful attention to their underlying thought processes and making a genuine effort to understand their perspectives.
@@ -701,7 +704,7 @@ fmf(socratic_tutor, system, user)
 
 system = """
 Given the following SQL tables, your job is to write queries given a user’s request.
-    
+
     CREATE TABLE Orders (
       OrderID int,
       CustomerID int,
@@ -709,7 +712,7 @@ Given the following SQL tables, your job is to write queries given a user’s re
       OrderTime varchar(8),
       PRIMARY KEY (OrderID)
     );
-    
+
     CREATE TABLE OrderDetails (
       OrderDetailID int,
       OrderID int,
@@ -717,7 +720,7 @@ Given the following SQL tables, your job is to write queries given a user’s re
       Quantity int,
       PRIMARY KEY (OrderDetailID)
     );
-    
+
     CREATE TABLE Products (
       ProductID int,
       ProductName varchar(50),
@@ -726,7 +729,7 @@ Given the following SQL tables, your job is to write queries given a user’s re
       Stock int,
       PRIMARY KEY (ProductID)
     );
-    
+
     CREATE TABLE Customers (
       CustomerID int,
       FirstName varchar(50),
@@ -746,7 +749,7 @@ fmf(natural_language_to_sql, system, user)
 
 system = """
 You will be provided with meeting notes, and your task is to summarize the meeting as follows:
-    
+
     -Overall summary of discussion
     -Action items (what needs to be done and who is doing it)
     -If applicable, a list of topics that need to be discussed more fully in the next meeting.
@@ -756,48 +759,48 @@ user = """
 Meeting Date: March 5th, 2050
     Meeting Time: 2:00 PM
     Location: Conference Room 3B, Intergalactic Headquarters
-    
+
     Attendees:
     - Captain Stardust
     - Dr. Quasar
     - Lady Nebula
     - Sir Supernova
     - Ms. Comet
-    
+
     Meeting called to order by Captain Stardust at 2:05 PM
-    
+
     1. Introductions and welcome to our newest team member, Ms. Comet
-    
+
     2. Discussion of our recent mission to Planet Zog
     - Captain Stardust: "Overall, a success, but communication with the Zogians was difficult. We need to improve our language skills."
     - Dr. Quasar: "Agreed. I'll start working on a Zogian-English dictionary right away."
     - Lady Nebula: "The Zogian food was out of this world, literally! We should consider having a Zogian food night on the ship."
-    
+
     3. Addressing the space pirate issue in Sector 7
     - Sir Supernova: "We need a better strategy for dealing with these pirates. They've already plundered three cargo ships this month."
     - Captain Stardust: "I'll speak with Admiral Starbeam about increasing patrols in that area.
     - Dr. Quasar: "I've been working on a new cloaking technology that could help our ships avoid detection by the pirates. I'll need a few more weeks to finalize the prototype."
-    
+
     4. Review of the annual Intergalactic Bake-Off
     - Lady Nebula: "I'm happy to report that our team placed second in the competition! Our Martian Mud Pie was a big hit!"
     - Ms. Comet: "Let's aim for first place next year. I have a secret recipe for Jupiter Jello that I think could be a winner."
-    
+
     5. Planning for the upcoming charity fundraiser
     - Captain Stardust: "We need some creative ideas for our booth at the Intergalactic Charity Bazaar."
     - Sir Supernova: "How about a 'Dunk the Alien' game? We can have people throw water balloons at a volunteer dressed as an alien."
     - Dr. Quasar: "I can set up a 'Name That Star' trivia game with prizes for the winners."
     - Lady Nebula: "Great ideas, everyone. Let's start gathering the supplies and preparing the games."
-    
+
     6. Upcoming team-building retreat
     - Ms. Comet: "I would like to propose a team-building retreat to the Moon Resort and Spa. It's a great opportunity to bond and relax after our recent missions."
     - Captain Stardust: "Sounds like a fantastic idea. I'll check the budget and see if we can make it happen."
-    
+
     7. Next meeting agenda items
     - Update on the Zogian-English dictionary (Dr. Quasar)
     - Progress report on the cloaking technology (Dr. Quasar)
     - Results of increased patrols in Sector 7 (Captain Stardust)
     - Final preparations for the Intergalactic Charity Bazaar (All)
-    
+
     Meeting adjourned at 3:15 PM. Next meeting scheduled for March 19th, 2050 at 2:00 PM in Conference Room 3B, Intergalactic Headquarters.
 """
 
@@ -821,11 +824,11 @@ You will be presented with user reviews and your job is to provide a set of tags
 
 user = """
 I recently purchased the Inflatotron 2000 airbed for a camping trip and wanted to share my experience with others. Overall, I found the airbed to be a mixed bag with some positives and negatives.
-    
+
     Starting with the positives, the Inflatotron 2000 is incredibly easy to set up and inflate. It comes with a built-in electric pump that quickly inflates the bed within a few minutes, which is a huge plus for anyone who wants to avoid the hassle of manually pumping up their airbed. The bed is also quite comfortable to sleep on and offers decent support for your back, which is a major plus if you have any issues with back pain.
-    
+
     On the other hand, I did experience some negatives with the Inflatotron 2000. Firstly, I found that the airbed is not very durable and punctures easily. During my camping trip, the bed got punctured by a stray twig that had fallen on it, which was quite frustrating. Secondly, I noticed that the airbed tends to lose air overnight, which meant that I had to constantly re-inflate it every morning. This was a bit annoying as it disrupted my sleep and made me feel less rested in the morning.
-    
+
     Another negative point is that the Inflatotron 2000 is quite heavy and bulky, which makes it difficult to transport and store. If you're planning on using this airbed for camping or other outdoor activities, you'll need to have a large enough vehicle to transport it and a decent amount of storage space to store it when not in use.
 """
 

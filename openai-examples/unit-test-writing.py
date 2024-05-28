@@ -1,6 +1,7 @@
-'''
+"""
 https://cookbook.openai.com/examples/unit_test_writing_using_a_multi-step_prompt_with_older_completions_api
-'''
+"""
+
 import ast  # used for detecting whether generated Python code is valid
 import json
 import logging

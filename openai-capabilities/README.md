@@ -8,16 +8,16 @@ Examples:
 
 ```
 # complete text with text output
-make chat-completion-text           
+make chat-completion-text
 
 # complete text with json output
-make chat-completion-json           
+make chat-completion-json
 
 # count tokens using the tiktoken library
-make count-tokens-local             
+make count-tokens-local
 
 # count tokens using an openai call
-make count-tokens-remote            
+make count-tokens-remote
 ```
 
 ## Function calling
@@ -33,44 +33,42 @@ Examples:
 
 ```
 # get and save food reviews embeddings
-make save-food-reviews-embeddings   
+make save-food-reviews-embeddings
 
 # reduce embeddings by normalizing
-make reduce-embeddings-dim          
+make reduce-embeddings-dim
 
 # provide context article to answer question
-make answer-question-using-context  
+make answer-question-using-context
 
 # search reviews using embeddings
-make search-reviews                 
+make search-reviews
 
 # get and save ag news embeddings
-make save-ag-news-embeddings        
+make save-ag-news-embeddings
 
 # recommend similar news articles
-make recommendation-news            
+make recommendation-news
 
 # visualize distribution of reviews
-make visualization-reviews          
+make visualization-reviews
 
 # regression of reviews vs score
-make regression-reviews             
+make regression-reviews
 
 # classification of reviews
-make classification-reviews         
+make classification-reviews
 
 # classification of reviews; positive/negative
-make zero-shot-classification       
+make zero-shot-classification
 
 # similarity between user/product embeddings
-make user-product-embeddings        
+make user-product-embeddings
 
 # cluster using embeddings
-make clustering-reviews             
+make clustering-reviews
 ```
 
 ## Fine-tuning
 
 https://platform.openai.com/docs/guides/fine-tuning
-
-

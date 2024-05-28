@@ -9,8 +9,12 @@ from itertools import islice
 import numpy as np
 import openai
 import tiktoken
-from tenacity import (retry, retry_if_not_exception_type, stop_after_attempt,
-                      wait_random_exponential)
+from tenacity import (
+    retry,
+    retry_if_not_exception_type,
+    stop_after_attempt,
+    wait_random_exponential,
+)
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
