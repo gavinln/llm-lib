@@ -42,7 +42,9 @@ def stream():
             for chunk in stream:
                 if chunk.choices[0].delta and chunk.choices[0].delta.content:
                     # Accumulate the content only if it's not None
-                    assistant_response_content += chunk.choices[0].delta.content
+                    assistant_response_content += chunk.choices[
+                        0
+                    ].delta.content
                     yield f"data: {chunk.choices[0].delta.content}\n\n"
                 if chunk.choices[0].finish_reason == "stop":
                     break  # Stop if the finish reason is 'stop'
@@ -52,11 +54,15 @@ def stream():
             {"role": "assistant", "content": assistant_response_content}
         )
 
-    return Response(stream_with_context(generate()), mimetype="text/event-stream")
+    return Response(
+        stream_with_context(generate()), mimetype="text/event-stream"
+    )
 
 
 @app.route("/reset", methods=["POST"])
 def reset_chat():
     global chat_history
-    chat_history = [{"role": "system", "content": "You are a helpful assistant."}]
+    chat_history = [
+        {"role": "system", "content": "You are a helpful assistant."}
+    ]
     return jsonify(success=True)

@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
 from werkzeug.utils import secure_filename
-import os
 import time
 
 from openai import OpenAI
@@ -20,7 +19,10 @@ chat_history = [
 
 
 def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    return (
+        "." in filename
+        and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    )
 
 
 @app.route("/upload", methods=["POST"])
@@ -39,8 +41,12 @@ def upload_file():
         filename = secure_filename(file.filename)
 
         # Upload the file and add it to the Assistant (you could also add it to the message)
-        uploaded_file = client.files.create(file=file.stream, purpose="assistants")
-        assistant_files = client.beta.assistants.files.list(assistant_id=assistant_id)
+        uploaded_file = client.files.create(
+            file=file.stream, purpose="assistants"
+        )
+        assistant_files = client.beta.assistants.files.list(
+            assistant_id=assistant_id
+        )
 
         file_ids = [file.id for file in assistant_files.data]
         file_ids.append(uploaded_file.id)
@@ -66,7 +72,9 @@ def get_ids():
 @app.route("/get_messages", methods=["GET"])
 def get_messages():
     if thread_id != "":
-        thread_messages = client.beta.threads.messages.list(thread_id, order="asc")
+        thread_messages = client.beta.threads.messages.list(
+            thread_id, order="asc"
+        )
         messages = [
             {
                 "role": msg.role,
@@ -95,7 +103,9 @@ def delete_files():
 @app.route("/get_files", methods=["GET"])
 def get_files():
     global assistant_id
-    assistant_files = client.beta.assistants.files.list(assistant_id=assistant_id)
+    assistant_files = client.beta.assistants.files.list(
+        assistant_id=assistant_id
+    )
     print(assistant_files)
 
     files_list = []
@@ -150,7 +160,11 @@ def chat():
     chat_history.append({"role": "user", "content": content})
 
     # Send the message to the assistant
-    message_params = {"thread_id": thread_id, "role": "user", "content": content}
+    message_params = {
+        "thread_id": thread_id,
+        "role": "user",
+        "content": content,
+    }
 
     thread_message = client.beta.threads.messages.create(**message_params)
 
@@ -161,7 +175,9 @@ def chat():
     # Wait for the run to complete and get the response
     while run.status != "completed":
         time.sleep(0.5)
-        run = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run.id)
+        run = client.beta.threads.runs.retrieve(
+            thread_id=thread_id, run_id=run.id
+        )
 
     response = client.beta.threads.messages.list(thread_id).data[0]
 
@@ -185,7 +201,9 @@ def chat():
 @app.route("/reset", methods=["POST"])
 def reset_chat():
     global chat_history
-    chat_history = [{"role": "system", "content": "You are a helpful assistant."}]
+    chat_history = [
+        {"role": "system", "content": "You are a helpful assistant."}
+    ]
 
     global thread_id
     thread_id = ""
