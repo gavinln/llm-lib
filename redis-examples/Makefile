@@ -35,7 +35,7 @@ env-up:
 .PHONY: env-rm
 env-rm:
 	docker compose rm -s -v -f
-	poetry env remove $$(poetry env info -e)
+	# poetry env remove $$(poetry env info -e)
 
 .PHONY: data-structure-store
 data-structure-store: env-up  ## redis data structure store
@@ -75,6 +75,51 @@ vector-search-hybrid:  ## vector hybrid search
 vector-search:  ## vector search
 	poetry run docker compose up -d
 	poetry run python $@.py
+
+.PHONY: redisvl-basic
+redisvsl-basic:  ## basic redis vector lib
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
+
+.PHONY: redisvl-vector-query
+redisvsl-vector-query:  ## vector query
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
+
+.PHONY: redisvl-tag-filters
+redisvsl-tag-filters:  ## vector query with tag filters
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
+
+.PHONY: redisvl-numeric-filters
+redisvsl-numeric-filters:  ## vector query with numeric filters
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
+
+.PHONY: redisvl-text-filters
+redisvsl-text-filters:  ## filter on a text field
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
+
+.PHONY: redisvl-combined-filters
+redisvsl-combined-filters:  ## combine multiple filters
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
+
+.PHONY: redisvl-filter-queries
+redisvsl-filter-queries:  ## TODO
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
+
+.PHONY: redisvl-count-queries
+redisvsl-count-queries:  ## TODO
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
+
+.PHONY: redisvl-range-queries
+redisvsl-range-queries:  ## TOOO
+	poetry run docker compose up -d
+	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
