@@ -77,47 +77,47 @@ vector-search:  ## vector search
 	poetry run python $@.py
 
 .PHONY: redisvl-basic
-redisvsl-basic:  ## basic redis vector lib
+redisvl-basic:  ## basic redis vector lib
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: redisvl-vector-query
-redisvsl-vector-query:  ## vector query
+redisvl-vector-query:  ## vector query
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: redisvl-tag-filters
-redisvsl-tag-filters:  ## vector query with tag filters
+redisvl-tag-filters:  ## vector query with tag filters
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: redisvl-numeric-filters
-redisvsl-numeric-filters:  ## vector query with numeric filters
+redisvl-numeric-filters:  ## vector query with numeric filters
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: redisvl-text-filters
-redisvsl-text-filters:  ## filter on a text field
+redisvl-text-filters:  ## vector query with text filter
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: redisvl-combined-filters
-redisvsl-combined-filters:  ## combine multiple filters
+redisvl-combined-filters:  ## vector query: text, numeric filters
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: redisvl-filter-queries
-redisvsl-filter-queries:  ## TODO
+redisvl-filter-queries:  ## filter query, no vector query
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: redisvl-count-queries
-redisvsl-count-queries:  ## TODO
+redisvl-count-queries:  ## count query, no vector query
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 
 .PHONY: redisvl-range-queries
-redisvsl-range-queries:  ## TOOO
+redisvl-range-queries:  ## vector query with range
 	poetry run docker compose up -d
 	poetry run python redis-vector-lib-samples.py $@
 

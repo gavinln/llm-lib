@@ -8,15 +8,15 @@ import pathlib
 import pickle
 import sys
 from typing import Any
+from contextlib import contextmanager
 
 import fire
 import pandas as pd
 import redis
 from redisvl.index import SearchIndex
-from redisvl.query import VectorQuery
-from redisvl.query.filter import Num, Tag, Text
+from redisvl.query import CountQuery, FilterQuery, RangeQuery, VectorQuery
+from redisvl.query.filter import FilterExpression, Num, Tag, Text
 from redisvl.schema import IndexSchema
-from redisvl.query.filter import FilterExpression
 
 # from redis.commands.search.field import TextField, VectorField
 # from redis.commands.search.indexDefinition import IndexDefinition, IndexType
@@ -122,6 +122,7 @@ def basic():
     print(results)
 
 
+@contextmanager
 def create_index_and_load_data():
     schema = get_hybrid_example_data_schema()
     index_name = schema["index"]["name"]
@@ -134,12 +135,15 @@ def create_index_and_load_data():
     # delete index if it exists
     if index_name in index.listall():
         index.delete()
-    index.create(overwrite=True)
+    try:
+        index.create(overwrite=True)
 
-    data = get_hybrid_example_data()
-    keys = index.load(data)
-    assert len(keys) == len(data), "data cannot be loaded"
-    return index
+        data = get_hybrid_example_data()
+        keys = index.load(data)
+        assert len(keys) == len(data), "data cannot be loaded"
+        yield index
+    finally:
+        index.delete()
 
 
 def print_columns_except_id(results: list[dict]):
@@ -166,16 +170,17 @@ def get_vector_query():
 
 def vector_query():
     v = get_vector_query()
-    index = create_index_and_load_data()
-    results = index.query(v)
-    print_columns_except_id(results)
+    with create_index_and_load_data() as index:
+        results = index.query(v)
+        print_columns_except_id(results)
 
 
 def query_index_with_filter(filter_exp: FilterExpression) -> Any:
     v = get_vector_query()
     v.set_filter(filter_exp)
-    results = create_index_and_load_data().query(v)
-    return results
+    with create_index_and_load_data() as index:
+        results = index.query(v)
+        return results
 
 
 def tag_filters():
@@ -207,29 +212,48 @@ def combined_filters():
 
 
 def filter_queries():
-    pass
+    has_low_credit = Tag("credit_score") == "low"
+    filter_query = FilterQuery(
+        return_fields=["user", "credit_score", "age", "job", "location"],
+        filter_expression=has_low_credit,
+    )
+    with create_index_and_load_data() as index:
+        results = index.query(filter_query)
+        print_columns_except_id(results)
 
 
 def count_queries():
-    pass
+    has_low_credit = Tag("credit_score") == "low"
+    count_query = CountQuery(filter_expression=has_low_credit)
+    with create_index_and_load_data() as index:
+        count = index.query(count_query)
+        print(f"{count} records match the filter expression {has_low_credit}")
 
 
 def range_queries():
-    pass
+    range_query = RangeQuery(
+        vector=[0.1, 0.1, 0.5],
+        vector_field_name="user_embedding",
+        return_fields=["user", "credit_score", "age", "job", "location"],
+        distance_threshold=0.2,
+    )
+    with create_index_and_load_data() as index:
+        results = index.query(range_query)
+        print_columns_except_id(results)
 
 
 def main():
     fire.Fire(
         {
-            "redisvsl-basic": basic,
-            "redisvsl-vector-query": vector_query,
-            "redisvsl-tag-filters": tag_filters,
-            "redisvsl-numeric-filters": numeric_filters,
-            "redisvsl-text-filters": text_filters,
-            "redisvsl-combined-filters": combined_filters,
-            "redisvsl-filter-queries": filter_queries,
-            "redisvsl-count-queries": count_queries,
-            "redisvsl-range-queries": range_queries,
+            "redisvl-basic": basic,
+            "redisvl-vector-query": vector_query,
+            "redisvl-tag-filters": tag_filters,
+            "redisvl-numeric-filters": numeric_filters,
+            "redisvl-text-filters": text_filters,
+            "redisvl-combined-filters": combined_filters,
+            "redisvl-filter-queries": filter_queries,
+            "redisvl-count-queries": count_queries,
+            "redisvl-range-queries": range_queries,
         }
     )
 

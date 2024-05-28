@@ -15,7 +15,7 @@ import pandas as pd
 import redis
 from joblib import Memory
 from openai import OpenAI
-# import requests
+
 from redis.commands.search.field import TextField, VectorField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query

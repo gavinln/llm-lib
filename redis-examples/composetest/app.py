@@ -1,6 +1,7 @@
-'''
+"""
 https://docs.docker.com/compose/gettingstarted/
-'''
+"""
+
 import time
 
 import redis

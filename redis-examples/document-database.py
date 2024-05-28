@@ -2,7 +2,6 @@
 https://redis.io/docs/latest/develop/get-started/document-database/
 """
 
-import json
 import logging
 import pathlib
 from typing import Any
@@ -11,6 +10,7 @@ import redis
 from redis.commands.json.path import Path
 from redis.commands.search.field import NumericField, TagField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
+
 # import redis.commands.search.aggregation as aggregations
 # import redis.commands.search.reducers as reducers
 # from redis.commands.search.query import NumericFilter
