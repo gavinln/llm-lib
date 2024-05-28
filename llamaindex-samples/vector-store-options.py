@@ -6,8 +6,12 @@ import logging
 import pathlib
 
 import fire
-from llama_index.core import (SimpleDirectoryReader, StorageContext,
-                              VectorStoreIndex, load_index_from_storage)
+from llama_index.core import (
+    SimpleDirectoryReader,
+    StorageContext,
+    VectorStoreIndex,
+    load_index_from_storage,
+)
 from llama_index.core.indices.base import BaseIndex
 from llama_index.vector_stores.redis import RedisVectorStore
 from redis import Redis
