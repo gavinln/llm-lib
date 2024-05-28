@@ -2,6 +2,7 @@
 GPT using "tool call" or "function calling"
 https://platform.openai.com/docs/guides/function-calling
 """
+
 import json
 import logging
 import pathlib
@@ -12,8 +13,9 @@ import fire
 import openai
 from openai.types.chat.chat_completion import ChatCompletion
 from openai.types.chat.chat_completion_message import ChatCompletionMessage
-from openai.types.chat.chat_completion_message_tool_call import \
-    ChatCompletionMessageToolCall
+from openai.types.chat.chat_completion_message_tool_call import (
+    ChatCompletionMessageToolCall,
+)
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()

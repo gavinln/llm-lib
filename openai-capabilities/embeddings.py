@@ -1,6 +1,7 @@
 """
 https://platform.openai.com/docs/guides/embeddings
 """
+
 import logging
 import pathlib
 import sys
@@ -19,8 +20,11 @@ from sklearn.cluster import KMeans
 from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.manifold import TSNE
-from sklearn.metrics import (classification_report, mean_absolute_error,
-                             mean_squared_error)
+from sklearn.metrics import (
+    classification_report,
+    mean_absolute_error,
+    mean_squared_error,
+)
 from sklearn.model_selection import train_test_split
 from tqdm.auto import tqdm
 

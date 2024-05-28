@@ -3,6 +3,7 @@ GPT using assistants
 https://platform.openai.com/docs/assistants/overview?context=without-streaming
 https://cookbook.openai.com/examples/assistants_api_overview_python
 """
+
 import json
 import logging
 import pathlib

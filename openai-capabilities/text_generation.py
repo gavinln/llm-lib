@@ -1,6 +1,7 @@
 """
 https://platform.openai.com/docs/guides/embeddings
 """
+
 import logging
 import pathlib
 from typing import Any, Iterable
@@ -10,8 +11,9 @@ import openai
 import tiktoken
 from openai import OpenAI
 from openai.types.chat.chat_completion import ChatCompletion
-from openai.types.chat.chat_completion_message_param import \
-    ChatCompletionMessageParam
+from openai.types.chat.chat_completion_message_param import (
+    ChatCompletionMessageParam,
+)
 from openai.types.chat.completion_create_params import ResponseFormat
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
