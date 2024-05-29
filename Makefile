@@ -19,6 +19,10 @@ aider:  ## run aider to modify code using AI
 
 .PHONY: clean
 clean:  ## remove temporary directories in python envs
+
+	@make -C ./faiss-samples/ clean
+	@make -C ./langchain-samples/ clean
+	@make -C ./llamaindex-samples/ clean
 	@make -C ./openai-capabilities/ clean
 	@make -C ./openai-examples/ clean
 	@make -C ./openai-prompts/ clean
