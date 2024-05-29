@@ -36,6 +36,10 @@ PHONY: redis-vector-store
 redis-vector-store: env-up  ## query with redis vector store
 	poetry run python ./vector-store-options.py $@
 
+PHONY: redis-custom-schema
+redis-custom-schema: env-up  ## query with redis vector store
+	poetry run python ./vector-store-options.py $@
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
