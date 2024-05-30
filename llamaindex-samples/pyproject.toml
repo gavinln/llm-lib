@@ -15,6 +15,9 @@ llama-index-llms-ollama = "^0.1.5"
 fire = "^0.6.0"
 redis = "^5.0.4"
 llama-index-vector-stores-redis = "^0.2.0"
+scikit-learn = "^1.5.0"
+llama-index-readers-wikipedia = "^0.1.4"
+wikipedia = "^1.4.0"
 
 [build-system]
 requires = ["poetry-core"]

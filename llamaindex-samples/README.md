@@ -7,3 +7,17 @@
 ## Links
 
 https://docs.llamaindex.ai/en/stable/
+
+### Vector stores
+
+#### Simple vector store
+
+https://docs.llamaindex.ai/en/stable/examples/vector_stores/SimpleIndexDemo/
+
+#### Simple vector store - async
+
+https://docs.llamaindex.ai/en/stable/examples/vector_stores/AsyncIndexCreationDemo/
+
+#### Simple vector store - MMR
+
+https://docs.llamaindex.ai/en/stable/examples/vector_stores/SimpleIndexDemoMMR/

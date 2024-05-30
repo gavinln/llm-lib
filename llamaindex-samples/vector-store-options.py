@@ -2,7 +2,6 @@
 https://docs.llamaindex.ai/en/stable/examples/vector_stores/RedisIndexDemo/
 """
 
-import collections
 import datetime
 import logging
 import pathlib
@@ -47,13 +46,17 @@ def persist_default_vector_store_index(persist_dir, documents) -> BaseIndex:
     return index
 
 
+def get_data_dir():
+    return str(pathlib.Path(SCRIPT_DIR / "data" / "paul_graham"))
+
+
 def default_vector_store():
     print("using default vector store")
     persist_dir = pathlib.Path(SCRIPT_DIR / "temp_storage")
     if persist_dir.exists():
         index = get_default_vector_store_index(persist_dir)
     else:
-        documents = SimpleDirectoryReader("data").load_data()
+        documents = SimpleDirectoryReader(get_data_dir()).load_data()
         index = persist_default_vector_store_index(persist_dir, documents)
 
     query_engine = index.as_query_engine()
@@ -105,7 +108,7 @@ def redis_vector_store():
         index = get_redis_vector_store_index(url)
         sys.exit("Index exists. Exiting")
     else:
-        documents = SimpleDirectoryReader("data").load_data()
+        documents = SimpleDirectoryReader(get_data_dir()).load_data()
         index = persist_redis_vector_store_index(url, documents)
 
     query_engine = index.as_query_engine()
@@ -260,7 +263,7 @@ def redis_custom_schema():
     redis_client = Redis.from_url(url)
     assert redis_client.ping() is True, "Cannot connect to Redis"
     schema = get_custom_schema()
-    documents = SimpleDirectoryReader("data").load_data()
+    documents = SimpleDirectoryReader(get_data_dir()).load_data()
     # add updated_at metadata to documents
     modified_date: Any = None
     for document in documents:

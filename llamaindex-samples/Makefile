@@ -29,16 +29,28 @@ starter-openai: env-up  ## llamaindex openai starter
 	poetry run python starter-openai.py
 
 PHONY: default-vector-store
-default-vector-store: env-up  ## query with default vector store
+default-vector-store: env-up  ## query default vector store
 	poetry run python ./vector-store-options.py $@
 
 PHONY: redis-vector-store
-redis-vector-store: env-up  ## query with redis vector store
+redis-vector-store: env-up  ## query redis vector store
 	poetry run python ./vector-store-options.py $@
 
 PHONY: redis-custom-schema
-redis-custom-schema: env-up  ## query with redis vector store
+redis-custom-schema: env-up  ## query redis custom schema
 	poetry run python ./vector-store-options.py $@
+
+PHONY: vector-svm-regression
+vector-svm-regression: env-up  ## vector search with regression
+	poetry run python simple-vector-store.py $@
+
+PHONY: vector-async-index
+vector-async-index: env-up  ## create index using async
+	poetry run python simple-vector-store.py $@
+
+PHONY: vector-maximum-marginal-rel
+vector-maximum-marginal-rel: env-up  ## modifiy relevance threshold
+	poetry run python simple-vector-store.py $@
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
