@@ -41,15 +41,15 @@ redis-custom-schema: env-up  ## query redis custom schema
 	poetry run python ./vector-store-options.py $@
 
 PHONY: vector-svm-regression
-vector-svm-regression: env-up  ## vector search with regression
+vector-svm-regression: env-up  ## simple vector search with regression
 	poetry run python simple-vector-store.py $@
 
 PHONY: vector-async-index
-vector-async-index: env-up  ## create index using async
+vector-async-index: env-up  ## simple vector index using async
 	poetry run python simple-vector-store.py $@
 
 PHONY: vector-maximum-marginal-rel
-vector-maximum-marginal-rel: env-up  ## modifiy relevance threshold
+vector-maximum-marginal-rel: env-up  ## simple vector relevance threshold
 	poetry run python simple-vector-store.py $@
 
 .PHONY: clean
