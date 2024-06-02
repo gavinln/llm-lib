@@ -1,45 +1,23 @@
 """
-https://docs.llamaindex.ai/en/stable/examples/vector_stores/FaissIndexDemo/
+https://docs.llamaindex.ai/en/stable/examples/vector_stores/DocArrayInMemoryIndexDemo/
 """
 
 import logging
 import pathlib
-import tempfile
+from typing import Any
 
-from joblib import Memory
 from llama_index.core import (
-    Document,
-    QueryBundle,
+    GPTVectorStoreIndex,
     SimpleDirectoryReader,
     StorageContext,
-    VectorStoreIndex,
-    load_index_from_storage,
 )
 from llama_index.core.base.base_retriever import BaseRetriever
 from llama_index.core.indices.base import BaseIndex
-from llama_index.core.vector_stores import ExactMatchFilter, MetadataFilters
-from llama_index.readers.wikipedia import WikipediaReader
+from llama_index.vector_stores.docarray import DocArrayInMemoryVectorStore
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 
 log = logging.getLogger(__name__)
-
-memory = Memory(tempfile.gettempdir(), verbose=0)
-
-
-def get_default_vector_store_index(persist_dir) -> BaseIndex:
-    storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
-    index = load_index_from_storage(storage_context)
-    return index
-
-
-def persist_default_vector_store_index(persist_dir, documents) -> BaseIndex:
-    index: BaseIndex = VectorStoreIndex.from_documents(
-        documents,
-    )
-    index.set_index_id("vector_index")
-    index.storage_context.persist(persist_dir=persist_dir)
-    return index
 
 
 def get_data_dir():
@@ -67,25 +45,27 @@ def print_query_nodes(retriever: BaseRetriever, query):
         print("There are NO NODES")
 
 
-def create_retriever(index: BaseIndex) -> BaseRetriever:
-    retriever = index.as_retriever(
-        similarity_top_k=3,
-        filters=MetadataFilters(
-            filters=[
-                ExactMatchFilter(key="tag", value="target"),
-            ],
-        ),
+def create_index_from_documents(data_dir) -> BaseIndex:
+    vector_store: Any = DocArrayInMemoryVectorStore()
+    storage_context = StorageContext.from_defaults(vector_store=vector_store)
+
+    documents = SimpleDirectoryReader(data_dir).load_data()
+    index = GPTVectorStoreIndex.from_documents(
+        documents, storage_context=storage_context
     )
-    return retriever
-
-
-def create_index_from_documents(documents) -> BaseIndex:
-    index = VectorStoreIndex.from_documents(documents, use_async=True)
     return index
 
 
 def main():
     print("docarray vector store")
+    data_dir = get_data_dir()
+    index = create_index_from_documents(data_dir)
+    query_engine = index.as_query_engine()
+    query = "What did the author do growing up?"
+    print_query_response(query_engine, query)
+
+    query = "What was a hard moment for the author?"
+    print_query_response(query_engine, query)
 
 
 if __name__ == "__main__":

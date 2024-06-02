@@ -58,7 +58,6 @@ def load_index_from_dir(persist_dir) -> BaseIndex:
 
 
 def main():
-    print("faiss vector store")
     data_dir = get_data_dir()
     persist_dir = get_temp_storage_dir()
     _ = create_index_from_documents(data_dir, persist_dir)
