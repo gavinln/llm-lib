@@ -18,6 +18,8 @@ llama-index-vector-stores-redis = "^0.2.0"
 scikit-learn = "^1.5.0"
 llama-index-readers-wikipedia = "^0.1.4"
 wikipedia = "^1.4.0"
+llama-index-vector-stores-faiss = "^0.1.2"
+faiss-cpu = "^1.8.0"
 
 [build-system]
 requires = ["poetry-core"]

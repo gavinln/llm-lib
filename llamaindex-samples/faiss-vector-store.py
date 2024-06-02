@@ -4,42 +4,20 @@ https://docs.llamaindex.ai/en/stable/examples/vector_stores/FaissIndexDemo/
 
 import logging
 import pathlib
-import tempfile
 
-from joblib import Memory
+import faiss
 from llama_index.core import (
-    Document,
-    QueryBundle,
     SimpleDirectoryReader,
     StorageContext,
     VectorStoreIndex,
     load_index_from_storage,
 )
-from llama_index.core.base.base_retriever import BaseRetriever
 from llama_index.core.indices.base import BaseIndex
-from llama_index.core.vector_stores import ExactMatchFilter, MetadataFilters
-from llama_index.readers.wikipedia import WikipediaReader
+from llama_index.vector_stores.faiss import FaissVectorStore
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 
 log = logging.getLogger(__name__)
-
-memory = Memory(tempfile.gettempdir(), verbose=0)
-
-
-def get_default_vector_store_index(persist_dir) -> BaseIndex:
-    storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
-    index = load_index_from_storage(storage_context)
-    return index
-
-
-def persist_default_vector_store_index(persist_dir, documents) -> BaseIndex:
-    index: BaseIndex = VectorStoreIndex.from_documents(
-        documents,
-    )
-    index.set_index_id("vector_index")
-    index.storage_context.persist(persist_dir=persist_dir)
-    return index
 
 
 def get_data_dir():
@@ -56,36 +34,40 @@ def print_query_response(query_engine, query):
     print(response)
 
 
-def print_query_nodes(retriever: BaseRetriever, query):
-    result_nodes = retriever.retrieve(query)
-    print(f"--{query}----")
-    no_nodes = True
-    for node in result_nodes:
-        print(node)
-        no_nodes = False
-    if no_nodes:
-        print("There are NO NODES")
+def create_index_from_documents(data_dir, persist_dir) -> BaseIndex:
+    dim = 1536
+    faiss_index = faiss.IndexFlatL2(dim)
+    vector_store = FaissVectorStore(faiss_index=faiss_index)
+    storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
-
-def create_retriever(index: BaseIndex) -> BaseRetriever:
-    retriever = index.as_retriever(
-        similarity_top_k=3,
-        filters=MetadataFilters(
-            filters=[
-                ExactMatchFilter(key="tag", value="target"),
-            ],
-        ),
+    documents = SimpleDirectoryReader(data_dir).load_data()
+    index = VectorStoreIndex.from_documents(
+        documents, storage_context=storage_context
     )
-    return retriever
+    index.storage_context.persist(persist_dir=persist_dir)
+    return index
 
 
-def create_index_from_documents(documents) -> BaseIndex:
-    index = VectorStoreIndex.from_documents(documents, use_async=True)
+def load_index_from_dir(persist_dir) -> BaseIndex:
+    vector_store = FaissVectorStore.from_persist_dir(persist_dir)
+    storage_context = StorageContext.from_defaults(
+        vector_store=vector_store, persist_dir=persist_dir
+    )
+    index = load_index_from_storage(storage_context=storage_context)
     return index
 
 
 def main():
     print("faiss vector store")
+    data_dir = get_data_dir()
+    persist_dir = get_temp_storage_dir()
+    _ = create_index_from_documents(data_dir, persist_dir)
+    index = load_index_from_dir(persist_dir)
+    query_engine = index.as_query_engine()
+    print_query_response(query_engine, "What did the author do growing up?")
+    print_query_response(
+        query_engine, "What did the author do after his time at Y Combinator?"
+    )
 
 
 if __name__ == "__main__":

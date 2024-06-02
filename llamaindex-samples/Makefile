@@ -52,6 +52,10 @@ PHONY: vector-maximum-marginal-rel
 vector-maximum-marginal-rel: env-up  ## simple vector relevance threshold
 	poetry run python simple-vector-store.py $@
 
+PHONY: faiss-vector-store
+faiss-vector-store: env-up  ## simple vector relevance threshold
+	poetry run python $@.py
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
