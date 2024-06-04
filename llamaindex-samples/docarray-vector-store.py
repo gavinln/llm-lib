@@ -8,6 +8,7 @@ import logging
 import pathlib
 from typing import Any
 
+import fire
 from llama_index.core import (
     GPTVectorStoreIndex,
     SimpleDirectoryReader,
@@ -16,9 +17,11 @@ from llama_index.core import (
 from llama_index.core.base.base_retriever import BaseRetriever
 from llama_index.core.indices.base import BaseIndex
 from llama_index.core.schema import TextNode
-from llama_index.vector_stores.docarray import DocArrayInMemoryVectorStore
-
 from llama_index.core.vector_stores import ExactMatchFilter, MetadataFilters
+from llama_index.vector_stores.docarray import (
+    DocArrayHnswVectorStore,
+    DocArrayInMemoryVectorStore,
+)
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 
@@ -50,8 +53,7 @@ def print_query_nodes(retriever: BaseRetriever, query):
         print("There are NO NODES")
 
 
-def create_index_from_documents(data_dir) -> BaseIndex:
-    vector_store: Any = DocArrayInMemoryVectorStore()
+def create_index_from_vector_store(vector_store, data_dir) -> BaseIndex:
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
     documents = SimpleDirectoryReader(data_dir).load_data()
@@ -61,8 +63,7 @@ def create_index_from_documents(data_dir) -> BaseIndex:
     return index
 
 
-def create_index_from_nodes(nodes) -> BaseIndex:
-    vector_store: Any = DocArrayInMemoryVectorStore()
+def create_index_from_nodes(nodes, vector_store) -> BaseIndex:
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
     index = GPTVectorStoreIndex(nodes, storage_context=storage_context)
     return index
@@ -94,10 +95,14 @@ def get_movie_nodes() -> list[TextNode]:
     return nodes
 
 
-def main():
-    print("docarray vector store")
+def inmemory_vector_store():
+    """
+    MetaDataFilters does not work
+    """
     data_dir = get_data_dir()
-    index = create_index_from_documents(data_dir)
+    vector_store: Any = DocArrayInMemoryVectorStore()
+    index = create_index_from_vector_store(vector_store, data_dir)
+
     query_engine = index.as_query_engine()
     query = "What did the author do growing up?"
     print_query_response(query_engine, query)
@@ -106,12 +111,51 @@ def main():
     print_query_response(query_engine, query)
 
     nodes = get_movie_nodes()
-    index = create_index_from_nodes(nodes)
+    index = create_index_from_nodes(nodes, vector_store)
     filters = MetadataFilters(
         filters=[ExactMatchFilter(key="theme", value="Mafia")]
     )
     retriever = index.as_retriever(filters=filters)
-    print_query_nodes(retriever, "What is inception about?")
+    print(retriever)
+    # print_query_nodes(retriever, "What is inception about?")
+
+
+def hnsw_vector_store():
+    """
+    DOES NOT WORK
+
+    ValueError: Search field embedding is not present in the HNSW indices
+    """
+    data_dir = get_data_dir()
+    temp_dir = get_temp_storage_dir()
+    vector_store: Any = DocArrayHnswVectorStore(work_dir=str(temp_dir))
+    index = create_index_from_vector_store(vector_store, data_dir)
+
+    query_engine = index.as_query_engine()
+    query = "What did the author do growing up?"
+    print(query_engine, query)
+    # print_query_response(query_engine, query)
+
+    # query = "What was a hard moment for the author?"
+    # print_query_response(query_engine, query)
+
+    nodes = get_movie_nodes()
+    index = create_index_from_nodes(nodes, vector_store)
+    filters = MetadataFilters(
+        filters=[ExactMatchFilter(key="theme", value="Mafia")]
+    )
+    retriever = index.as_retriever(filters=filters)
+    print(retriever)
+    # print_query_nodes(retriever, "What is inception about?")
+
+
+def main():
+    fire.Fire(
+        {
+            "docarray-inmemory-vector": inmemory_vector_store,
+            "docarray-hnsw-vector": hnsw_vector_store,
+        }
+    )
 
 
 if __name__ == "__main__":

@@ -56,9 +56,13 @@ PHONY: faiss-vector-store
 faiss-vector-store: env-up  ## simple vector relevance threshold
 	poetry run python $@.py
 
-PHONY: docarray-vector-store
-docarray-vector-store:  ## simple vector relevance threshold
-	poetry run python $@.py
+PHONY: docarray-inmemory-vector
+docarray-inmemory-vector:  ## docarry inmemory vector store
+	poetry run python docarray-vector-store.py $@
+
+PHONY: docarray-hnsw-vector
+docarray-hnsw-vector:  ## docarry hnsw vector store
+	poetry run python docarray-vector-store.py $@
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
