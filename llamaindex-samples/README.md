@@ -34,10 +34,6 @@ https://docs.llamaindex.ai/en/stable/examples/vector_stores/DocArrayInMemoryInde
 
 https://docs.llamaindex.ai/en/stable/examples/vector_stores/DocArrayHnswIndexDemo/
 
-#### Deep Lake Vector Store
-
-https://docs.llamaindex.ai/en/stable/examples/vector_stores/DeepLakeIndexDemo/
-
 #### Auto-Retrieval from a Vector Database
 
 https://docs.llamaindex.ai/en/stable/examples/vector_stores/chroma_auto_retriever/

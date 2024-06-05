@@ -64,6 +64,10 @@ PHONY: docarray-hnsw-vector
 docarray-hnsw-vector:  ## docarry hnsw vector store
 	poetry run python docarray-vector-store.py $@
 
+PHONY: auto-retrieval-vector-store
+auto-retrieval-vector-store:  ## auto-retrieval in llamaindex
+	poetry run python $@.py
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
