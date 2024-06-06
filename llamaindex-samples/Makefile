@@ -73,7 +73,7 @@ ingestion-pipeline-documents:  ## ingestion pipeline & docs
 	poetry run python ingestion.py $@
 
 PHONY: ingestion-pipeline-redis
-ingestion-pipeline-redis:  ## ingestion pipeline with redis
+ingestion-pipeline-redis: env-up  ## ingestion pipeline with redis
 	poetry run python ingestion.py $@
 
 .PHONY: clean
