@@ -10,21 +10,23 @@ import logging
 import pathlib
 from typing import Any
 
+import faiss
 import fire
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
+from llama_index.core.extractors import TitleExtractor
 from llama_index.core.ingestion import (
     DocstoreStrategy,
     IngestionCache,
     IngestionPipeline,
 )
-
-# from llama_index.storage.docstore.redis import RedisDocumentStore
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.schema import Document
 from llama_index.core.storage.docstore import SimpleDocumentStore
+from llama_index.core.vector_stores.types import BasePydanticVectorStore
 from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.storage.docstore.redis import RedisDocumentStore
 from llama_index.storage.kvstore.redis import RedisKVStore
+from llama_index.vector_stores.faiss import FaissVectorStore
 from llama_index.vector_stores.redis import RedisVectorStore
 from redisvl.schema import IndexSchema
 
@@ -43,7 +45,7 @@ def print_query_response(query_engine, query):
     print(response)
 
 
-def get_pipeline() -> IngestionPipeline:
+def get_pipeline_documents() -> IngestionPipeline:
     pipeline = IngestionPipeline(
         transformations=[
             SentenceSplitter(),
@@ -62,14 +64,13 @@ def get_documents(data_dir) -> list[Document]:
 
 
 def pipeline_documents():
-    print("ingestion pipeline docs")
     data_dir = get_data_dir()
     documents = get_documents(data_dir)
     print("---------docs--------------")
     for doc in documents:
         print(doc)
 
-    pipeline = get_pipeline()
+    pipeline = get_pipeline_documents()
     nodes = pipeline.run(documents=documents)
     print("---------nodes-------------")
     for node in nodes:
@@ -125,7 +126,6 @@ def get_redis_pipeline(embed_model, custom_schema) -> IngestionPipeline:
 
 
 def pipeline_redis():
-    print("ingestion pipeline redis")
     data_dir = get_data_dir()
     documents = get_documents(data_dir)
     embed_model = OpenAIEmbedding(model="text-embedding-3-large")
@@ -153,9 +153,76 @@ def pipeline_redis():
         vector_store.delete_index()
 
 
+def get_doc_sample():
+    doc = """
+    Context
+
+    LLMs are a phenomenal piece of technology for knowledge generation and
+    reasoning. They are pre-trained on large amounts of publicly available
+    data. How do we best augment LLMs with our own private data? We need a
+    comprehensive toolkit to help perform this data augmentation for LLMs.
+
+    Proposed Solution
+
+    That's where LlamaIndex comes in. LlamaIndex is a "data framework" to help
+    you build LLM  apps. It provides the following tools:
+
+    Offers data connectors to ingest your existing data sources and data
+    formats (APIs, PDFs, docs, SQL, etc.)
+
+    Provides ways to structure your data (indices, graphs) so that this data
+    can be easily used with LLMs.
+
+    Provides an advanced retrieval/query interface over your data:
+
+    Feed in any LLM input prompt, get back retrieved context and
+    knowledge-augmented output.
+
+    Allows easy integrations with your outer application framework (e.g. with
+    LangChain, Flask, Docker, ChatGPT, anything else).
+
+    LlamaIndex provides tools for both beginner users and advanced users.
+
+    Our high-level API allows beginner users to use LlamaIndex to ingest and
+    query their data in 5 lines of code.
+
+    Our lower-level APIs allow advanced users to customize and extend any
+    module (data connectors, indices, retrievers, query engines, reranking
+    modules), to fit their needs.
+
+    """
+    return doc
+
+
+def get_pipeline(vector_store: BasePydanticVectorStore) -> IngestionPipeline:
+    pipeline = IngestionPipeline(
+        transformations=[
+            SentenceSplitter(chunk_size=50, chunk_overlap=0),
+            TitleExtractor(),
+            OpenAIEmbedding(model="text-embedding-3-large"),
+        ],
+        vector_store=vector_store,
+    )
+    return pipeline
+
+
+def pipeline():
+    dim = 3072
+    faiss_index = faiss.IndexFlatL2(dim)
+    vector_store = FaissVectorStore(faiss_index=faiss_index)
+
+    doc = Document(text=get_doc_sample())
+    pipeline = get_pipeline(vector_store)
+    nodes = pipeline.run(documents=[doc])
+    print("---------nodes-------------")
+    for node in nodes:
+        print(node.metadata)
+
+
 def main():
     fire.Fire(
         {
+            "ingestion-pipeline": pipeline,
             "ingestion-pipeline-documents": pipeline_documents,
             "ingestion-pipeline-redis": pipeline_redis,
         }

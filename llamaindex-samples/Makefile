@@ -76,6 +76,10 @@ PHONY: ingestion-pipeline-redis
 ingestion-pipeline-redis: env-up  ## ingestion pipeline with redis
 	poetry run python ingestion.py $@
 
+PHONY: ingestion-pipeline
+ingestion-pipeline:  ## ingestion pipeline
+	poetry run python ingestion.py $@
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
