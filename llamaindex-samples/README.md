@@ -37,3 +37,12 @@ https://docs.llamaindex.ai/en/stable/examples/vector_stores/DocArrayHnswIndexDem
 #### Auto-Retrieval from a Vector Database
 
 https://docs.llamaindex.ai/en/stable/examples/vector_stores/chroma_auto_retriever/
+
+## LLamaindex components
+
+1. Loading data - ingestion
+2. Indexing and Embedding
+3. Storing
+4. Querying
+5. Tracing and debugging
+6. Evaluating

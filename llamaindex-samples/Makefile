@@ -80,6 +80,10 @@ PHONY: ingestion-pipeline
 ingestion-pipeline:  ## ingestion pipeline
 	poetry run python ingestion.py $@
 
+PHONY: component-loading
+component-loading:  ## loading component of llamaindex
+	poetry run python llamaindex-components.py $@
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
