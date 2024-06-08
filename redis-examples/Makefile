@@ -35,7 +35,7 @@ env-up:
 .PHONY: env-rm
 env-rm:
 	docker compose rm -s -v -f
-	# poetry env remove $$(poetry env info -e)
+	poetry env remove $$(poetry env info -e)
 
 .PHONY: data-structure-store
 data-structure-store: env-up  ## redis data structure store
