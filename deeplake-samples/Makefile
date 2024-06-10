@@ -28,6 +28,10 @@ env-rm:
 rag-quickstart: env-up  ## RAG quickstart
 	poetry run python $@.py
 
+.PHONY: deeplake-llamaindex
+deeplake-llamaindex: env-up  ## deeplake using llamaindex
+	poetry run python $@.py
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock

@@ -11,6 +11,8 @@ python = "^3.11"
 deeplake = "^3.9.9"
 ipython = "^8.25.0"
 openai = "^1.33.0"
+llama-index = "^0.10.43"
+llama-index-vector-stores-deeplake = "^0.1.2"
 
 
 [build-system]
