@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "guidance-samples"
+version = "0.1.0"
+description = ""
+authors = ["Gavin Noronha <gavinln@hotmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+guidance = "^0.1.15"
+openai = "^1.33.0"
+ipython = "^8.25.0"
+fire = "^0.6.0"
+transformers = "^4.41.2"
+torch = {version = "^2.3.1+cpu", source = "torch"}
+
+
+[[tool.poetry.source]]
+name = "torch"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
