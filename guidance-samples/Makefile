@@ -76,8 +76,12 @@ stateful-basics: env-up  ## stateful generation
 stateful-re-act: env-up  ## stateful ReAct - Reasoning Action
 	poetry run python stateful_gen.py $@
 
-.PHONY: stateful-tools
-stateful-tools: env-up  ## stateful Reasoning Action Tools
+.PHONY: stateful-tools1
+stateful-tools1: env-up  ## stateful Reasoning Action Tools
+	poetry run python stateful_gen.py $@
+
+.PHONY: stateful-tools2
+stateful-tools2: env-up  ## stateful Reasoning Action Tools
 	poetry run python stateful_gen.py $@
 
 .PHONY: clean
