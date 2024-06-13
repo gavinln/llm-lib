@@ -7,6 +7,7 @@ guidance integration
 
 import logging
 import pathlib
+import re
 import sys
 
 import fire
@@ -18,17 +19,21 @@ SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
 log.addHandler(logging.StreamHandler(stream=sys.stdout))
 
+_LOADED_MODEL = None
+
 
 def get_model():
-    # return models.Transformers("gpt2", echo=False)  # type: ignore
-    return models.Transformers(  # type: ignore
-        "pankajmathur/orca_mini_3b", echo=False
-    )
+    global _LOADED_MODEL
+    if not _LOADED_MODEL:
+        _LOADED_MODEL = models.Transformers(  # type: ignore
+            "pankajmathur/orca_mini_3b", echo=False
+        )
+    return _LOADED_MODEL
 
 
 def select_constrained_gen():
-    gpt2 = get_model()
-    lm = gpt2 + "I like the color "
+    lm = get_model()
+    lm += "I like the color "
     lm += select(["red", "blue", "green"])
     print(lm)
 
@@ -102,14 +107,64 @@ def expression(lm):
 def cfg_constrained_gen():
     "context free grammar"
     query = "Problem: What is three plus two?" "\n"
-    lm = get_model() + query
+    model = get_model()
+    lm = model + query
     lm += "Equivalent arithmetic expression: " + gen(
         max_tokens=30, stop="\n"
     )  # type: ignore
     print(lm)
 
-    lm = get_model() + query
+    lm = model + query
     lm += "Equivalent arithmetic expression: " + expression()  # type: ignore
+    print(lm)
+
+
+@guidance(stateless=True)  # type: ignore
+def ner_instruction(lm, input):
+    lm += f"""
+    Please tag each word in the input with PER, ORG, LOC, or nothing
+    ---
+    Input: John worked at Apple.
+    Output:
+    John: PER
+    worked:
+    at:
+    Apple: ORG
+    .:
+    ---
+    Input: {input}
+    Output:
+    """
+    return lm
+
+
+def cfg_constrained_gen2():
+    "context free grammar2"
+    input = "Julia never went to Morocco in her life!!"
+    lm = get_model()
+    lm += ner_instruction(input) + gen(stop="---")  # type: ignore
+    print(lm)
+
+
+@guidance(stateless=True)  # type: ignore
+def constrained_ner(lm, input):
+    # Split into words
+    words = [
+        x
+        for x in re.split("([^a-zA-Z0-9])", input)
+        if x and not re.match(r"\s", x)
+    ]
+    ret = ""
+    for x in words:
+        ret += x + ": " + select(["PER", "ORG", "LOC", ""]) + "\n"
+    return lm + ret
+
+
+def cfg_constrained_gen3():
+    "context free grammar2"
+    input = "Julia never went to Morocco in her life!!"
+    lm = get_model()
+    lm += ner_instruction(input) + constrained_ner(input)  # type: ignore
     print(lm)
 
 
@@ -120,6 +175,8 @@ def main():
             "constrained-interleave": interleave_constrained_gen,
             "constrained-regex": regex_constrained_gen,
             "constrained-cfg": cfg_constrained_gen,
+            "constrained-cfg2": cfg_constrained_gen2,
+            "constrained-cfg3": cfg_constrained_gen3,
         }
     )
 

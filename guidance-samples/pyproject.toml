@@ -14,6 +14,7 @@ ipython = "^8.25.0"
 fire = "^0.6.0"
 transformers = "^4.41.2"
 torch = {version = "^2.3.1+cpu", source = "torch"}
+sentencepiece = "^0.2.0"
 
 
 [[tool.poetry.source]]

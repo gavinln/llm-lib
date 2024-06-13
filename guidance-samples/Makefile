@@ -46,19 +46,39 @@ basics-functions: env-up  ## function encapsulation
 
 .PHONY: constrained-select
 constrained-select: env-up  ## select constrained generation
-	poetry run python constrained-gen.py $@
+	poetry run python constrained_gen.py $@
 
 .PHONY: constrained-interleave
 constrained-interleave: env-up  ## interleave constrained generation
-	poetry run python constrained-gen.py $@
+	poetry run python constrained_gen.py $@
 
 .PHONY: constrained-regex
 constrained-regex: env-up  ## regex constrained generation
-	poetry run python constrained-gen.py $@
+	poetry run python constrained_gen.py $@
 
 .PHONY: constrained-cfg
 constrained-cfg: env-up  ## context free grammar constrained gen
-	poetry run python constrained-gen.py $@
+	poetry run python constrained_gen.py $@
+
+.PHONY: constrained-cfg2
+constrained-cfg2: env-up  ## context free grammar constrained gen
+	poetry run python constrained_gen.py $@
+
+.PHONY: constrained-cfg3
+constrained-cfg3: env-up  ## context free grammar constrained gen
+	poetry run python constrained_gen.py $@
+
+.PHONY: stateful-basics
+stateful-basics: env-up  ## stateful generation
+	poetry run python stateful_gen.py $@
+
+.PHONY: stateful-re-act
+stateful-re-act: env-up  ## stateful ReAct - Reasoning Action
+	poetry run python stateful_gen.py $@
+
+.PHONY: stateful-tools
+stateful-tools: env-up  ## stateful Reasoning Action Tools
+	poetry run python stateful_gen.py $@
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
