@@ -32,6 +32,14 @@ starter-website-chat: env-up  ## starter examples
 starter-fetch-query: env-up  ## starter examples
 	poetry run python haystack-starter.py $@
 
+.PHONY: rag-predefined
+rag-predefined: env-up  ## starter examples
+	poetry run python haystack-rag.py $@
+
+.PHONY: rag-pipeline
+rag-pipeline: env-up  ## starter examples
+	poetry run python haystack-rag.py $@
+
 .PHONY: chroma-info
 chroma-info: env-up  ## chromadb info
 	poetry run python chroma-starter.py $@
