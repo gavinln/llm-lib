@@ -57,7 +57,7 @@ rag-qa-pipeline: env-up  ## answer questions using RAG
 	poetry run python $@.py
 
 .PHONY: metadata-filtering
-metadata-filtering: env-up  ##
+metadata-filtering: env-up  ## use metadata filtering
 	poetry run python $@.py
 
 .PHONY: preprocess-files
