@@ -52,6 +52,49 @@ chroma-collections: env-up  ## chromadb collections
 chroma-query: env-up  ## chromadb query
 	poetry run python chroma-starter.py $@
 
+.PHONY: rag-qa-pipeline
+rag-qa-pipeline: env-up  ## answer questions using RAG
+	poetry run python $@.py
+
+.PHONY: metadata-filtering
+metadata-filtering: env-up  ##
+	poetry run python $@.py
+
+.PHONY: preprocess-files
+preprocess-files: env-up  ##
+	poetry run python $@.py
+
+.PHONY: embed-metadata
+embed-metadata: env-up  ##
+	poetry run python $@.py
+
+.PHONY: serialize-pipelines
+serialize-pipelines: env-up  ##
+	poetry run python $@.py
+
+.PHONY: extractive-pipeline
+extractive-pipeline: env-up  ##
+	poetry run python $@.py
+
+.PHONY: hybrid-retrieval-pipeline
+hybrid-retrieval-pipeline: env-up  ##
+	poetry run python $@.py
+
+.PHONY: structured-output
+structured-output: env-up  ##
+	poetry run python $@.py
+
+.PHONY: classify-documents
+classify-documents: env-up  ##
+	poetry run python $@.py
+
+.PHONY: evaluate-pipelines
+evaluate-pipelines: env-up  ##
+	poetry run python $@.py
+
+.PHONY: chat-app-with-function-calls
+chat-app-with-function-calls: env-up  ##
+	poetry run python $@.py
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
