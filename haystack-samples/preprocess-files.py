@@ -30,7 +30,6 @@ def get_document_dir():
 
 
 def main():
-    document_store = InMemoryDocumentStore()
     file_type_router = FileTypeRouter(
         mime_types=["text/plain", "application/pdf", "text/markdown"]
     )
@@ -38,18 +37,18 @@ def main():
     markdown_converter = MarkdownToDocument()
     pdf_converter = PyPDFToDocument()
     document_joiner = DocumentJoiner()
-
     document_cleaner = DocumentCleaner()
     document_splitter = DocumentSplitter(
         split_by="word", split_length=150, split_overlap=50
     )
-
     document_embedder = SentenceTransformersDocumentEmbedder(
         model="sentence-transformers/all-MiniLM-L6-v2"
     )
+    document_store = InMemoryDocumentStore()
     document_writer = DocumentWriter(document_store)
 
     preprocessing_pipeline = Pipeline()
+
     preprocessing_pipeline.add_component(
         instance=file_type_router, name="file_type_router"
     )
