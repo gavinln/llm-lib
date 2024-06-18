@@ -23,6 +23,7 @@ pypdf = "^4.2.0"
 wikipedia = "^1.4.0"
 pyyaml = "^6.0.1"
 transformers = {extras = ["sentencepiece", "torch"], version = "^4.41.2"}
+colorama = "^0.4.6"
 
 [[tool.poetry.source]]
 name = "torch-cpu"

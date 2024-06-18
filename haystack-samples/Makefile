@@ -81,7 +81,7 @@ hybrid-retrieval-pipeline: env-up  ## embedding & keyword retrieval
 	poetry run python $@.py
 
 .PHONY: structured-output
-structured-output: env-up  ##
+structured-output: env-up  ## generate llm output in JSON format
 	poetry run python $@.py
 
 .PHONY: classify-documents

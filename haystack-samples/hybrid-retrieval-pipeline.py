@@ -24,8 +24,6 @@ from haystack.components.retrievers.in_memory import (
 )
 from haystack.components.writers import DocumentWriter
 from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.document_stores.types import DuplicatePolicy
-from haystack.utils import ComponentDevice
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 
@@ -34,7 +32,7 @@ log.addHandler(logging.StreamHandler(stream=sys.stdout))
 
 
 def get_pubmed_dataset():
-    dataset = load_dataset("anakin87/medrag-pubmed-chunk", split="train")
+    dataset: Any = load_dataset("anakin87/medrag-pubmed-chunk", split="train")
     return dataset.select(range(50))
 
 
