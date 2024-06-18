@@ -20,6 +20,7 @@ sentence-transformers = "^3.0.1"
 markdown-it-py = "^3.0.0"
 mdit-plain = "^1.0.1"
 pypdf = "^4.2.0"
+wikipedia = "^1.4.0"
 
 [[tool.poetry.source]]
 name = "torch-cpu"

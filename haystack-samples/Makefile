@@ -64,8 +64,8 @@ metadata-filtering: env-up  ## use metadata filtering
 preprocess-files: env-up  ## load different file types in doc store
 	poetry run python $@.py
 
-.PHONY: embed-metadata
-embed-metadata: env-up  ##
+.PHONY: embedding-metadata
+embedding-metadata: env-up  ## embedding in metadata
 	poetry run python $@.py
 
 .PHONY: serialize-pipelines
