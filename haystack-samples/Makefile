@@ -73,7 +73,7 @@ serialize-pipelines: env-up  ## serialize pipelines to yaml
 	poetry run python $@.py
 
 .PHONY: extractive-pipeline
-extractive-pipeline: env-up  ##
+extractive-pipeline: env-up  ## extract verbatim text
 	poetry run python $@.py
 
 .PHONY: hybrid-retrieval-pipeline
