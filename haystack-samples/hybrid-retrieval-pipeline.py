@@ -35,7 +35,7 @@ log.addHandler(logging.StreamHandler(stream=sys.stdout))
 
 def get_pubmed_dataset():
     dataset = load_dataset("anakin87/medrag-pubmed-chunk", split="train")
-    return dataset.select(range(25))
+    return dataset.select(range(50))
 
 
 def get_sentence_transformer_model_name():
@@ -92,8 +92,8 @@ def main():
     text_embedder = SentenceTransformersTextEmbedder(
         model=get_sentence_transformer_model_name()
     )
-    embedding_retriever = InMemoryEmbeddingRetriever(document_store)
-    bm25_retriever = InMemoryBM25Retriever(document_store)
+    embedding_retriever = InMemoryEmbeddingRetriever(document_store, top_k=3)
+    bm25_retriever = InMemoryBM25Retriever(document_store, top_k=3)
 
     document_joiner = DocumentJoiner()
 
