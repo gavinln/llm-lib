@@ -69,7 +69,7 @@ embedding-metadata: env-up  ## embedding in metadata
 	poetry run python $@.py
 
 .PHONY: serialize-pipelines
-serialize-pipelines: env-up  ##
+serialize-pipelines: env-up  ## serialize pipelines to yaml
 	poetry run python $@.py
 
 .PHONY: extractive-pipeline

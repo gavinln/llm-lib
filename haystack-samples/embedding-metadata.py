@@ -10,8 +10,6 @@ from typing import Sequence
 import wikipedia
 from haystack import Document, Pipeline
 
-# from haystack.components.builders import PromptBuilder
-# from haystack.components.generators import OpenAIGenerator
 from haystack.components.embedders import (
     SentenceTransformersDocumentEmbedder,
     SentenceTransformersTextEmbedder,
