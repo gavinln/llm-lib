@@ -77,7 +77,7 @@ extractive-pipeline: env-up  ## extract verbatim text
 	poetry run python $@.py
 
 .PHONY: hybrid-retrieval-pipeline
-hybrid-retrieval-pipeline: env-up  ##
+hybrid-retrieval-pipeline: env-up  ## embedding & keyword retrieval
 	poetry run python $@.py
 
 .PHONY: structured-output
