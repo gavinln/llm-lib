@@ -85,7 +85,7 @@ structured-output: env-up  ## generate llm output in JSON format
 	poetry run python $@.py
 
 .PHONY: classify-documents
-classify-documents: env-up  ##
+classify-documents: env-up  ## classify documents by human language
 	poetry run python $@.py
 
 .PHONY: evaluate-pipelines
