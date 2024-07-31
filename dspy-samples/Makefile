@@ -22,6 +22,38 @@ env-rm:
 hello: env-up  ## hello
 	echo hello
 
+.PHONY: direct-llm-call
+direct-llm-call: env-up  ## directly call llm
+	poetry run python language-models.py $@
+
+.PHONY: dspy-llm-call
+dspy-llm-call: env-up  ## call llm with dspy signature
+	poetry run python language-models.py $@
+
+.PHONY: multiple-llms
+multiple-llms: env-up  ## call multiple llms
+	poetry run python language-models.py $@
+
+.PHONY: multiple-outputs
+multiple-outputs: env-up  ## generate multiple outputs
+	poetry run python language-models.py $@
+
+.PHONY: remote-llms
+remote-llms: env-up  ## call remote llms
+	poetry run python language-models.py $@
+
+.PHONY: local-llms
+local-llms: env-up  ## call local llm
+	poetry run python language-models.py $@
+
+.PHONY: inline-signatures
+inline-signatures: env-up  ## signature defined with a string
+	poetry run python signatures.py $@
+
+.PHONY: class-signatures
+class-signatures: env-up  ## signature defined with a class
+	poetry run python signatures.py $@
+
 .PHONY: jupyter
 jupyter:  ## start jupyter lab
 	poetry run jupyter lab --port=8888 --ip=127.0.0.1 --no-browser --notebook-dir=$(SCRIPT_DIR)/notebooks
