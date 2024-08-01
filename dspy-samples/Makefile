@@ -22,6 +22,10 @@ env-rm:
 hello: env-up  ## hello
 	echo hello
 
+.PHONY: jupyter
+jupyter:  ## start jupyter lab
+	poetry run jupyter lab --port=8888 --ip=127.0.0.1 --no-browser --notebook-dir=$(SCRIPT_DIR)/notebooks
+
 .PHONY: direct-llm-call
 direct-llm-call: env-up  ## directly call llm
 	poetry run python language-models.py $@
@@ -54,9 +58,17 @@ inline-signatures: env-up  ## signature defined with a string
 class-signatures: env-up  ## signature defined with a class
 	poetry run python signatures.py $@
 
-.PHONY: jupyter
-jupyter:  ## start jupyter lab
-	poetry run jupyter lab --port=8888 --ip=127.0.0.1 --no-browser --notebook-dir=$(SCRIPT_DIR)/notebooks
+.PHONY: predict-prompt
+predict-prompt: env-up  ## basic prompt
+	poetry run python prompting-techniques.py $@
+
+.PHONY: chain-of-thought-prompt
+chain-of-thought-prompt: env-up  ## chain-of-thought prompt
+	poetry run python prompting-techniques.py $@
+
+.PHONY: metrics-basic
+metrics-basic: env-up  ## chain-of-thought prompt
+	poetry run python metrics.py $@
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
