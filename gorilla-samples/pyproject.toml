@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "gorilla-samples"
+version = "0.1.0"
+description = ""
+authors = ["Gavin Noronha <gavinln@hotmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+gorilla-cli = "^0.0.10"
+huggingface-hub = "^0.24.5"
+openai = "0.28.1"
+fire = "^0.6.0"
+black = "^24.8.0"
+torch = {version = "^2.4.0+cpu", source = "torch"}
+transformers = "^4.44.0"
+sentencepiece = "^0.2.0"
+protobuf = "^5.27.3"
+accelerate = "^0.33.0"
+ipython = "^8.26.0"
+
+
+[[tool.poetry.source]]
+name = "torch"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
