@@ -1,0 +1,15 @@
+services:
+  pgvector:
+    image: "phidata/pgvector:16"
+    ports:
+      - "5532:5432"
+    volumes:
+      - pgvolume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=ai
+      - POSTGRES_USER=ai
+      - POSTGRES_PASSWORD=ai
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+volumes:
+  pgvolume:

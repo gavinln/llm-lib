@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "phidata-samples"
+version = "0.1.0"
+description = ""
+authors = ["Gavin Noronha <gavinln@hotmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+phidata = "^2.4.29"
+openai = "^1.40.6"
+duckduckgo-search = "^6.2.6"
+requests = "^2.32.3"
+yfinance = "^0.2.41"
+newspaper4k = "^0.9.3.1"
+lxml-html-clean = "^0.2.0"
+pgvector = "^0.3.2"
+pypdf = "^4.3.1"
+psycopg = {extras = ["binary"], version = "^3.2.1"}
+sqlalchemy = "^2.0.32"
+black = "^24.8.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
