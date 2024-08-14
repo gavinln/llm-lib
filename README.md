@@ -151,8 +151,14 @@ Chat [GPT login][1010]
 
 https://github.com/langchain-ai/langchain
 
+[Phidata][1020] is a Python library that helps build AI assistants with memory,
+knowledge and tools.
+
+[1020]: https://github.com/phidatahq/phidata
+
 Building applications with Large Language Models (LLMs)
 
+[Gorilla][1030] is a Python library that connects large language models (LLMs) to application programming interfaces (APIs).
 
 ### Getting started with LLMs using LangChain
 
