@@ -1,5 +1,7 @@
 """
 https://github.com/ShishirPatil/gorilla/tree/main/openfunctions/openfunctions-v1
+
+https://gorilla.cs.berkeley.edu/blogs/7_open_functions_v2.html
 """
 
 import json
@@ -25,7 +27,7 @@ def get_gorilla_response(
     openai.api_base = "http://luigi.millennium.berkeley.edu:8000/v1"
     try:
         completion = openai.ChatCompletion.create(
-            model="gorilla-openfunctions-v1",
+            model=model,
             temperature=0.0,
             messages=[{"role": "user", "content": query}],
             functions=functions,
@@ -62,6 +64,24 @@ def get_uber_ride_function() -> dict:
     }
 
 
+def get_current_weather_function() -> dict:
+    return {
+        "name": "get_current_weather",
+        "description": "Get the current weather in a given location",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "string",
+                    "description": "The city and state, e.g. San Francisco, CA",
+                },
+                "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+            },
+            "required": ["location"],
+        },
+    }
+
+
 def get_recursive_size(root_dir) -> int:
     root_path = pathlib.Path(root_dir)
     return sum(file.stat().st_size for file in root_path.rglob("*"))
@@ -88,9 +108,9 @@ def show_huggingface_cached_models():
     return ""
 
 
-def hosted_functions():
-    "run gorilla function call on hosted model"
-    model = "gorilla-openfunctions-v0"
+def hosted_functions_v1():
+    "run gorilla function call on hosted model v1"
+    model = "gorilla-openfunctions-v1"
     query = (
         'Call me an Uber ride type "Plus" in Berkeley at zipcode '
         + "94704 in 10 minutes"
@@ -178,11 +198,21 @@ def local_functions():
     pp.pprint(output)
 
 
+def hosted_functions_v2():
+    "run gorilla function call on hosted model v2"
+    model = "gorilla-openfunctions-v2"
+    query = "What's the weather like in the two cities of Boston and San Francisco?"
+    functions = [get_current_weather_function()]
+    out = get_gorilla_response(query, model, functions=functions)
+    print(out)
+
+
 def main():
     fire.Fire(
         {
-            "hosted-functions": hosted_functions,
+            "hosted-functions-v1": hosted_functions_v1,
             "local-functions": local_functions,
+            "hosted-functions-v2": hosted_functions_v2,
             "show-huggingface-cached-models": show_huggingface_cached_models,
         }
     )

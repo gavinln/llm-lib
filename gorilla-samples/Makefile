@@ -26,12 +26,16 @@ env-rm:
 gorilla-cli:  ## run gorilla cli app example
 	poetry run gorilla "Find markdown files in subdirectories"
 
-.PHONY: hosted-functions
-hosted-functions:  ## use gorilla hosted model
+.PHONY: hosted-functions-v1
+hosted-functions-v1:  ## use gorilla hosted model
 	poetry run python gorilla-functions.py $@
 
 .PHONY: local-functions
 local-functions:  ## use gorilla local model (37GB, 1 min)
+	poetry run python gorilla-functions.py $@
+
+.PHONY: hosted-functions-v2
+hosted-functions-v2:  ## use gorilla hosted model
 	poetry run python gorilla-functions.py $@
 
 .PHONY: clean
