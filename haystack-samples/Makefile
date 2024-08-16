@@ -89,7 +89,7 @@ classify-documents: env-up  ## classify documents by human language
 	poetry run python $@.py
 
 .PHONY: evaluate-pipelines
-evaluate-pipelines: env-up  ##
+evaluate-pipelines: env-up  ## evaluate rag pipeline
 	poetry run python $@.py
 
 .PHONY: chat-app-tools-cli
