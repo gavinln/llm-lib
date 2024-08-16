@@ -92,9 +92,13 @@ classify-documents: env-up  ## classify documents by human language
 evaluate-pipelines: env-up  ##
 	poetry run python $@.py
 
-.PHONY: chat-app-with-function-calls
-chat-app-with-function-calls: env-up  ##
-	poetry run python $@.py
+.PHONY: chat-app-tools-cli
+chat-app-tools-cli: env-up  ## chat app with tools - cli
+	poetry run python chat-app-tools.py cli
+
+.PHONY: chat-app-tools-web
+chat-app-tools-web: env-up  ## chat app with tools - web
+	poetry run python chat-app-tools.py web
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files

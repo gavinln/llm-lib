@@ -25,6 +25,8 @@ pyyaml = "^6.0.1"
 transformers = {extras = ["sentencepiece", "torch"], version = "^4.41.2"}
 colorama = "^0.4.6"
 langdetect = "^1.0.9"
+black = "^24.8.0"
+gradio = "^4.41.0"
 
 [[tool.poetry.source]]
 name = "torch-cpu"
