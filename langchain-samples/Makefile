@@ -22,16 +22,33 @@ env-up:
 env-rm:
 	poetry env remove $$(poetry env info -e)
 
-.PHONY: quickstart-ollama
-quickstart-ollama: env-up  ## redis document database
-	echo "ollama serve"
-	echo "ollma pull orca-mini"
+.PHONY: quickstart-openai
+quickstart-openai: env-up  ## simple example with openai
 	poetry run python $@.py
 
 .PHONY: retrieval-chain
 retrieval-chain: env-up  ## retrieve document for context
 	poetry run python $@.py
 
+.PHONY: rag-quickstart
+rag-quickstart: env-up  ##
+	poetry run python rag.py $@
+
+.PHONY: rag-chat-history
+rag-chat-history: env-up  ##
+	poetry run python rag.py $@
+
+.PHONY: rag-streaming
+rag-streaming: env-up  ##
+	poetry run python rag.py $@
+
+.PHONY: rag-sources
+rag-sources: env-up  ##
+	poetry run python rag.py $@
+
+.PHONY: rag-citations
+rag-citations: env-up  ##
+	poetry run python rag.py $@
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
