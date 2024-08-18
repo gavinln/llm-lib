@@ -14,6 +14,12 @@ help:  ## help for this Makefile
 tmux:  ## run tmux
 	tmuxp load .tmuxp.yaml
 
+.PHONY: fix
+fix:  ## run isort and ruff on python code
+	isort *.py
+	ruff check --fix *.py
+	poetry run black -l 79 *.py
+
 .PHONY: env-up
 env-up:
 	poetry install
@@ -31,7 +37,7 @@ retrieval-chain: env-up  ## retrieve document for context
 	poetry run python $@.py
 
 .PHONY: rag-quickstart
-rag-quickstart: env-up  ##
+rag-quickstart: env-up  ## use RAG to answer question
 	poetry run python rag.py $@
 
 .PHONY: rag-chat-history
