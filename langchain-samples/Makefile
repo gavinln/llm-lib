@@ -16,7 +16,7 @@ tmux:  ## run tmux
 
 .PHONY: fix
 fix:  ## run isort and ruff on python code
-	isort *.py
+	isort --float-to-top *.py
 	ruff check --fix *.py
 	poetry run black -l 79 *.py
 
@@ -41,7 +41,7 @@ rag-quickstart: env-up  ## use RAG to answer question
 	poetry run python rag.py $@
 
 .PHONY: rag-chat-history
-rag-chat-history: env-up  ##
+rag-chat-history: env-up  ## RAG with chat history
 	poetry run python rag.py $@
 
 .PHONY: rag-streaming
