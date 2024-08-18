@@ -6,9 +6,9 @@ import logging
 import pathlib
 
 from langchain_core.messages.base import BaseMessage
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
-from langchain_core.output_parsers import StrOutputParser
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)

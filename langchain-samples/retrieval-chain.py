@@ -87,6 +87,9 @@ def get_web_documents(url: str) -> list[Document]:
 
 @memory.cache
 def get_split_documents(docs: list[Document]):
+    """
+    Splits a list of documents into smaller chunks using a RecursiveCharacterTextSplitter.
+    """
     text_splitter = RecursiveCharacterTextSplitter()
     print("original docs length: {:>12,d}".format(len(docs[0].page_content)))
     documents = text_splitter.split_documents(docs)
@@ -96,6 +99,13 @@ def get_split_documents(docs: list[Document]):
 
 
 def get_docs_vector(docs: list[Document]):
+    """
+    Process a list of documents, split them, convert to embeddings,
+    and store them in a FAISS vector store.
+
+    Returns:
+        FAISS: A FAISS vector store containing the document embeddings.
+    """
     documents = get_split_documents(docs)
     embeddings = OpenAIEmbeddings()
     vector_store = FAISS.from_documents(documents, embeddings)
