@@ -19,8 +19,13 @@ aider:  ## run aider to modify code using AI
 
 .PHONY: clean
 clean:  ## remove temporary directories in python envs
-
+	rm -rf .aider.*
+	@make -C ./deeplake-samples/ clean
+	@make -C ./dspy-samples/ clean
 	@make -C ./faiss-samples/ clean
+	@make -C ./gorilla-samples/ clean
+	@make -C ./guidance-samples/ clean
+	@make -C ./haystack-samples/ clean
 	@make -C ./langchain-samples/ clean
 	@make -C ./llamaindex-samples/ clean
 	@make -C ./openai-capabilities/ clean
@@ -28,4 +33,5 @@ clean:  ## remove temporary directories in python envs
 	@make -C ./openai-prompts/ clean
 	@make -C ./openai-quickstart-python/ clean
 	@make -C ./openai-website-qa/ clean
+	@make -C ./phidata-samples/ clean
 	@make -C ./redis-examples/ clean

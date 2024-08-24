@@ -1,5 +1,4 @@
 """
-https://python.langchain.com/v0.1/docs/use_cases/question_answering/quickstart/
 
 A RAG (Retrieval augmented generation) application involves two stages
 
@@ -16,6 +15,18 @@ The retrieval and generation part is composed of two steps
 
 a. Retrieve the relevant split document parts
 b. Generate the answer with an LLM using a prompt and the retrieved data
+
+rag-quickstart
+https://python.langchain.com/v0.1/docs/use_cases/question_answering/quickstart/
+
+rag-chat_history
+https://python.langchain.com/v0.1/docs/use_cases/question_answering/chat_history/
+
+rag-streaming
+https://python.langchain.com/v0.1/docs/use_cases/question_answering/streaming/
+
+rag-citations
+https://python.langchain.com/v0.1/docs/use_cases/question_answering/citations/
 """
 
 import logging
@@ -35,11 +46,12 @@ from langchain.vectorstores.base import VectorStoreRetriever
 from langchain_chroma import Chroma
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.retrievers import WikipediaRetriever
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.messages import HumanMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnableParallel, RunnablePassthrough
 from langchain_core.runnables.base import RunnableBinding
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
@@ -234,16 +246,56 @@ def rag_chat_history():
     vector_store.delete_collection()
 
 
+def process_chunks(chain, question):
+    output = {}
+    curr_key = None
+    for chunk in chain.stream(question):
+        for key in chunk:
+            if key not in output:
+                output[key] = chunk[key]
+            else:
+                output[key] += chunk[key]
+            if key != curr_key:
+                print(f"\n\n{key}: {chunk[key]}", end="", flush=True)
+            else:
+                print(chunk[key], end="", flush=True)
+            curr_key = key
+
+
 def rag_streaming():
-    pass
+    url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
+    vector_store = get_vector_store_docs_from_url(url)
 
+    prompt = get_rag_prompt_tempate()
 
-def rag_sources():
-    pass
+    retriever: VectorStoreRetriever = vector_store.as_retriever()
+
+    def format_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+
+    llm = ChatOpenAI(model="gpt-3.5-turbo-0125")
+    rag_chain_from_docs = (
+        RunnablePassthrough.assign(
+            context=(lambda x: format_docs(x["context"]))
+        )
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
+
+    rag_chain_with_source = RunnableParallel(
+        {"context": retriever, "question": RunnablePassthrough()}
+    ).assign(answer=rag_chain_from_docs)
+    question = "What is Task Decomposition?"
+    for chunk in rag_chain_with_source.stream(question):
+        print(chunk)
+    process_chunks(rag_chain_with_source, question)
+    vector_store.delete_collection()
 
 
 def rag_citations():
-    pass
+    question = "How fast are cheetahs?"
+    _ = WikipediaRetriever
 
 
 def main():
@@ -252,7 +304,6 @@ def main():
             "rag-quickstart": rag_quickstart,
             "rag-chat-history": rag_chat_history,
             "rag-streaming": rag_streaming,
-            "rag-sources": rag_sources,
             "rag-citations": rag_citations,
         }
     )
