@@ -48,13 +48,25 @@ rag-chat-history: env-up  ## RAG with chat history
 rag-streaming: env-up  ## RAG with streaming
 	poetry run python rag.py $@
 
-.PHONY: rag-sources
-rag-sources: env-up  ##
+.PHONY: rag-citations
+rag-citations: env-up  ## get citations from Wikipedia
 	poetry run python rag.py $@
 
-.PHONY: rag-citations
-rag-citations: env-up  ##
-	poetry run python rag.py $@
+.PHONY: structured-one-entity
+structured-one-entity: env-up  ## extract structured data; one entity
+	poetry run python ./structured-output.py $@
+
+.PHONY: structured-many-entities
+structured-many-entities: env-up  ## extract structured data; many entities
+	poetry run python ./structured-output.py $@
+
+.PHONY: tool-use
+tool-use: env-up  ## LLM tool use
+	poetry run python ./tool_agent_use.py $@
+
+.PHONY: agent-used
+agent-use: env-up  ## LLM agent use
+	poetry run python ./tool_agent_use.py $@
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
