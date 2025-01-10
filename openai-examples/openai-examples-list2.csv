@@ -1,0 +1,161 @@
+Embedding Wikipedia articles for search|CompletionsEmbeddings|Nov 26, 2024
+GPT Actions library - Tray.ai APIM|ChatGPT|Nov 26, 2024
+GPT Actions library - Google Calendar|ChatGPT|Nov 22, 2024
+GPT Actions library - Workday|ChatGPT|Nov 20, 2024
+Optimizing Retrieval-Augmented Generation using GPT-4o Vision Modality|CompletionsVision|Nov 12, 2024
+Pinecone Vector Database and Retool Workflow with GPT Actions|ChatGPTEmbeddings|Nov 11, 2024
+Vision Fine-tuning on GPT-4o for Visual Question Answering|CompletionsFine-tuningVision|Nov 1, 2024
+Steering Text-to-Speech for more dynamic audio generation|AudioCompletions|Nov 1, 2024
+Enhance your prompts with meta prompting|CompletionsReasoning|Oct 23, 2024
+GPT Actions library - GitHub|ChatGPT|Oct 23, 2024
+Voice Translation into Different Languages|AudioCompletions|Oct 21, 2024
+Leveraging model distillation to fine-tune a model|CompletionsFine-tuning|Oct 16, 2024
+Custom LLM as a Judge to Detect Hallucinations with Braintrust|CompletionsEvals|Oct 14, 2024
+Orchestrating Agents: Routines and Handoffs|CompletionsFunctions|Oct 10, 2024
+GPT Actions library - Google Ads via Adzviser|ChatGPT|Oct 10, 2024
+Prompt Caching 101|CompletionsLatency|Oct 1, 2024
+Using chained calls for o1 structured outputs|CompletionsReasoning|Sep 26, 2024
+Building a Bring Your Own Browser (BYOB) Tool for Web Browsing and Summarization|Completions|Sep 26, 2024
+GPT Actions library - Canvas Learning Management System|ChatGPT|Sep 17, 2024
+Using reasoning for data validation|CompletionsReasoning|Sep 12, 2024
+Using reasoning for routine generation|CompletionsReasoning|Sep 12, 2024
+GPT Actions library - Retool Workflow|ChatGPT|Aug 28, 2024
+GPT Actions library - Snowflake Middleware|ChatGPT|Aug 14, 2024
+GPT Actions library - Snowflake Direct|ChatGPT|Aug 13, 2024
+GPT Actions library (Middleware) - Google Cloud Function|ChatGPT|Aug 11, 2024
+GPT Actions library - Google Drive|ChatGPT|Aug 11, 2024
+GPT Actions library - AWS Redshift|ChatGPT|Aug 9, 2024
+GPT Actions library - AWS Middleware|ChatGPT|Aug 9, 2024
+Structured Outputs for Multi-Agent Systems|CompletionsFunctions|Aug 6, 2024
+Introduction to Structured Outputs|CompletionsFunctions|Aug 6, 2024
+GPT Actions library - Zapier|ChatGPT|Aug 5, 2024
+GPT Actions library - Box|ChatGPT|Aug 2, 2024
+GCP BigQuery Vector Search with GCP Functions and GPT Actions in ChatGPT|ChatGPTCompletionsEmbeddingsTiktoken|Aug 2, 2024
+GPT Actions library - Confluence|ChatGPT|Jul 31, 2024
+GPT Actions library - SQL Database|ChatGPT|Jul 31, 2024
+GPT Actions library - Notion|ChatGPT|Jul 25, 2024
+GPT Actions library - Gmail|ChatGPT|Jul 24, 2024
+GPT Actions library - Jira|ChatGPT|Jul 24, 2024
+How to fine-tune chat models|CompletionsFine-tuning|Jul 23, 2024
+How to combine GPT4o mini with RAG to create a clothing matchmaker app|EmbeddingsVision|Jul 18, 2024
+Using GPT4o mini to tag and caption images|EmbeddingsVision|Jul 18, 2024
+Introduction to GPT-4o and GPT-4o mini|CompletionsVisionWhisper|Jul 18, 2024
+GPT Actions library - Salesforce|ChatGPT|Jul 18, 2024
+GPT Actions library - Outlook|ChatGPT|Jul 15, 2024
+GPT Actions library - getting started|ChatGPT|Jul 9, 2024
+GPT Actions library - BigQuery|ChatGPT|Jul 9, 2024
+Data Extraction and Transformation in ELT Workflows using GPT-4o as an OCR Alternative|CompletionsVision|Jul 9, 2024
+Azure AI Search with Azure Functions and GPT Actions in ChatGPT|ChatGPTCompletionsEmbeddingsTiktoken|Jul 8, 2024
+Developing Hallucination Guardrails|Guardrails|May 29, 2024
+GPT Actions library - Sharepoint (Return Docs)|ChatGPT|May 24, 2024
+GPT Actions library - Sharepoint (Return Text)|ChatGPT|May 24, 2024
+GPT Actions library (Middleware) - Azure Functions|ChatGPT|May 24, 2024
+Using tool required for customer service|CompletionsFunctions|May 1, 2024
+Batch processing with the Batch API|BatchCompletions|Apr 24, 2024
+Summarizing Long Documents|Chat|Apr 19, 2024
+Synthetic data generation (Part 1)|Completions|Apr 10, 2024
+CLIP embeddings to improve multimodal RAG with GPT-4 Vision|EmbeddingsVision|Apr 10, 2024
+Using GPT4 Vision with Function Calling|ChatVision|Apr 9, 2024
+Getting Started with OpenAI Evals|Completions|Mar 21, 2024
+How to use the moderation API|Moderation|Mar 5, 2024
+How to parse PDF docs for RAG|EmbeddingsVision|Feb 28, 2024
+Using logprobs|Completions|Dec 20, 2023
+How to implement LLM guardrails|Guardrails|Dec 19, 2023
+Creating slides with the Assistants API and DALL·E 3|AssistantsDALL-E|Dec 8, 2023
+RAG with a Graph database|CompletionsEmbeddings|Dec 8, 2023
+Supabase Vector Database|Embeddings|Dec 4, 2023
+Semantic search using Supabase Vector|Embeddings|Dec 4, 2023
+MongoDB Atlas Vector Search|CompletionsEmbeddings|Nov 21, 2023
+Semantic search using MongoDB Atlas Vector Search and OpenAI|CompletionsEmbeddings|Nov 21, 2023
+Fine tuning for function calling|CompletionsFine-tuningFunctions|Nov 7, 2023
+Processing and narrating a video with GPT's visual capabilities and the TTS API|CompletionsspeechVision|Nov 6, 2023
+What's new with DALL·E 3?|DALL-E|Nov 6, 2023
+How to make your completions outputs consistent with the new seed parameter|Completions|Nov 6, 2023
+Evaluate RAG with LlamaIndex|CompletionsEmbeddings|Nov 6, 2023
+Named Entity Recognition to Enrich Text|CompletionsFunctions|Oct 20, 2023
+Function calling with an OpenAPI specification|CompletionsFunctions|Oct 15, 2023
+How to build an agent with the OpenAI Node.js SDK|CompletionsFunctions|Oct 5, 2023
+Fine-tuning OpenAI models with Weights & Biases|CompletionsFine-tuningTiktoken|Oct 4, 2023
+OpenAI API Monitoring with Weights & Biases Weave|CompletionsTiktoken|Oct 4, 2023
+Question answering with LangChain, Deep Lake, & OpenAI|Embeddings|Sep 30, 2023
+Neon as a vector database|Embeddings|Sep 28, 2023
+Vector similarity search using Neon Postgres|Embeddings|Sep 28, 2023
+How to automate AWS tasks with function calling|CompletionsEmbeddingsFunctions|Sep 27, 2023
+Azure Chat Completion models with your own data (preview)|Completions|Sep 11, 2023
+Azure AI Search as a vector database for OpenAI embeddings|Embeddings|Sep 11, 2023
+Using Tair as a vector database for OpenAI embeddings|Embeddings|Sep 11, 2023
+Question answering with Langchain, Tair and OpenAI|CompletionsEmbeddingsTiktoken|Sep 11, 2023
+Fine-Tuning for retrieval augmented generation (RAG) with Qdrant|CompletionsEmbeddingsFine-tuning|Sep 4, 2023
+What makes documentation good|Sep 1, 2023
+Philosophy with vector embeddings, OpenAI and Cassandra / Astra DB|CompletionsEmbeddings|Aug 29, 2023
+Philosophy with vector embeddings, OpenAI and Cassandra / Astra DB|CompletionsEmbeddings|Aug 29, 2023
+Cassandra / Astra DB|Embeddings|Aug 29, 2023
+Elasticsearch|CompletionsEmbeddings|Aug 29, 2023
+Retrieval augmented generation using Elasticsearch and OpenAI|CompletionsEmbeddings|Aug 29, 2023
+Semantic search using Elasticsearch and OpenAI|CompletionsEmbeddings|Aug 29, 2023
+Data preparation and analysis for chat model fine-tuning|CompletionsFine-tuningTiktoken|Aug 22, 2023
+How to evaluate a summarization task|CompletionsEmbeddings|Aug 16, 2023
+Function calling for nearby places: Leveraging the Google Places API and customer profiles|CompletionsFunctions|Aug 11, 2023
+Addressing transcription misspellings: prompt vs post-processing|CompletionsWhisper|Aug 11, 2023
+Enhancing Whisper transcriptions: pre- & post-processing techniques|Whisper|Aug 11, 2023
+Azure functions example|CompletionsFunctions|Jul 21, 2023
+Visualizing the embeddings in Kangas|Embeddings|Jul 11, 2023
+Using PolarDB-PG as a vector database for OpenAI embeddings|Embeddings|Jul 11, 2023
+Search reranking with cross-encoders|CompletionsEmbeddings|Jun 28, 2023
+Vector databases|Embeddings|Jun 28, 2023
+Using Chroma for embeddings search|Embeddings|Jun 28, 2023
+Using MyScale for embeddings search|Embeddings|Jun 28, 2023
+Using Pinecone for embeddings search|Embeddings|Jun 28, 2023
+Using Qdrant for embeddings search|Embeddings|Jun 28, 2023
+Using Redis for embeddings search|Embeddings|Jun 28, 2023
+Using Typesense for embeddings search|Embeddings|Jun 28, 2023
+Using Weaviate for embeddings search|Embeddings|Jun 28, 2023
+Whisper prompting guide|CompletionsWhisper|Jun 27, 2023
+Financial document analysis with LlamaIndex|CompletionsEmbeddings|Jun 22, 2023
+Question answering using a search API and re-ranking|CompletionsEmbeddings|Jun 16, 2023
+How to use functions with a knowledge base|CompletionsFunctions|Jun 14, 2023
+How to call functions with chat models|CompletionsFunctions|Jun 13, 2023
+Semantic search with SingleStoreDB|CompletionsEmbeddings|May 22, 2023
+SingleStoreDB|CompletionsEmbeddings|May 22, 2023
+Using Weaviate with generative OpenAI module for generative search|CompletionsEmbeddings|May 22, 2023
+Unit test writing using a multi-step prompt with legacy Completions|Completions|May 19, 2023
+How to create dynamic masks with DALL·E and Segment Anything|DALL-E|May 19, 2023
+Using Hologres as a vector database for OpenAI embeddings|Embeddings|May 19, 2023
+Running hybrid VSS queries with Redis and OpenAI|Embeddings|May 11, 2023
+Redis as a context store with Chat Completions|CompletionsEmbeddings|May 11, 2023
+Kusto as a vector database for embeddings|Embeddings|May 10, 2023
+Kusto as a vector database|Embeddings|May 10, 2023
+Redis vectors as JSON with OpenAI|Embeddings|May 10, 2023
+Question answering with Langchain, AnalyticDB and OpenAI|EmbeddingsTiktoken|May 5, 2023
+How to build a tool-using agent with LangChain|CompletionsEmbeddings|May 2, 2023
+Using MyScale as a vector database for OpenAI embeddings|Embeddings|May 1, 2023
+Typesense|Embeddings|Apr 13, 2023
+Using AnalyticDB as a vector database for OpenAI embeddings|Embeddings|Apr 6, 2023
+Robust question answering with Chroma and OpenAI|CompletionsEmbeddings|Apr 6, 2023
+Visualizing embeddings in Atlas|Embeddings|Mar 28, 2023
+Azure Chat Completions example (preview)|Completions|Mar 28, 2023
+Filtered search with Milvus and OpenAI|Embeddings|Mar 28, 2023
+Getting started with Milvus and OpenAI|Embeddings|Mar 28, 2023
+Filtered Search with Zilliz and OpenAI|Embeddings|Mar 28, 2023
+Getting Started with Zilliz and OpenAI|Embeddings|Mar 28, 2023
+Retrieval augmentation for GPT-4 using Pinecone|CompletionsEmbeddingsTiktoken|Mar 24, 2023
+Pinecone vector database|CompletionsEmbeddings|Mar 24, 2023
+Semantic search with Pinecone and OpenAI|Embeddings|Mar 24, 2023
+How to format inputs to ChatGPT models|CompletionsTiktoken|Mar 1, 2023
+Long document content extraction|Completions|Feb 20, 2023
+Using Qdrant as a vector database for OpenAI embeddings|Embeddings|Feb 16, 2023
+Question answering with Langchain, Qdrant and OpenAI|Embeddings|Feb 16, 2023
+Redis|CompletionsEmbeddings|Feb 13, 2023
+Using Redis as a vector database with OpenAI|Embeddings|Feb 13, 2023
+Weaviate <> OpenAI|Embeddings|Feb 13, 2023
+Using Weaviate with OpenAI vectorize module for embeddings search|Embeddings|Feb 13, 2023
+Using Weaviate with OpenAI vectorize module for hybrid search|Embeddings|Feb 13, 2023
+Question Answering in Weaviate with OpenAI Q&A module|CompletionsEmbeddings|Feb 13, 2023
+Retrieval augmented generative question answering with Pinecone|CompletionsEmbeddings|Feb 7, 2023
+Visualizing embeddings in Weights and Biases|Embeddings|Feb 1, 2023
+How to work with large language models|Completions|Jan 20, 2023
+Use cases for embeddings|Embeddings|Jan 20, 2023
+Related resources from around the web|CompletionsEmbeddings|Jan 20, 2023
+Embedding texts that are longer than the model's maximum context length|EmbeddingsTiktoken|Jan 18, 2023
+How to count tokens with Tiktoken|CompletionsTiktoken|Dec 16, 2022
+Unit test writing using a multi-step prompt|Completions|Nov 15, 2022
