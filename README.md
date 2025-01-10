@@ -172,6 +172,10 @@ https://www.youtube.com/@echohive/videos
 
 https://www.youtube.com/watch?v=aywZrzNaKjs
 
+### Open-source RAG tool to chat with documents
+
+https://github.com/Cinnamon/kotaemon
+
 ### Other
 
 [How to build a semantic search][1100]
