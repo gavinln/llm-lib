@@ -1,5 +1,5 @@
 """
-function calling using openapi specifications
+Function calling with an OpenAPI specification|CompletionsFunctions|Oct 15, 2023
 https://cookbook.openai.com/examples/function_calling_with_an_openapi_spec
 """
 
