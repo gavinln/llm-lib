@@ -125,6 +125,10 @@ assistant-code-interpreter: env-up  ## run assistant with code interpreter
 assistant-retrieval: env-up  ## run assistant with document retrieval
 	poetry run python assistant.py $@
 
+.PHONY: function-calling-openapi
+function-calling-openapi: env-up  ## function calling, openapi spec
+	poetry run python function-calling-openapi.py $@
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -rf output/
