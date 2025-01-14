@@ -129,6 +129,10 @@ assistant-retrieval: env-up  ## run assistant with document retrieval
 function-calling-openapi: env-up  ## function calling, openapi spec
 	poetry run python function-calling-openapi.py $@
 
+.PHONY: named-entity-enrich-text
+named-entity-enrich-text: env-up  ## named entity enrich text
+	poetry run python $@.py
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -rf output/
