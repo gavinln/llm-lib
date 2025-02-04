@@ -22,12 +22,16 @@ env-up:
 env-rm:
 	poetry env remove $$(poetry env info -e)
 
+.PHONY: nvim
+nvim:  ## nvim in python environment
+	poetry run nvim
+
 .PHONY: web-search
 web-search:  ## duckduckgo web search
 	poetry run python $@.py
 
 .PHONY: finance-assistant
-finance-assistant:  ## yahoo finance
+finance-assistant: env-up  ## yahoo finance
 	poetry run python $@.py
 
 .PHONY: research
