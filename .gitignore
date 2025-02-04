@@ -170,3 +170,4 @@ output/
 .aider*
 **/Session.vim
 temp_storage/
+llamaindex-samples/temp/

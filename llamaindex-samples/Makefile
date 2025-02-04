@@ -84,6 +84,10 @@ PHONY: component-loading
 component-loading:  ## loading component of llamaindex
 	poetry run python llamaindex-components.py $@
 
+PHONY: evaluate-rag
+evaluate-rag:  ## run evaluations for RAG
+	poetry run python ./evaluate-rag-llamaindex.py
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
