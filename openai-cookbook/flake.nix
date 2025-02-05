@@ -12,16 +12,16 @@
       devShells = forAllSystems (system:
         let
           pythonEnv = pkgs.${system}.python313.withPackages
-            (ps: with ps; [ isort black vulture ]);
+            (ps: with ps; [ pip isort black vulture ]);
         in {
           default = pkgs.${system}.mkShellNoCC {
             packages = with pkgs.${system}; [
               bashInteractive # for nested interactive shells: poetry shell
               nixfmt-rfc-style
-              poetry
-              pre-commit
               pythonEnv
               ruff
+              # poetry  # does not work. use uv tool install poetry
+              # pre-commit  # does not work. use uv tool install pre-commit
             ];
             shellHook = ''
               # set SHELL to interactive bash

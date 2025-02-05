@@ -38,13 +38,13 @@ nvim:  ## nvim
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run nvim -S Session.vim
 
 .PHONY: guardrail-input-good
-guardrails-input-good: env-up  ## run guardrails
+guardrails-input-good: env-up  ## guardrails with good input
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python guardrails.py input-good
 
 .PHONY: guardrail-input-bad
-guardrails-input-bad: env-up  ## run guardrails
+guardrails-input-bad: env-up  ## guardrails with bad input
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python guardrails.py input-bad
 
 .PHONY: output-guardrails
-output-guardrails: env-up  ## run guardrails
+output-guardrails: env-up  ## output and input guardrails
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python guardrails.py output-guardrails
