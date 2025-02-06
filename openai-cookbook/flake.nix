@@ -12,7 +12,7 @@
       devShells = forAllSystems (system:
         let
           pythonEnv = pkgs.${system}.python313.withPackages
-            (ps: with ps; [ pip isort black vulture ]);
+            (ps: with ps; [ isort black vulture ]);
         in {
           default = pkgs.${system}.mkShellNoCC {
             packages = with pkgs.${system}; [
@@ -26,6 +26,7 @@
             shellHook = ''
               # set SHELL to interactive bash
               export SHELL=`which bash`
+              export UV_PROJECT_ENVIRONMENT=~/.cache/venv/openai-cookbook
             '';
           };
         });

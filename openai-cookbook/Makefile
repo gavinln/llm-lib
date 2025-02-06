@@ -31,6 +31,8 @@ env-rm:
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
 	find . -name '.pytest_cache' -type d -exec rm -rf '{}' +
+	find . -name '.ruff_cache' -type d -exec rm -rf '{}' +
+	find . -name '__pycache__' -type d -exec rm -rf '{}' +
 	find . -name '__pycache__' -type d -exec rm -rf '{}' +
 
 .PHONY: nvim
@@ -48,3 +50,7 @@ guardrails-input-bad: env-up  ## guardrails with bad input
 .PHONY: output-guardrails
 output-guardrails: env-up  ## output and input guardrails
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python guardrails.py output-guardrails
+
+.PHONY: logprobs-classification
+logprobs-classification: env-up  ## classification with log probabilities
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python logprobs.py classification
