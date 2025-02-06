@@ -125,4 +125,5 @@ redisvl-range-queries:  ## vector query with range
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
 	find . -name '.pytest_cache' -type d -exec rm -rf '{}' +
+	find . -name '.ruff_cache' -type d -exec rm -rf '{}' +
 	find . -name '__pycache__' -type d -exec rm -rf '{}' +
