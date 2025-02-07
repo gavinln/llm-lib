@@ -4,12 +4,7 @@ https://cookbook.openai.com/examples/how_to_use_moderation
 
 import asyncio
 import logging
-import math
-import statistics
 import sys
-import textwrap
-import typing
-from pprint import pprint as pp
 
 import fire
 import openai
@@ -62,7 +57,7 @@ async def execute_chat_with_input_moderation(user_request):
             await asyncio.sleep(0.1)
             continue
 
-        if moderation_task.result() == True:
+        if moderation_task.result():
             chat_task.cancel()
             return moderation_message.strip().replace("\n", " ")
 
