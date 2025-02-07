@@ -1,5 +1,5 @@
 """
-https://cookbook.openai.com/examples/how_to_use_guardrails
+https://cookbook.openai.com/examples/using_logprobs
 """
 
 import logging

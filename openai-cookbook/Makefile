@@ -66,3 +66,19 @@ autocomplete: env-up  ## autocomplete with log probabilities
 .PHONY: perplexity
 perplexity: env-up  ## perplexity with log probabilities
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python logprobs.py perplexity
+
+.PHONY: moderation-input-good
+moderation-input-good: env-up  ## moderation api - good input
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python moderation.py $@
+
+.PHONY: moderation-input-bad
+moderation-input-bad: env-up  ## moderation api - bad input
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python moderation.py $@
+
+.PHONY: moderation-custom-good
+moderation-custom-good: env-up  ## custom moderation - good input
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python moderation.py $@
+
+.PHONY: moderation-custom-bad
+moderation-custom-bad: env-up  ## custom moderation api - bad input
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python moderation.py $@
