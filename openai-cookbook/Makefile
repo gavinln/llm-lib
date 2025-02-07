@@ -54,3 +54,15 @@ output-guardrails: env-up  ## output and input guardrails
 .PHONY: logprobs-classification
 logprobs-classification: env-up  ## classification with log probabilities
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python logprobs.py classification
+
+.PHONY: reduce-hallucinations
+reduce-hallucinations: env-up  ## reduce hallucations with log probabilities
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python logprobs.py reduce-hallucinations
+
+.PHONY: autocomplete
+autocomplete: env-up  ## autocomplete with log probabilities
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python logprobs.py autocomplete
+
+.PHONY: perplexity
+perplexity: env-up  ## perplexity with log probabilities
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python logprobs.py perplexity
