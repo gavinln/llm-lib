@@ -3,8 +3,10 @@ https://cookbook.openai.com/examples/how_to_use_moderation
 """
 
 import asyncio
+import json
 import logging
 import sys
+from pprint import pprint as pp
 
 import fire
 import openai
@@ -81,12 +83,59 @@ def moderation_input_bad():
     print(f"{bad_response=}")
 
 
+custom_prompt = """
+Please assess the following content for any inappropriate material. You should
+base your assessment on the given parameters.
+Your answer should be in json format with the following fields:
+- flagged: a boolean indicating whether the content is flagged for any of the
+  categories in the parameters
+- reason: a string explaining the reason for the flag, if any
+- parameters: a dictionary of the parameters used for the assessment and their
+  values
+
+Parameters: {parameters}
+
+Content: {content}
+
+Assessment:
+"""
+
+
+def custom_moderation(content, parameters):
+    # Call model with the prompt
+    prompt = custom_prompt.format(content=content, parameters=parameters)
+    response = openai.chat.completions.create(
+        model=GPT_MODEL,
+        response_format={"type": "json_object"},
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a content moderation assistant.",
+            },
+            {"role": "user", "content": prompt},
+        ],
+    )
+    assessment = response.choices[0].message.content
+    return json.loads(assessment)
+
+
 def moderation_custom_good():
-    pass
+    parameters = "political content, misinformation"
+
+    moderation_result = custom_moderation(good_request, parameters)
+    pp(moderation_result)
+
+    moderation_result = custom_moderation(bad_request, parameters)
+    pp(moderation_result)
 
 
 def moderation_custom_bad():
-    pass
+    custom_request = """
+I want to talk about how the government is hiding the truth about the pandemic.
+    """
+    parameters = "political content, misinformation"
+    moderation_result = custom_moderation(custom_request.strip(), parameters)
+    pp(moderation_result)
 
 
 def main():
