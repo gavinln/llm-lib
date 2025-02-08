@@ -82,3 +82,23 @@ moderation-custom-good: env-up  ## custom moderation - good input
 .PHONY: moderation-custom-bad
 moderation-custom-bad: env-up  ## custom moderation api - bad input
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python moderation.py $@
+
+.PHONY: csv-with-prompt
+csv-with-prompt: env-up  ## create csv with a structured prompt
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python synthetic-data.py $@
+
+.PHONY: csv-with-python
+csv-with-python: env-up  ## create csv with a Python program
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python synthetic-data.py $@
+
+.PHONY: csv-multitable-with-python
+csv-multitable-with-python: env-up  ## create multiple csv tables
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python synthetic-data.py $@
+
+.PHONY: text-with-prompt
+text-with-prompt: env-up  ## create plain text with a prompt
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python synthetic-data.py $@
+
+.PHONY: text-imbalanced
+text-imbalanced: env-up  ## handle imbalanced text
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python synthetic-data.py $@
