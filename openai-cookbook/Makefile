@@ -102,3 +102,19 @@ text-with-prompt: env-up  ## create plain text with a prompt
 .PHONY: text-imbalanced
 text-imbalanced: env-up  ## handle imbalanced text
 	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python synthetic-data.py $@
+
+.PHONY: doc-summary
+doc-summary: env-up  ## summarize document
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python summarize-long-docs.py $@
+
+.PHONY: doc-summary-points
+doc-summary-points: env-up  ## summarize document using points
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python summarize-long-docs.py $@
+
+.PHONY: doc-summary-recursive
+doc-summary-recursive: env-up  ## summarize document recursively
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python summarize-long-docs.py $@
+
+.PHONY: customer-service-tool
+customer-service-tool: env-up  ## customer service using tools
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python customer-service-tool.py $@
