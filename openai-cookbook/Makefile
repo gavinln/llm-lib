@@ -117,4 +117,8 @@ doc-summary-recursive: env-up  ## summarize document recursively
 
 .PHONY: customer-service-tool
 customer-service-tool: env-up  ## customer service using tools
-	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python customer-service-tool.py $@
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python customer-service-tool.py use-tool
+
+.PHONY: customer-service-test
+customer-service-test: env-up  ## customer service testing tools
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv run python customer-service-tool.py test-tool
