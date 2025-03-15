@@ -1,4 +1,9 @@
 # vim: sw=2 ts=2 sts=2 et
+
+# Setup the environment
+# nix flake lock  # create the flake.lock file
+# nix develop  # setup the development environment
+
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
