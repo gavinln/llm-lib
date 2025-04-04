@@ -202,6 +202,8 @@ https://github.com/stanfordnlp/dspy - 2.4k stars
 
 https://github.com/jerryjliu/llama_index - 21k stars
 
+https://github.com/langflow-ai/langflow - 53.9k stars
+
 #### Comparison of libraries
 
 https://medium.com/badal-io/exploring-langchain-and-llamaindex-to-achieve-standardization-and-interoperability-in-large-2b5f3fabc360
