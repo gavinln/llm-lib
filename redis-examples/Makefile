@@ -1,3 +1,5 @@
+# TODO: need to migrate from poetry to uv
+
 SCRIPT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 SHELL = /bin/bash
@@ -9,6 +11,10 @@ SHELL = /bin/bash
 .DEFAULT_GOAL=help
 help:  ## help for this Makefile
 	@grep -E '^[a-zA-Z0-9_\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
+
+PROJECT := redis-examples
+VENV := ~/.cache/venv/$(PROJECT)
+UV_RUN := UV_PROJECT_ENVIRONMENT=$(VENV) uv run
 
 .PHONY: tmux
 tmux:  ## run tmux
@@ -29,13 +35,15 @@ docker-compose-test-rm:  ## remove example docker compose
 
 .PHONY: env-up
 env-up:
-	docker compose up -d
-	poetry install
+	# docker compose up -d
+	# poetry install
+	UV_PROJECT_ENVIRONMENT=$(VENV) uv sync
 
 .PHONY: env-rm
 env-rm:
-	docker compose rm -s -v -f
-	poetry env remove $$(poetry env info -e)
+	# docker compose rm -s -v -f
+	# poetry env remove $$(poetry env info -e)
+	rm -rf $(VENV)
 
 .PHONY: data-structure-store
 data-structure-store: env-up  ## redis data structure store
@@ -52,8 +60,8 @@ vector-database: env-up  ## redis vector database
 	poetry run python vector-database.py
 
 .PHONY: sentence-xfmer
-sentence-xfmer:  ## sentence transformer examples
-	poetry run python sentence-transformer-example.py
+sentence-xfmer: env-up  ## sentence transformer examples
+	$(UV_RUN) sentence-transformer-example.py
 
 .PHONY: vector-search-existing
 vector-search-existing:  ## vector search with existing embedding
@@ -127,3 +135,7 @@ clean: env-rm  ## remove temporary files
 	find . -name '.pytest_cache' -type d -exec rm -rf '{}' +
 	find . -name '.ruff_cache' -type d -exec rm -rf '{}' +
 	find . -name '__pycache__' -type d -exec rm -rf '{}' +
+	uv cache prune
+	uv cache clean
+	rm -rf $(HOME)/.cache/torch/sentence_transformers
+	rm -rf $(HOME)/.cache/huggingface/hub
